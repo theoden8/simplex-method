@@ -1,20 +1,34 @@
-OBJECTS		= main.cpp Window.cpp Matrix.cpp
-LIBRARIES	= Window.hpp Matrix.hpp
 
-all :  $(OBJECTS) $(LIBRARIES)
-	g++ -std=c++11 -Wno-deprecated $(OBJECTS) -o "_matrix" -framework OpenGL -framework GLUT
+#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌DECLARATION⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
 
-v :  $(OBJECTS) $(LIBRARIES)
-	g++ -v -std=c++11 $(OBJECTS) -o "_matrix" -framework OpenGL -framework GLUT
+LIBRARIES = Matrix.hpp Window.hpp
+OBJECTS = main.cpp Matrix.cpp Window.cpp
+CC="g++ -std=c++0x -Wno-deprecated"
+CFLAGS="-framework OpenGL -framework GLUT"
+BIN="_matrix"
 
-compile :
-	g++ -std=c++11 "main.cpp" -o "_matrix" -framework OpenGL -framework GLUT
+#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌MAIN⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
 
-run :
-	./_matrix
 
-remake :
-	cd "_MakeGen"; perl "_make_gen.pl" ".." "main.cpp" "_matrix"; cd ".."
+all : $(OBJECTS) $(LIBRARIES)
+	$(CC) $(OBJECTS) -o "$(BIN)" $(CFLAGS)
 
-open :
-	vim -p *hpp*
+compile : 
+	$(CC) -std=c++0x -Wno-deprecated "main.cpp" -o "$(BIN)" $(CFLAGS)
+
+run : $(BIN)
+	./"$(BIN)"
+
+remake : 
+	cd "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen"&& \
+	perl "_make_gen.pl" ".." "main.cpp" "_matrix"&& \
+	cd ".."
+
+open : 
+	vim -p *.hpp
+
+#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌PLUGINS⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
+
+
+highlight : 
+	bash "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight//highlight.sh" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight/"

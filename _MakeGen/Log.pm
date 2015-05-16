@@ -21,7 +21,6 @@ sub Format(@) {
 	my $string;
 	my @vector = split("m", $codes);
 	foreach my $n(@vector) {
-		my $n = shift @vector;
 		$string = $string."\x1b[033;".$n."m";
 	}
 	return $string;

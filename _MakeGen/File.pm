@@ -44,7 +44,7 @@ sub WriteFile(@) {
 	my @options = (
 		Option::Separate("DECLARATION"),
 		my $declare	= Option::Declare	(
-			"g++ -std=c++11 -Wno-deprecated",
+			"g++ -std=c++0x -Wno-deprecated",
 			"-framework OpenGL -framework GLUT",
 			$binary,
 			$DIR,
@@ -52,12 +52,12 @@ sub WriteFile(@) {
 		),
 		Option::Separate("MAIN"),
 		my $all		= Option::AddOption	(
-			"all", "\$($Option::OBJECTS_MARK) \$($Option::LIBRARIES_MARK) \$($Option::CC_MARK) \$($Option::BIN_MARK)",
+			"all", "\$($Option::OBJECTS_MARK) \$($Option::LIBRARIES_MARK)",
 			"\$($Option::CC_MARK) \$(".$Option::EXTENSIONS{".cpp"}.") -o \"\$($Option::BIN_MARK)\" \$($Option::CFLAGS_MARK)",
 		),
 		my $compile	= Option::AddOption	(
-			"compile", "\$($Option::CC_MARK) \$($Option::BIN_MARK)",
-			"\$($Option::CC_MARK) \"$main\" -o \"\$($Option::BIN_MARK)\" \$($Option::CFLAGS_MARK)",
+			"compile", "",
+			"\$($Option::CC_MARK) -std=c++0x -Wno-deprecated \"$main\" -o \"\$($Option::BIN_MARK)\" \$($Option::CFLAGS_MARK)",
 		),
 		my $run		= Option::AddOption	(
 			"run", "\$($Option::BIN_MARK)",
