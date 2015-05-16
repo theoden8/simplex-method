@@ -73,7 +73,6 @@ Matrix	Matrix::Join(const Matrix &B) const {
 		for(size_t x = 0; x < B.Width(); ++x)
 			C[y].push_back(B[y][x]);
 	}
-	std::cout << "\n\x1b[033;41m\x1b[033;1m\x1b[033;97m[     FLAG     ]\x1b[033;0m\n\n";
 	return C;
 }
 
@@ -104,31 +103,30 @@ Matrix	Matrix::operator* (const Matrix &B) const {
 	return C;
 }
 
-Matrix	Matrix::Transpose()						const {
+void	Matrix::Transpose()						{
 	Matrix A(Height(), Width());
 	for(size_t x = 0; x < Width(); ++x)
 		for(size_t y = 0; y < Height(); ++y)
 			A[x][y] = grid_[y][x];
-	return A;
+	*this = A;
 }
 
 void	Matrix::Swap_Lines(const size_t line1, const size_t line2)	{
 	std::swap(grid_[line1], grid_[line2]);
 }
 
-void	Matrix::Add_Line(const size_t line1, const size_t line2) {
+void	Matrix::Add_To_Line(const size_t line1, const size_t line2, const val_t k = 1) {
+	if(!k)
+		throw std::runtime_error("Matrix::Add_To_Line Can't multiply by 0.");
 	std::vector <val_t> line = grid_[line2];
 	if(line.size() != Width())
-		throw std::runtime_error("Matrix::Add_Line Improper size of a line passed..");
+		throw std::runtime_error("Matrix::Add_To_Line Improper size of a line passed..");
 	for(size_t x = 0; x < Width(); ++x)
-		grid_[line1][x] += line[x];
+		grid_[line1][x] += line[x] * k;
 }
 
 void	Matrix::Multiply_Line(const size_t line1, const val_t k) {
-	if(!k)
-		throw std::runtime_error("Matrix::Multiply_Line Can't multiply by 0.");
-	for(size_t x = 0; x < Width(); ++x)
-		grid_[line1][x] *= k;
+	Add_To_Column(line1, line1, k - 1);
 }
 
 void	Matrix::Swap_Columns(const size_t clm1, const size_t clm2)	{
@@ -139,22 +137,21 @@ void	Matrix::Swap_Columns(const size_t clm1, const size_t clm2)	{
 	}
 }
 
-void	Matrix::Add_Column(const size_t clm1, const size_t clm2) {
+void	Matrix::Add_To_Column(const size_t clm1, const size_t clm2, const val_t k = 1) {
+	if(!k)
+		throw std::runtime_error("Matrix::Add_To_Column Can't multiply by 0.");
 	for(size_t y = 0; y < Height(); ++y)
-		grid_[y][clm1] += grid_[y][clm2];
+		grid_[y][clm1] += grid_[y][clm2] * k;
 }
 
 void	Matrix::Multiply_Column(const size_t clm1, const val_t k) {
-	if(!k)
-		throw std::runtime_error("Matrix::Multiply_Line Can't multiply by 0.");
-	for(size_t y = 0; y < Height(); ++y)
-		grid_[y][clm1] *= k;
+	Add_To_Column(clm1, clm1, k - 1);
 }
 
-Matrix	Matrix::GetInverse() const {
-	Matrix	*common	= new Matrix(this->Join(Matrix(Height())));
-	common->DoGauss();
-	Matrix inverse = Matrix(common->SubMatrix(Width(), common->Width() - Width()));
+Matrix	Matrix::Inverse() const {
+	Matrix	common	= this->Join(Matrix(Height()));
+	common.DoGauss();
+	Matrix inverse = Matrix(common.SubMatrix(Width(), common.Width() - Width()));
 
 	std::cout << "MATRIX:" << std::endl;
 	for(size_t y = 0; y < inverse.Height(); ++y) {
@@ -163,7 +160,6 @@ Matrix	Matrix::GetInverse() const {
 		std::cout << "\n\n";
 	}
 
-	delete common;
 	return inverse;
 }
 
@@ -176,13 +172,8 @@ void	Matrix::DoGauss() {
 			if(grid_[ln][clm] && free[ln]) {
 				free[ln] = false;
 				for(size_t ln2 = 0; ln2 < Height(); ++ln2) {
-					val_t k = (ln2 == ln) ?
-						(grid_[ln2][clm] - 1) / grid_[ln2][clm]
-								:
-						(grid_[ln2][clm]) / grid_[ln][clm]
-					;
-//					for(size_t clm2 = 0; clm2 < Width(); ++clm2)
-//						grid_[ln2][clm2] -= k * grid_[ln][clm2];
+					val_t k = (ln2 == ln) ?  (grid_[ln2][clm] - 1) / grid_[ln2][clm] : (grid_[ln2][clm]) / grid_[ln][clm] ;
+					if(k) Add_To_Line(ln2, ln, -k);
 				}
 				break;
 			}

@@ -28,13 +28,13 @@ private:
 	Matrix	SubMatrix	(const size_t start, const size_t length)	const;
 public:
 	Matrix	operator*	(const Matrix &B)				const;
-	Matrix	Transpose	()						const;
+	void	Transpose	();
 	void	Swap_Lines	(const size_t line1, const size_t line2);
-	void	Add_Line	(const size_t line1, const size_t line2);
+	void	Add_To_Line	(const size_t line1, const size_t line2, const val_t k);
 	void	Multiply_Line	(const size_t line1, const val_t k);
 	void	Swap_Columns	(const size_t clm1, const size_t clm2);
-	void	Add_Column	(const size_t clm1, const size_t clm2);
+	void	Add_To_Column	(const size_t clm1, const size_t clm2, const val_t k);
 	void	Multiply_Column	(const size_t clm1, const val_t k);
-	Matrix	GetInverse	()						const;
+	Matrix	Inverse	()							const;
 	void	DoGauss		();
 };

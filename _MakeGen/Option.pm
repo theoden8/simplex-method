@@ -34,7 +34,7 @@ sub Declare(@) {
 	my $CFLAGS	= shift;
 	my $BIN		= shift;
 	my $DIR		= shift;
-	my $Relative	= shift;
+	my $REL		= shift;
 
 	my $declare;
 
@@ -44,7 +44,7 @@ sub Declare(@) {
 	while( (my $key, my $category) = each %EXTENSIONS) {
 		my $output_file = $key."files";
 		$output_file =~ s/^.//g;
-		my $outputlist = "$category = ".File::ReadFile($DIR, $Relative, $key, $output_file);
+		my $outputlist = "$category = ".File::ReadFile($DIR, $REL, $key, $output_file);
 		unshift @tmp, $outputlist;
 	}
 	$OBJECTS	= shift @tmp;
@@ -65,7 +65,7 @@ sub Declare(@) {
 
 sub GetPlugins(@) {
 	my $DIR		= shift;
-	my $Relative	= shift;
+	my $REL		= shift;
 
 	my $SCRIPT_KEY		= ".sh";
 
@@ -81,12 +81,12 @@ sub GetPlugins(@) {
 sub Separate(@) {
 	my $section = shift;
 
-	my $separator	= "⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌";
+	my $SEPARATOR	= "⚌" x 40;
 	my $append;
 	for(my $i = 0; $i < (20 - length($section))/2; ++$i) {
 		$append = $append."⚌";
 	}
-	return "\n#$separator$append$section$append$separator\n\n"
+	return "\n#$SEPARATOR$append$section$append$SEPARATOR\n\n"
 }
 
 1;

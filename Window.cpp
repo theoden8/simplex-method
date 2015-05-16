@@ -141,7 +141,9 @@ void	Window::Keyboard	(unsigned char key, int x, int y) {
 			matrices_.front().DoGauss();
 			break;
 		case 'i':
-			AddMatrix(matrices_.front().GetInverse());
+			AddMatrix(matrices_.front().Inverse());
+			std::cout << "\n\x1b[033;41m\x1b[033;1m\x1b[033;97m[     FLAG     ]\x1b[033;0m\n\n";
+			break;
 		case 'p':
 			if(matrices_.size())
 				matrices_.pop_back();
