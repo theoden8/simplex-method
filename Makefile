@@ -4,14 +4,14 @@
 LIBRARIES = Matrix.hpp Window.hpp
 OBJECTS = main.cpp Matrix.cpp Window.cpp
 CC="g++"
-CFLAGS="-framework OpenGL -framework GLUT"
+CFLAGS=-framework OpenGL -framework GLUT
 BIN="_matrix"
 
 #⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌MAIN⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
 
 
 all : $(OBJECTS) $(LIBRARIES)
-	$(CC) -std=c++0x -Wno-deprecated $(OBJECTS) -o "$(BIN)" -framework OpenGL -framework GLUT
+	$(CC) -std=c++0x -Wno-deprecated $(OBJECTS) -o "$(BIN)" $(CFLAGS)
 
 compile :
 	$(CC) -std=c++0x -Wno-deprecated "main.cpp" -o "$(BIN)" -framework OpenGL -framework GLUT

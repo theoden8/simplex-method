@@ -89,17 +89,17 @@ Matrix	Matrix::SubMatrix(const size_t start, const size_t length) const {
 
 Matrix	Matrix::operator* (const Matrix &B) const {
 	const Matrix &A = *this;
-	Matrix C(B.Width(), Height(), 0);
+	Matrix C(B.Width(), A.Height(), 0);
 
-	if(Width() != B.Height())
+	if(A.Height() != B.Height())
 		throw std::runtime_error("Matrix::Operator* The matrixes have different dimensions");
+	size_t depth = A.Height();
 
-	for(size_t i = 0; i < Height(); ++i)
-		for(int j = 0; j < B.Width(); ++j) {
-			C[i][j] = 0.0;
-			for(int k = 0; k < Width(); ++k)
-				C[i][j] += A[i][k] * B[k][j];
-		}
+	for(size_t y1 = 0; y1 < A.Height(); ++y1)
+		for(size_t x2 = 0; x2 < B.Width(); ++x2)
+			for(size_t i = 0; i < depth; ++i)
+				C[y1][x2] += A[y1][i] * B[i][x2];
+
 	return C;
 }
 
