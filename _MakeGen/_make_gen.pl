@@ -17,7 +17,7 @@ Log::SysLog(		$Log::fbold.Log::Highlight("Executing the program from ")."\n\t".$
 Log::Write(		Log::Highlight("Makefile")." generating program is started."							);
 
 my $REL	= "..";
-$REL	= shift @ARGV;	if(exists $ARGV[0]);
+$REL	= shift @ARGV	if(exists $ARGV[0]);
 if(
 	$REL eq "~" or
 	$REL eq "/"

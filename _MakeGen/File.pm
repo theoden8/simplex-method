@@ -56,21 +56,21 @@ sub WriteFile(@) {
 			"\$($Option::CC_MARK) \$(".$Option::EXTENSIONS{".cpp"}.") -o \"\$($Option::BIN_MARK)\" \$($Option::CFLAGS_MARK)",
 		),
 		Option::AddOption	(
-			"compile",,
+			"compile","",
 			"\$($Option::CC_MARK) -std=c++0x -Wno-deprecated \"$main\" -o \"\$($Option::BIN_MARK)\" \$($Option::CFLAGS_MARK)",
 		),
 		Option::AddOption	(
-			"run",,
+			"run","",
 			"./\"\$($Option::BIN_MARK)\"",
 		),
 		Option::AddOption	(
-			"remake",,
+			"remake","",
 			"cd \"$DIR\"".								"&& \\".
 			"\n\tperl \"$perlscript\" \"$REL\" \"$main\" \"$binary\"".		"&& \\".
 			"\n\tcd \"$REL\"",
 		),
 		Option::AddOption	(
-			"open",,
+			"open","",
 			"vim -p *.hpp",
 		),
 		Option::Separate("PLUGINS"),

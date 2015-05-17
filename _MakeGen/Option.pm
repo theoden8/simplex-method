@@ -53,12 +53,12 @@ sub Declare(@) {
 	$declare = $declare.$OBJECTS;
 	$declare = $declare.$LIBRARIES;
 	$declare = $declare."$CC_MARK=\"$CC\"\n";
-	$declare = $declare."$CFLAGS_MARK=\"$CFLAGS\"\n";
+	$declare = $declare."$CFLAGS_MARK=$CFLAGS\n";
 	$declare = $declare."$BIN_MARK=\"$BIN\"\n";
 	Log::Write("Declared variable ".Log::Highlight("$OBJECTS_MARK=$OBJECTS"));
 	Log::Write("Declared variable ".Log::Highlight("$LIBRARIES_MARK=$LIBRARIES"));
 	Log::Write("Declared variable ".Log::Highlight("$CC_MARK=\"$CC\""));
-	Log::Write("Declared variable ".Log::Highlight("$CFLAGS_MARK=\"$CFLAGS\""));
+	Log::Write("Declared variable ".Log::Highlight("$CFLAGS_MARK=$CFLAGS"));
 	Log::Write("Declared variable ".Log::Highlight("$BIN_MARK=\"$BIN\""));
 	return $declare
 }
