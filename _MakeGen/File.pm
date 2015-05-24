@@ -3,7 +3,7 @@
 package File;
 
 use strict;
-use warnings;
+#use warnings;
 
 use Log;
 use Option;
@@ -31,10 +31,10 @@ sub WriteFile(@) {
 	my($DIR, $REL, $MAIN, $MAKEFILE, $BIN) = @_;
 	$MAKEFILE	= "$DIR/$REL/$MAKEFILE";
 
-	my %osX_frameworks {
+	my %osX_frameworks = {
 		"GLUT"		=>	"-framework GLUT",
 		"OpenGL"	=>	"-framework OpenGL",
-	}
+	};
 
 	# make options:
 	my @OPTIONS = (
