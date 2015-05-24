@@ -6,79 +6,53 @@ use Log;
 
 package Option;
 
+our $SHELL_MARK		= "SHELL";
+our $CXX_MARK		= "CXX";
+our $CXXFLAGS_MARK	= "CXXFLAGS";
+our $BIN_MARK		= "BIN";
 our $OBJECTS_MARK	= "OBJECTS";
 our $LIBRARIES_MARK	= "LIBRARIES";
-our $CC_MARK		= "CC";
-our $CFLAGS_MARK	= "CFLAGS";
-our $BIN_MARK		= "BIN";
 
 our $PLUGIN_DIR		= "plugins";
 
-our %EXTENSIONS = (
-	".cpp"	=>	$OBJECTS_MARK,
-	".hpp"	=>	$LIBRARIES_MARK,
-);
+sub Declare(@) {
+	my ($NAME, $VALUE)	= @_;
+	my $TEXT = $NAME." "x(10 - length($NAME))."= ".$VALUE;
+	chomp($TEXT);
+	Log::Write("Declared Variable:\n\t\t".Log::Highlight($TEXT));
+	return "$TEXT\n";
+}
 
 sub AddOption(@) {
 	my $cmd = shift;
 	my $postcmd = shift;
 	my $text = shift;
 	$text = "\n$cmd : $postcmd\n\t$text\n";
-	my $separator = "\n=============================================================";
-	Log::Write("$separator\n\tAdded option ".Log::Highlight($cmd).":\t$postcmd\n\t\t$text$separator");
+	my $separator = "\n"."=" x 140;
+	Log::Write(Log::Highlight("\U$cmd\E")."$separator\n\t\t$text$separator");
 	return $text;
 }
 
-sub Declare(@) {
-	my $CC		= shift;
-	my $CFLAGS	= shift;
-	my $BIN		= shift;
-	my $DIR		= shift;
-	my $REL		= shift;
+sub AddPlugins(@) {
+	my ($DIR, $REL)	 = @_;
 
-	my $declare;
-
-	my $OBJECTS;
-	my $LIBRARIES;
-	my @tmp;
-	while( (my $key, my $category) = each %EXTENSIONS) {
-		my $output_file = $key."files";
-		$output_file =~ s/^.//g;
-		my $outputlist = "$category = ".File::ReadFile($DIR, $REL, $key, $output_file);
-		unshift @tmp, $outputlist;
-	}
-	$OBJECTS	= shift @tmp;
-	$LIBRARIES	= shift @tmp;
-
-	$declare = $declare.$OBJECTS;
-	$declare = $declare.$LIBRARIES;
-	$declare = $declare."$CC_MARK=\"$CC\"\n";
-	$declare = $declare."$CFLAGS_MARK=$CFLAGS\n";
-	$declare = $declare."$BIN_MARK=\"$BIN\"\n";
-	Log::Write("Declared variable ".Log::Highlight("$OBJECTS_MARK=$OBJECTS"));
-	Log::Write("Declared variable ".Log::Highlight("$LIBRARIES_MARK=$LIBRARIES"));
-	Log::Write("Declared variable ".Log::Highlight("$CC_MARK=\"$CC\""));
-	Log::Write("Declared variable ".Log::Highlight("$CFLAGS_MARK=$CFLAGS"));
-	Log::Write("Declared variable ".Log::Highlight("$BIN_MARK=\"$BIN\""));
-	return $declare
-}
-
-sub GetPlugins(@) {
-	my $DIR		= shift;
-	my $REL		= shift;
-
-	my $SCRIPT_KEY		= ".sh";
-
-	my $output_file = $SCRIPT_KEY."files";
-	$output_file =~ s/^.//g;
-
-	my $plugins	= File::ReadFile($DIR, $PLUGIN_DIR, $SCRIPT_KEY, $output_file)." ";
-	$plugins	=~ s/[\n\r]//g;
+	my $plugins	= File::ReadFile($DIR, $PLUGIN_DIR, "sh");
+	chomp($plugins);
 	my @plugins	= split(".sh ", $plugins);
-	return @plugins;
+	my @opts;
+	foreach my $plugin(@plugins) {
+		my $plugin_filename = (split ("/", $plugin))[-1];
+		Log::Write("Adding plugin ".Log::Highlight($plugin));
+		my $EXEC_DIR = "$DIR/$PLUGIN_DIR"."/".(substr($plugin, 0, (length($plugin) - length($plugin_filename) - 1)));
+		push(@opts, Option::AddOption(
+			(split ("/", $plugin))[0], "",
+			"bash \"$EXEC_DIR/$plugin_filename\" \"$EXEC_DIR\"",
+		));
+	}
+	return @opts;
 }
 
-sub Separate(@) {
+sub AddSeparator(@) {
 	my $section = shift;
 
 	my $SEPARATOR	= "⚌" x 40;

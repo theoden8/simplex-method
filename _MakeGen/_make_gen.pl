@@ -10,6 +10,7 @@ use Option;
 use File;
 
 my $DIR = cwd();
+my $POST = "Post.pl";
 $DIR	=~ s/\\/\\\\/g;
 $DIR	=~ s/"/\\"/g;
 
@@ -26,17 +27,19 @@ if(
 	$REL = '.';
 }
 
-my $main = "main.cpp";
+my $MAIN = "main.cpp";
 if(exists $ARGV[0]) {
-	$main = shift @ARGV;
+	$MAIN = shift @ARGV;
 }
 my $MAKEFILE = "Makefile";
-my $binary = "_bin";
+my $BIN = "_bin";
 if(exists $ARGV[0]) {
-	$binary = shift @ARGV;
+	$BIN = shift @ARGV;
 }
 
-File::WriteFile($DIR, $REL, $main, $MAKEFILE, $binary);
+File::WriteFile($DIR, $REL, $MAIN, $MAKEFILE, $BIN);
 
 Log::Write(		"Task is completed. Open generated file ".Log::Highlight("Makefile")." to see what happened."			);
+Log::Write(		"If you want to have post-perception, you can use file ".Log::Highlight($POST)." that is run after this program.");
 Log::SysLog(		$Log::fbold.$Log::fblink.Log::Highlight("If you reached this line, no errors occured.")				);
+#system "perl ".cwd()."/$POST \"$REL/$MAKEFILE\"";

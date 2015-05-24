@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 
 use strict;
-use warnings;
 
 package Log;
 
@@ -18,12 +17,7 @@ our   $fblink = "\e[033;5m";
 
 sub Format(@) {
 	my $codes	= shift;
-	my $string;
-	my @vector = split("m", $codes);
-	foreach my $n(@vector) {
-		$string = $string."\x1b[033;".$n."m";
-	}
-	return $string;
+	return "\033[0;$codes";
 }
 
 sub Log(@) {
@@ -45,13 +39,10 @@ sub Write(@) {
 	Log($bcolor, $fcolor, @_);
 }
 
-sub Special_Formatting(@) {
-}
-
 sub Highlight(@) {
 	my $str;
 	foreach my $word(@_) {
-		$str = $str.$word;
+		$str .= $word;
 	}
 	return $fhlight.$str.$freset.$bcolor.$fcolor;
 }

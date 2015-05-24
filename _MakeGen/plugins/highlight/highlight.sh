@@ -1,3 +1,5 @@
+#!/usr/bin/sh
+
 [ -z "$(compgen -abc | grep ^highlight$ | head -1)" ] && echo "Please, install highlight utility (brew install highlight)" && return
 separator="==============================================================================================\n"
 DIR=$1
