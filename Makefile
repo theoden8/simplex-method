@@ -1,34 +1,38 @@
 
-#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌DECLARATION⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
+#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌DECLARATION⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
 
+SHELL     = /bin/bash
+CXX       = g++ -std=c++0x -Wno-deprecated
+CXXFLAGS  = -framework OpenGL -framework GLUT
+BIN       = _matrix
+OBJECTS   = main.cpp Matrix.cpp Window.cpp
 LIBRARIES = Matrix.hpp Window.hpp
-OBJECTS = main.cpp Matrix.cpp Window.cpp
-CC="g++"
-CFLAGS=-framework OpenGL -framework GLUT
-BIN="_matrix"
 
-#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌MAIN⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
+#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌MAIN⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
 
 
 all : $(OBJECTS) $(LIBRARIES)
-	$(CC) -std=c++0x -Wno-deprecated $(OBJECTS) -o "$(BIN)" $(CFLAGS)
+	$(CXX) $(OBJECTS) -o "$(BIN)" $(CXXFLAGS)
 
-compile :
-	$(CC) -std=c++0x -Wno-deprecated "main.cpp" -o "$(BIN)" -framework OpenGL -framework GLUT
+compile : 
+	$(CXX) -std=c++0x -Wno-deprecated "main.cpp" -o "$(BIN)" $(CXXFLAGS)
 
-run :
+run : 
 	./"$(BIN)"
 
-remake :
+remake : 
 	cd "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen"&& \
 	perl "_make_gen.pl" ".." "main.cpp" "_matrix"&& \
 	cd ".."
 
-open :
+open : 
 	vim -p *.hpp
 
-#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌PLUGINS⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
+#⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌PLUGINS⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
 
 
-highlight :
-	bash "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight/highlight.sh" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight/"
+highlight : 
+	bash "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight/highlight" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight"
+
+update : 
+	bash "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/update/update.sh" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/update"

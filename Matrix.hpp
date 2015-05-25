@@ -9,6 +9,7 @@ public:
 	typedef long double val_t;
 	typedef std::vector <std::vector <val_t> > matrix_t;
 	typedef std::vector <val_t> row_t;
+	val_t det;
 private:
 	matrix_t grid_;
 public:
@@ -20,10 +21,12 @@ public:
 	std::vector <val_t>		&operator[]	(size_t line);
 	const std::vector <val_t>	&operator[]	(size_t line)		const;
 private:
-	size_t Width		()						const;
-	size_t Height		()						const;
-	bool Square		()						const;
-	void MakeSquare		();
+	void	Determinant	();
+	val_t	Determinant	(val_t value, val_t last, bool *scan, bool inverse) const;
+	size_t	Width		()						const;
+	size_t	Height		()						const;
+	bool	Square		()						const;
+	void	MakeSquare		();
 	Matrix	Join		(const Matrix &B)				const;
 	Matrix	SubMatrix	(const size_t start, const size_t length)	const;
 public:

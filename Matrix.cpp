@@ -5,21 +5,28 @@
 
 Matrix::Matrix(matrix_t grid) :
 	grid_(grid)
-{}
+{
+	Determinant();
+}
 
 Matrix::Matrix(matrix_t &grid) :
 	grid_(grid)
-{}
+{
+	Determinant();
+}
 
 Matrix::Matrix(size_t x, size_t y, val_t value = 0) :
 	grid_(y, std::vector <val_t> (x, value))
-{}
+{
+	Determinant();
+}
 
 Matrix::Matrix(size_t diagonal) :
 	grid_(diagonal, std::vector <val_t> (diagonal, 0)) {
 	for(int i = 0; i < Width(); ++i) {
 		grid_[i][i] = 1;
 	}
+	Determinant();
 }
 
 Matrix::matrix_t Matrix::GetGrid() {
@@ -32,6 +39,26 @@ std::vector <Matrix::val_t> &Matrix::operator [] (size_t line) {
 
 const std::vector <Matrix::val_t> &Matrix::operator [] (size_t line) const {
 	return grid_[line];
+}
+
+void	Matrix::Determinant() {
+	bool *B = new bool(Width() * Height());
+	det = Determinant(0, 1e9, B, 0);
+	std::cout << det << std::endl;
+	delete B;
+}
+
+Matrix::val_t	Matrix::Determinant(val_t value, val_t last, bool *scan, bool inverse) const {
+	for(size_t i = 0; i < Width() * Height(); ++i) {
+		val_t elem = grid_[i / Height()][i % Width()];
+		if(scan[i])
+			continue;
+		scan[i] = true;
+		inverse = (inverse == last < elem);
+		value += (-2 * inverse + 1) * Determinant(value, elem, scan, inverse);
+		scan[i] = false;
+	}
+	return value;
 }
 
 size_t	Matrix::Height() const {
