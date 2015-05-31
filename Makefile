@@ -2,8 +2,8 @@
 #⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌DECLARATION⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌⚌
 
 SHELL     = /bin/bash
-CXX       = g++ -std=c++0x -Wno-deprecated
-CXXFLAGS  = -framework OpenGL -framework GLUT
+CPP       = g++ -std=c++0x -Wno-deprecated
+CPPFLAGS  = -framework OpenGL -framework GLUT
 BIN       = _matrix
 OBJECTS   = main.cpp Matrix.cpp Window.cpp
 LIBRARIES = Matrix.hpp Window.hpp
@@ -12,10 +12,10 @@ LIBRARIES = Matrix.hpp Window.hpp
 
 
 all : $(OBJECTS) $(LIBRARIES)
-	$(CXX) $(OBJECTS) -o "$(BIN)" $(CXXFLAGS)
+	$(CPP) $(OBJECTS) -o "$(BIN)" $(CPPFLAGS)
 
 compile : 
-	$(CXX) -std=c++0x -Wno-deprecated "main.cpp" -o "$(BIN)" $(CXXFLAGS)
+	$(CPP) -std=c++0x -Wno-deprecated "main.cpp" -o "$(BIN)" $(CPPFLAGS)
 
 run : 
 	./"$(BIN)"
