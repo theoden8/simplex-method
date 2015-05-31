@@ -22,7 +22,6 @@ public:
 	const std::vector <val_t>	&operator[]	(size_t line)		const;
 private:
 	void	Determinant	();
-	val_t	Determinant	(val_t value, val_t last, bool *scan, bool inverse) const;
 	size_t	Width		()						const;
 	size_t	Height		()						const;
 	bool	Square		()						const;

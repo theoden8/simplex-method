@@ -42,23 +42,7 @@ const std::vector <Matrix::val_t> &Matrix::operator [] (size_t line) const {
 }
 
 void	Matrix::Determinant() {
-	bool *B = new bool(Width() * Height());
-	det = Determinant(0, 1e9, B, 0);
-	std::cout << det << std::endl;
-	delete B;
-}
-
-Matrix::val_t	Matrix::Determinant(val_t value, val_t last, bool *scan, bool inverse) const {
-	for(size_t i = 0; i < Width() * Height(); ++i) {
-		val_t elem = grid_[i / Height()][i % Width()];
-		if(scan[i])
-			continue;
-		scan[i] = true;
-		inverse = (inverse == last < elem);
-		value += (-2 * inverse + 1) * Determinant(value, elem, scan, inverse);
-		scan[i] = false;
-	}
-	return value;
+	return;
 }
 
 size_t	Matrix::Height() const {
