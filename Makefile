@@ -21,9 +21,9 @@ run :
 	./"$(BIN)"
 
 remake : 
-	cd "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen"&& \
-	perl "_make_gen.pl" ".." "main.cpp" "_matrix"&& \
-	cd ".."
+	cd "/Users/Admin/apps/_src/Perl/LargeProjects/makegen"&& \
+	perl "_make_gen.pl" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix" "main.cpp" "_matrix"&& \
+	cd --
 
 open : 
 	vim -p *.hpp
@@ -32,4 +32,7 @@ open :
 
 
 highlight : 
-	bash "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight/highlight.sh" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight"
+	bash "/Users/Admin/apps/_src/Perl/LargeProjects/makegen/plugins/highlight/highlight" "/Users/Admin/apps/_src/Perl/LargeProjects/makegen/plugins/highlight"
+
+update : 
+	bash "/Users/Admin/apps/_src/Perl/LargeProjects/makegen/plugins/update/update.sh" "/Users/Admin/apps/_src/Perl/LargeProjects/makegen/plugins/update"
