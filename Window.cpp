@@ -138,10 +138,10 @@ void	Window::Keyboard	(unsigned char key, int x, int y) {
 				exit(0);
 			break;
 		case 'g':
-			matrices_.front().DoGauss();
+			matrices_.front() = matrices_.front().Gauss();
 			break;
 		case 'i':
-			AddMatrix(matrices_.front().Inverse());
+			AddMatrix(matrices_.front().Invert());
 			std::cout << "\n\x1b[033;41m\x1b[033;1m\x1b[033;97m[     FLAG     ]\x1b[033;0m\n\n";
 			break;
 		case 'p':

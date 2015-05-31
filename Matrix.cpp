@@ -57,25 +57,26 @@ bool	Matrix::Square() const {
 	return Height() == Width();
 }
 
-void	Matrix::MakeSquare() {
+Matrix	Matrix::MakeSquare() const {
 	if(!Square())
 		throw std::runtime_error("Matrix::MakeSquare has made a slip.");
-
+	Matrix result = *this;
 	long long diff = Height() - Width();
 	if(!diff)
-		return;
+		return result;
 	if(diff < 0)
 		for(size_t i = 0; i < Height(); ++i)
-			grid_[i].resize(Height());
+			result[i].resize(Height());
 	if(diff > 0)
-		grid_.resize(Width());
+		result.grid_.resize(Width());
+	return result;
 }
 
-Matrix	Matrix::Join(const Matrix &B) const {
+Matrix	Matrix::Concatenate(const Matrix &B) const {
 	const Matrix &A = *this;
 
 	if(A.Height() != B.Height())
-		throw std::runtime_error("Matrix::Join The matrixes have different heights");
+		throw std::runtime_error("Matrix::Concatenate The matrixes have different heights");
 
 	Matrix C(Height(), A.Width());
 	for(size_t y = 0; y < Height(); ++y) {
@@ -114,54 +115,61 @@ Matrix	Matrix::operator* (const Matrix &B) const {
 	return C;
 }
 
-void	Matrix::Transpose()						{
-	Matrix A(Height(), Width());
+Matrix	Matrix::Transpose() const {
+	Matrix result(Height(), Width());
 	for(size_t x = 0; x < Width(); ++x)
 		for(size_t y = 0; y < Height(); ++y)
-			A[x][y] = grid_[y][x];
-	*this = A;
+			result[x][y] = grid_[y][x];
+	return result;
 }
 
-void	Matrix::Swap_Lines(const size_t line1, const size_t line2)	{
-	std::swap(grid_[line1], grid_[line2]);
+Matrix	Matrix::Swap_Lines(const size_t line1, const size_t line2) const {
+	Matrix result = *this;
+	std::swap(result[line1], result[line2]);
+	return result;
 }
 
-void	Matrix::Add_To_Line(const size_t line1, const size_t line2, const val_t k = 1) {
+Matrix	Matrix::Add_To_Line(const size_t line1, const size_t line2, const val_t k = 1) const {
 	if(!k)
 		throw std::runtime_error("Matrix::Add_To_Line Can't multiply by 0.");
-	std::vector <val_t> line = grid_[line2];
+	Matrix result = *this;
+	std::vector <val_t> line = result[line2];
 	if(line.size() != Width())
 		throw std::runtime_error("Matrix::Add_To_Line Improper size of a line passed..");
 	for(size_t x = 0; x < Width(); ++x)
-		grid_[line1][x] += line[x] * k;
+		result[line1][x] += line[x] * k;
+	return result;
 }
 
-void	Matrix::Multiply_Line(const size_t line1, const val_t k) {
-	Add_To_Column(line1, line1, k - 1);
+Matrix	Matrix::Multiply_Line(const size_t line1, const val_t k) const {
+	return Add_To_Column(line1, line1, k - 1);
 }
 
-void	Matrix::Swap_Columns(const size_t clm1, const size_t clm2)	{
+Matrix	Matrix::Swap_Columns(const size_t clm1, const size_t clm2) const {
+	Matrix result = *this;
 	for(size_t y = 0; y < Height(); ++y) {
-		val_t tmp = grid_[y][clm1];
-		grid_[y][clm1] = grid_[y][clm2];
-		grid_[y][clm2] = tmp;
+		val_t tmp = result[y][clm1];
+		result[y][clm1] = result[y][clm2];
+		result[y][clm2] = tmp;
 	}
+	return result;
 }
 
-void	Matrix::Add_To_Column(const size_t clm1, const size_t clm2, const val_t k = 1) {
+Matrix	Matrix::Add_To_Column(const size_t clm1, const size_t clm2, const val_t k = 1) const {
 	if(!k)
 		throw std::runtime_error("Matrix::Add_To_Column Can't multiply by 0.");
+	Matrix result = *this;
 	for(size_t y = 0; y < Height(); ++y)
-		grid_[y][clm1] += grid_[y][clm2] * k;
+		result[y][clm1] += result[y][clm2] * k;
+	return result;
 }
 
-void	Matrix::Multiply_Column(const size_t clm1, const val_t k) {
-	Add_To_Column(clm1, clm1, k - 1);
+Matrix	Matrix::Multiply_Column(const size_t clm1, const val_t k) const {
+	return Add_To_Column(clm1, clm1, k - 1);
 }
 
-Matrix	Matrix::Inverse() const {
-	Matrix	common	= this->Join(Matrix(Height()));
-	common.DoGauss();
+Matrix	Matrix::Invert() const {
+	Matrix	common	= this->Concatenate(Matrix(Height())).Gauss();
 	Matrix inverse = Matrix(common.SubMatrix(Width(), common.Width() - Width()));
 
 	std::cout << "MATRIX:" << std::endl;
@@ -174,19 +182,21 @@ Matrix	Matrix::Inverse() const {
 	return inverse;
 }
 
-void	Matrix::DoGauss() {
+Matrix	Matrix::Gauss()	const {
+	Matrix result = *this;
 	bool *free = new bool[Height()];
 	for(size_t i = 0; i < Height(); ++i)
 		free[i] = true;
 	for(size_t clm = 0; clm < Width(); ++clm)
 		for(size_t ln = 0; ln < Height(); ++ln)
-			if(grid_[ln][clm] && free[ln]) {
+			if(result[ln][clm] && free[ln]) {
 				free[ln] = false;
 				for(size_t ln2 = 0; ln2 < Height(); ++ln2) {
-					val_t k = (ln2 == ln) ?  (grid_[ln2][clm] - 1) / grid_[ln2][clm] : (grid_[ln2][clm]) / grid_[ln][clm] ;
+					val_t k = (ln2 == ln) ?  (result[ln2][clm] - 1) / result[ln2][clm] : (result[ln2][clm]) / result[ln][clm] ;
 					if(k) Add_To_Line(ln2, ln, -k);
 				}
 				break;
 			}
 	delete(free);
+	return result;
 }

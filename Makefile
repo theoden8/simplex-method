@@ -32,7 +32,4 @@ open :
 
 
 highlight : 
-	bash "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight/highlight" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight"
-
-update : 
-	bash "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/update/update.sh" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/update"
+	bash "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight/highlight.sh" "/Users/Admin/apps/_src/C++/SmallProjects/_Graphics/matrix/_MakeGen/plugins/highlight"
