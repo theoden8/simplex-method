@@ -50,10 +50,7 @@ void	Window::AddMatrix	(const Matrix &new_matrix) {
 //	matrices_.push_back(columns);
 //	matrices_.push_back(transp);
 }
-
-void	Window::Write(const std::string &message) {
-	std::cerr << "\x1b[033;96m[\t\x1b[033;93m" << message << "\x1b[033;0m" << std::endl;
-}
+//
 
 void	Window::Display		() {
 	glLoadIdentity();
@@ -109,7 +106,7 @@ void	Window::Display		() {
 	Type(corner_x, corner_y, ". . .");
 	glColor3f(0.2f,1.0f,1.0f);
 	if(edit)
-		Type(WIDTH_ - 100, HEIGHT_ - 50, std::string("EDIT").c_str());
+		Type(WIDTH_ - 100, HEIGHT_ - 50, "EDIT");
 
 	glutSwapBuffers();
 }
@@ -170,7 +167,6 @@ void	Window::Keyboard	(unsigned char key, int x, int y) {
 			if(edit)
 				*selected *= 10;
 			else {
-				Write("\x1b[033;1m\x1b[033;91mType here the wanted size of matrix, little brat: ");
 				int size;
 				scanf("%d", &size);
 				AddMatrix(size);
