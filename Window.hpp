@@ -18,6 +18,7 @@ private:
 	void Highlight	(const float x, const float y) const;
 public:
 	void AddMatrix	(const Matrix &A);
+	void Display	(const Matrix &A);
 	void Display	();
 	void Reshape	(int NEW_WIDTH, int NEW_HEIGHT);
 	void Keyboard	(unsigned char key, int x, int y);

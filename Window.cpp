@@ -50,7 +50,10 @@ void	Window::AddMatrix	(const Matrix &new_matrix) {
 //	matrices_.push_back(columns);
 //	matrices_.push_back(transp);
 }
-//
+
+void	Window::Display		(const Matrix &new_matrix) {
+	AddMatrix(new_matrix);
+}
 
 void	Window::Display		() {
 	glLoadIdentity();
@@ -65,8 +68,8 @@ void	Window::Display		() {
 	size_t select_M(0), select_y, select_x;
 	for(auto &matr : matrices_) {
 		size_t
-			width	= matr.GetGrid().front().size(),
-			height	= matr.GetGrid().size();
+			width	= matr.Width(),
+			height	= matr.Height();
 
 		maxwidth = std::max(maxwidth, width);
 		if (corner_y - height * D <= 0) {
@@ -201,8 +204,8 @@ void	Window::Keyboard	(unsigned char key, int x, int y) {
 }
 
 void	Window::Special		(int key, int x, int y)	{
-	size_t height	= matrices_[selection_.first].GetGrid().size();
-	size_t width	= matrices_[selection_.first].GetGrid().front().size();
+	size_t height	= matrices_[selection_.first].Height();
+	size_t width	= matrices_[selection_.first].Width();
 	switch(key) {
 		case 100 :
 //			Keyboard('a', x, y);
