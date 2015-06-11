@@ -227,38 +227,43 @@ Matrix	Matrix::GetOptimizedMinimum(row_t C) const {
 	Matrix Diag = Matrix(Height(), 1, 0).Concatenate_Lines(Matrix(Height()));
 	Matrix M = Matrix({C}).Concatenate_Lines(A).Concatenate_Columns(Matrix(Diag));
 	Print(M, "Whole M matrix");
-	for(size_t y1 = 1; y1 < M.Height(); ++y1) {
-		for(size_t x = 1; x < Width(); ++x) {
-			if(M[y1][x] > 0 && M[0][x] >= 0) {
-				M = M.Multiply_Line(y1, 1. / M[y1][x]);
-				for(size_t y2 = 0; y2 < M.Height(); ++y2)
-					if(M[y2][x] && y2 != y1) {
-						M = M.Add_To_Line(y1, y2, -M[y2][x] / M[y1][x]);
-						break;
-					}
-				Print(M, std::string(
-					+	"(Clm" + std::to_string(x + 1) + ", "
-					+	"Ln" + std::to_string(y1 + 1) + " : " + std::to_string(M[y1][x]) + " );"
-				).c_str());
+	for(size_t x = 1; x < Width(); ++x) {
+		for(size_t y1 = 1; y1 < M.Height(); ++y1) {
+			Print(M, std::string("\033[0;4;96mLooking at").c_str(), x, y1);
+			std::cin.get(); std::cout << "\033c";
+			if(!M[y1][x] || M[0][x] <= 0)
+				continue;
+			bool suitable = 1;
+			for(size_t y2 = 1; y2 < M.Height(); ++y2) {
+				if(y1 == y2)
+					continue;
+				if(M[y2][0] - M[y1][0] * (M[y2][x] / M[y1][x]) >= 0) {
+					suitable = 0;
+					break;
+				}
 			}
+			if(!suitable)
+				continue;
+			M = M.Multiply_Line(y1, 1. / M[y1][x]);
+			for(size_t y2 = 0; y2 < M.Height(); ++y2)
+				if(M[y2][x] && y2 != y1)
+					M = M.Add_To_Line(y1, y2, -M[y2][x] / M[y1][x]);
 		}
 	}
 	Print(M, "Finished optimizing");
 	return M;
 }
 
-void	Matrix::Print(const Matrix &A, const char *NAME, const size_t *SEPARATORS) {
-	const size_t SPACING = 30;
+void	Matrix::Print(const Matrix &A, const char *NAME, const size_t h_x, const size_t h_y) {
+	const size_t SPACING = 35;
 	std::cout << "\033[1;40;93m  [ Printing another matrix ] \033[0m\033[1;40;35m-><-\t# " << NAME << ":\033[0m" << std::endl;
 	for(size_t y = 0; y < A.Height(); ++y) {
 		std::cout << '\t';
 		for(size_t x = 0; x < A.Width(); ++x) {
-			if(SEPARATORS != NULL)
-				for(size_t i = 0; i < (sizeof(SEPARATORS) / sizeof(size_t)); ++i)
-					if(x == SEPARATORS[i])
-						std::cout << '|' << std::string(std::max(SPACING - 1, size_t(1)), ' ');
 			std::string number = std::to_string(A[y][x]);
-			if(number[0] == '-')
+			if(h_x == x && h_y == y)
+				number = std::string() + "\033[103;30m" + number + " \033[0m";
+			else if(number[0] == '-')
 				number = std::string() + "\033[1;40;91m" + number + "\033[0m";
 			else if(A[y][x] == 0)
 				number = std::string() + "\033[1;40;92m" + number + "\033[0m";

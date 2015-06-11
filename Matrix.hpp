@@ -41,5 +41,5 @@ public:
 	Matrix	Gauss		()							const;
 //	row_t	GetOptimizedMinimum	(row_t C)					const;
 	Matrix	GetOptimizedMinimum	(row_t C)					const;
-	static void	Print		(const Matrix &A, const char *NAME = "", const size_t *SEPARATORS = NULL);
+	static void	Print		(const Matrix &A, const char *NAME = "", const size_t h_x = -1, const size_t h_y = -1);
 };
