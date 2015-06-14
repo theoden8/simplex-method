@@ -199,7 +199,7 @@ Matrix	Matrix::Gauss()	const {
 	return result;
 }
 
-Matrix	Matrix::GetOptimizedMinimum(line_t C) const {
+Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 	if(C.size() != Width() - 1)
 		throw std::runtime_error("Matrix::GetOptimizedMinimum can't accept vector of inappropriate size.");
 	C.insert(C.begin(), 0);
@@ -226,14 +226,8 @@ Matrix	Matrix::GetOptimizedMinimum(line_t C) const {
 	do {
 		optimized = 0;
 		for(size_t x = 1; x < Width(); ++x) {
-			if(
-					scan[x]
-				||
-						!fake_count
-					&&
-						M[0][x] <= 0
-			)	continue;
-			// std::cin.get(); std::cout << "\033c";
+			if(scan[x] || !fake_count || M[0][x] <= 0)
+				continue;
 			bool suitable = 0;
 			val_t theta = 0;
 			size_t suit_y1 = 0;
@@ -248,6 +242,7 @@ Matrix	Matrix::GetOptimizedMinimum(line_t C) const {
 				}
 			}
 			Print(M, std::string("\033[0;4;96mLooking at").c_str(), x, suit_y1);
+//			std::cin.get(); std::cout << "\033c";
 			if(!suitable)
 				continue;
 			M = M.Multiply_Row(suit_y1, 1. / M[suit_y1][x]);
@@ -262,8 +257,14 @@ Matrix	Matrix::GetOptimizedMinimum(line_t C) const {
 			break;
 		}
 	} while(optimized);
+	if(fake_count)
+		throw std::runtime_error("Matrix::GetOptimizedMinimum The system has no solutions in non-negative values.");
 	Print(M, "Finished optimizing");
-	return M;
+	line_t solution(Width());
+	for(size_t i = 1; i < Width(); ++i)
+		solution[i - 1] = M[0][i];
+	solution[Width() - 1] = M[0][0];
+	return solution;
 }
 
 void	Matrix::Print(const Matrix &A, const char *NAME, const size_t h_x, const size_t h_y) {
@@ -272,12 +273,13 @@ void	Matrix::Print(const Matrix &A, const char *NAME, const size_t h_x, const si
 	for(size_t y = 0; y < A.Height(); ++y) {
 		std::cout << '\t';
 		for(size_t x = 0; x < A.Width(); ++x) {
-			std::string number = std::to_string(A[y][x]);
+			val_t precision = 0.0000009;
+			std::string number = (std::abs(A[y][x]) > precision) ? std::to_string(A[y][x]) : std::to_string(val_t(0));
 			if(h_x == x && h_y == y)
 				number = std::string() + "\033[103;30m" + number + " \033[0m";
 			else if(number[0] == '-')
 				number = std::string() + "\033[1;40;91m" + number + "\033[0m";
-			else if(A[y][x] == 0)
+			else if(std::abs(A[y][x]) < precision)
 				number = std::string() + "\033[1;40;92m" + number + "\033[0m";
 			else
 				number = std::string() + "\033[1;40;97m" + number + "\033[0m";
