@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 		{ 4,  0,  2, 3,  8},
 		{ 8,  9,  3, 13,  6},
 	});
-	Matrix::row_t C =
+	Matrix::line_t C =
 		{ -9, -1,  5, 0, };
 	A.GetOptimizedMinimum(C);
 //	black_screen->Display(A);
