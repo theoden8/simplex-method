@@ -138,7 +138,6 @@ Matrix	Matrix::Swap_Rows(const size_t row1, const size_t row2) const {
 }
 
 Matrix	Matrix::Add_To_Row(const size_t row1, const size_t row2, const val_t k = 1) const {
-	if(!k)	throw std::runtime_error("Matrix::Add_To_Row Can't multiply by 0.");
 	Matrix result = *this;
 	if(result[row2].size() != Width())
 		throw std::runtime_error("Matrix::Add_To_Row Improper size of a row passed..");
@@ -148,6 +147,7 @@ Matrix	Matrix::Add_To_Row(const size_t row1, const size_t row2, const val_t k = 
 }
 
 Matrix	Matrix::Multiply_Row(const size_t row1, const val_t k) const {
+	if(!k)	throw std::runtime_error("Matrix::Multiply_Row Can't multiply by 0.");
 	if(k == 1)
 		return *this;
 	return Add_To_Row(row1, row1, k - 1);
@@ -161,7 +161,6 @@ Matrix	Matrix::Swap_Columns(const size_t clm1, const size_t clm2) const {
 }
 
 Matrix	Matrix::Add_To_Column(const size_t clm1, const size_t clm2, const val_t k = 1) const {
-	if(!k)	throw std::runtime_error("Matrix::Add_To_Column Can't multiply by 0.");
 	Matrix result = *this;
 	for(size_t y = 0; y < Height(); ++y)
 		result[y][clm2] += result[y][clm1] * k;
@@ -169,6 +168,7 @@ Matrix	Matrix::Add_To_Column(const size_t clm1, const size_t clm2, const val_t k
 }
 
 Matrix	Matrix::Multiply_Column(const size_t clm1, const val_t k) const {
+	if(!k)	throw std::runtime_error("Matrix::Multiply_Column Can't multiply by 0.");
 	if(k == 1)
 		return *this;
 	return Add_To_Column(clm1, clm1, k - 1);
@@ -205,38 +205,63 @@ Matrix	Matrix::GetOptimizedMinimum(line_t C) const {
 	C.insert(C.begin(), 0);
 	Print(Matrix({C}), "To minimize:");
 	Matrix A(*this);
+	std::vector <size_t>	match	(Height());
+	std::vector <bool>	scan	(Width(), 0);
 	for(size_t y = 0; y < Height(); ++y) {
 		A[y].insert(A[y].begin(), A[y].back());
 		A[y].pop_back();
 		if(A[y].front() < 0)
 			A = A.Multiply_Row(y, -1);
+		match[y] = y + Width();
 	}
 	Print(A, "Left side");
-	Matrix Diag = Matrix(Height(), 1, 0).Concatenate_Rows(Matrix(Height()));
-	Matrix M = Matrix({C}).Concatenate_Rows(A).Concatenate_Columns(Matrix(Diag));
+	Matrix M = Matrix({C})
+		.Concatenate_Rows(A)
+		.Concatenate_Columns(Matrix(Height(), 1, 0)
+		.Concatenate_Rows(Matrix(Height())));
 	Print(M, "Initial M matrix");
-	for(size_t x = 1; x < Width(); ++x)
-		for(size_t y1 = 1; y1 < M.Height(); ++y1) {
-			Print(M, std::string("\033[0;4;96mLooking at").c_str(), x, y1);
-			std::cin.get(); std::cout << "\033c";
-			if(!M[y1][x] || M[0][x] <= 0)
-				continue;
-			bool suitable = 1;
-			for(size_t y2 = 1; y2 < M.Height(); ++y2) {
-				if(y1 == y2)
+	size_t x = 0;
+	bool optimized;
+	int fake_count = Height();
+	do {
+		optimized = 0;
+		for(size_t x = 1; x < Width(); ++x) {
+			if(
+					scan[x]
+				||
+						!fake_count
+					&&
+						M[0][x] <= 0
+			)	continue;
+			// std::cin.get(); std::cout << "\033c";
+			bool suitable = 0;
+			val_t theta = 0;
+			size_t suit_y1 = 0;
+			for(size_t y1 = 1; y1 < M.Height(); ++y1) {
+				if(M[y1][x] <= 0)
 					continue;
-				if(M[y2][0] - M[y1][0] * (M[y2][x] / M[y1][x]) < 0) {
-					suitable = 0;
-					break;
+				val_t next_theta = M[y1][0] / M[y1][x];
+				if(!suitable || theta > next_theta) {
+					theta		= next_theta;
+					suitable	= true;
+					suit_y1		= y1;
 				}
 			}
+			Print(M, std::string("\033[0;4;96mLooking at").c_str(), x, suit_y1);
 			if(!suitable)
 				continue;
-			M = M.Multiply_Row(y1, 1. / M[y1][x]);
-			for(size_t y2 = 0; y2 < M.Height(); ++y2)
-				if(M[y2][x] && y2 != y1)
-					M = M.Add_To_Row(y1, y2, -M[y2][x] / M[y1][x]);
+			M = M.Multiply_Row(suit_y1, 1. / M[suit_y1][x]);
+			for(size_t y1 = 0; y1 < M.Height(); ++y1)
+				if(suit_y1 != y1)
+					M = M.Add_To_Row(suit_y1, y1, -M[y1][x]);
+			if(match[suit_y1] >= Width())	//	check for exceptionally dull buugs >||<
+				--fake_count;
+			match[suit_y1]	= x;
+			scan[x]		= 1;
+			optimized = true;
+			break;
 		}
+	} while(optimized);
 	Print(M, "Finished optimizing");
 	return M;
 }

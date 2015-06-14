@@ -22,8 +22,8 @@ public:
 	size_t	Width		()							const;
 	size_t	Height		()							const;
 private:
-	void	Determinant	();
 	bool	Square		()							const;
+	void	Determinant	();
 	Matrix	MakeSquare	()							const;
 	Matrix	Concatenate_Columns	(const Matrix &B)				const;
 	Matrix	Concatenate_Rows	(const Matrix &B)				const;
