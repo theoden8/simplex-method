@@ -226,7 +226,7 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 	do {
 		optimized = 0;
 		for(size_t x = 1; x < Width(); ++x) {
-			if(scan[x] || !fake_count || M[0][x] <= 0)
+			if(scan[x] || !fake_count && M[0][x] <= 0)
 				continue;
 			bool suitable = 0;
 			val_t theta = 0;
@@ -241,6 +241,14 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 					suit_y1		= y1;
 				}
 			}
+			std::cout << "\t\t\t";
+			for(size_t i = 0; i < scan.size(); ++i)
+				std::cout << scan[i] << '\t';
+			std::cout << "\n\t\t\t";
+			for(size_t i = 0; i < match.size(); ++i)
+				std::cout << match[i] << '\t';
+			std::cout << "\n\t\t\t" << fake_count << "\nPress enter to continue.";
+			std::cin.get(); std::cout << "\033c";
 			Print(M, std::string("\033[0;4;96mLooking at").c_str(), x, suit_y1);
 //			std::cin.get(); std::cout << "\033c";
 			if(!suitable)
@@ -251,8 +259,8 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 					M = M.Add_To_Row(suit_y1, y1, -M[y1][x]);
 			if(match[suit_y1] >= Width())	//	check for exceptionally dull buugs >||<
 				--fake_count;
-			match[suit_y1]	= x;
-			scan[x]		= 1;
+			match[suit_y1 - 1]	= x;
+			scan[x - 1]		= 1;
 			optimized = true;
 			break;
 		}
