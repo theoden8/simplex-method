@@ -34,12 +34,12 @@ int main(int argc, char **argv) {
 //	}));
 
 	Matrix A({
-		{ 5,  8,  1, 20, 15},
-		{ 4,  0,  2, 3,  8},
-		{ 8,  9,  3, 13, 6},
+		{ 1,  0,  0, 20, 15},
+		{ 0,  1,  0, 3,  8},
+		{ 0,  0,  1, 13, 6},
 	});
 	Matrix::line_t C =
-		{ -9, -1,  5, 0, };
+		{ -9, -1,  -5, -4, };
 	A.GetOptimizedMinimum(C);
 //	black_screen->Display(A);
 //	black_screen->Display(A.GetOptimizedMinimum(C));

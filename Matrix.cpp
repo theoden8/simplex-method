@@ -226,11 +226,11 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 	do {
 		optimized = 0;
 		for(size_t x = 1; x < Width(); ++x) {
-			if(scan[x] || !fake_count && M[0][x] <= 0)
+			if(scan[x - 1] || !fake_count && M[0][x] <= 0)
 				continue;
 			bool suitable = 0;
 			val_t theta = 0;
-			size_t suit_y1 = 0;
+			size_t suit_y1 = 1;
 			for(size_t y1 = 1; y1 < M.Height(); ++y1) {
 				if(M[y1][x] <= 0)
 					continue;
@@ -240,17 +240,16 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 					suitable	= true;
 					suit_y1		= y1;
 				}
+				Print(M, std::string("\033[0;4;96mLooking at").c_str(), x, suit_y1);
+				std::cout << "\t\t\t";
+				for(size_t i = 0; i < scan.size(); ++i)
+					std::cout << scan[i] << '\t';
+				std::cout << "\n\t\t\t";
+				for(size_t i = 0; i < match.size(); ++i)
+					std::cout << match[i] << '\t';
+				std::cout << "\n\t\t\t" << fake_count << "\nPress enter to continue.";
+				std::cin.get(); std::cout << "\033c";
 			}
-			std::cout << "\t\t\t";
-			for(size_t i = 0; i < scan.size(); ++i)
-				std::cout << scan[i] << '\t';
-			std::cout << "\n\t\t\t";
-			for(size_t i = 0; i < match.size(); ++i)
-				std::cout << match[i] << '\t';
-			std::cout << "\n\t\t\t" << fake_count << "\nPress enter to continue.";
-			std::cin.get(); std::cout << "\033c";
-			Print(M, std::string("\033[0;4;96mLooking at").c_str(), x, suit_y1);
-//			std::cin.get(); std::cout << "\033c";
 			if(!suitable)
 				continue;
 			M = M.Multiply_Row(suit_y1, 1. / M[suit_y1][x]);
@@ -265,6 +264,7 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 			break;
 		}
 	} while(optimized);
+	std::cout << std::endl;
 	if(fake_count)
 		throw std::runtime_error("Matrix::GetOptimizedMinimum The system has no solutions in non-negative values.");
 	Print(M, "Finished optimizing");
