@@ -45,11 +45,11 @@ bool	Matrix::operator== (const Matrix &other) const {
 	return true;
 }
 
-std::vector <Matrix::val_t> &Matrix::operator [] (size_t row) {
+Matrix::line_t	&Matrix::operator [] (size_t row) {
 	return grid_[row];
 }
 
-const std::vector <Matrix::val_t> &Matrix::operator [] (size_t row) const {
+const Matrix::line_t	&Matrix::operator [] (size_t row) const {
 	return grid_[row];
 }
 
@@ -203,10 +203,10 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 	if(C.size() != Width() - 1)
 		throw std::runtime_error("Matrix::GetOptimizedMinimum can't accept vector of inappropriate size.");
 	C.insert(C.begin(), 0);
-	Print(Matrix({C}), "To minimize:");
+//	Print(Matrix({C}), "To minimize:");
 	Matrix A(*this);
 	std::vector <size_t>	match	(Height());
-	std::vector <bool>	scan	(Width(), 0);
+	std::vector <bool>	in_basis	(Width() - 1, 0);
 	for(size_t y = 0; y < Height(); ++y) {
 		A[y].insert(A[y].begin(), A[y].back());
 		A[y].pop_back();
@@ -214,60 +214,70 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 			A = A.Multiply_Row(y, -1);
 		match[y] = y + Width();
 	}
-	Print(A, "Left side");
-	Matrix M = Matrix({C})
+//	Print(A, "Left side");
+	Matrix M =
+		Matrix({C})
 		.Concatenate_Rows(A)
 		.Concatenate_Columns(Matrix(Height(), 1, 0)
 		.Concatenate_Rows(Matrix(Height())));
-	Print(M, "Initial M matrix");
-	size_t x = 0;
-	bool optimized;
-	int fake_count = Height();
+	Print(M.SubMatrix(0, Width()), "Initial M matrix");
+	size_t x	= 0;
+	bool optimizing;
+	int slack_count	= Height();
 	do {
-		optimized = 0;
+		optimizing = 0;
 		for(size_t x = 1; x < Width(); ++x) {
-			if(scan[x - 1] || !fake_count && M[0][x] <= 0)
-				continue;
-			bool suitable = 0;
-			val_t theta = 0;
-			size_t suit_y1 = 1;
-			for(size_t y1 = 1; y1 < M.Height(); ++y1) {
-				if(M[y1][x] <= 0)
+			if (
+						slack_count
+					&&
+						in_basis[x - 1]
+				||
+						!slack_count
+					&&
+						M[0][x] <= 0
+			)	continue;
+			val_t theta	= 0;
+			size_t chosen_y	= 0;
+			for(size_t another_y = 1; another_y < M.Height(); ++another_y) {
+				if(M[another_y][x] <= 0)
 					continue;
-				val_t next_theta = M[y1][0] / M[y1][x];
-				if(!suitable || theta > next_theta) {
+				val_t next_theta = M[another_y][0] / M[another_y][x];
+				if(!chosen_y || theta > next_theta) {
 					theta		= next_theta;
-					suitable	= true;
-					suit_y1		= y1;
+					chosen_y	= another_y;
 				}
-				Print(M, std::string("\033[0;4;96mLooking at").c_str(), x, suit_y1);
-				std::cout << "\t\t\t";
-				for(size_t i = 0; i < scan.size(); ++i)
-					std::cout << scan[i] << '\t';
-				std::cout << "\n\t\t\t";
-				for(size_t i = 0; i < match.size(); ++i)
-					std::cout << match[i] << '\t';
-				std::cout << "\n\t\t\t" << fake_count << "\nPress enter to continue.";
-				std::cin.get(); std::cout << "\033c";
 			}
-			if(!suitable)
+			if(!chosen_y)
 				continue;
-			M = M.Multiply_Row(suit_y1, 1. / M[suit_y1][x]);
-			for(size_t y1 = 0; y1 < M.Height(); ++y1)
-				if(suit_y1 != y1)
-					M = M.Add_To_Row(suit_y1, y1, -M[y1][x]);
-			if(match[suit_y1] >= Width())	//	check for exceptionally dull buugs >||<
-				--fake_count;
-			match[suit_y1 - 1]	= x;
-			scan[x - 1]		= 1;
-			optimized = true;
-			break;
+			Print(M.SubMatrix(0, Width()), std::string("\033[0;4;96mLooking at").c_str(), x, chosen_y);
+			std::cout << "\n\t\t\t";
+			for(auto each : in_basis)
+				std::cout << each << '\t';
+			std::cout << "\n\t\t\t";
+			for(auto &each : match)
+				std::cout << each << '\t';
+			std::cout << "\n\t\t\t" << slack_count << "\nPress enter to continue.";
+			std::cin.get(); std::cout << "\033c";
+			M = M.Multiply_Row(chosen_y, 1. / M[chosen_y][x]);
+			for(size_t another_y = 0; another_y < M.Height(); ++another_y)
+				if(chosen_y != another_y)
+					M = M.Add_To_Row(chosen_y, another_y, -M[another_y][x]);
+			if(match[chosen_y - 1] >= Width()) {
+				slack_count -= (slack_count > 0);
+				if(!slack_count) {
+					Print(M.SubMatrix(0, Width()), "Found positive solutions");
+					break;
+				}
+			}
+			if(slack_count && x == Width() - 1)
+				throw std::runtime_error("Matrix::GetOptimizedMinimum The system has no solutions in non-negative values.");
+			match[chosen_y - 1]	= x;
+			in_basis[x - 1]		= 1;
+			optimizing		= 1;
 		}
-	} while(optimized);
-	std::cout << std::endl;
-	if(fake_count)
-		throw std::runtime_error("Matrix::GetOptimizedMinimum The system has no solutions in non-negative values.");
-	Print(M, "Finished optimizing");
+	} while(optimizing);
+	Print(M.SubMatrix(0, Width()), "Finished optimizing");
+	Print(Matrix({C}));
 	line_t solution(Width());
 	for(size_t i = 1; i < Width(); ++i)
 		solution[i - 1] = M[0][i];
