@@ -235,8 +235,8 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 						!slack_count
 					&&
 						M[0][x] <= 0
-			)	continue;
-			val_t theta	= 0;
+			) continue;
+			val_t	theta	= 0;
 			size_t chosen_y	= 0;
 			for(size_t another_y = 1; another_y < M.Height(); ++another_y) {
 				if(M[another_y][x] <= 0)
@@ -269,8 +269,18 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 					break;
 				}
 			}
-			if(slack_count && x == Width() - 1)
-				throw std::runtime_error("Matrix::GetOptimizedMinimum The system has no solutions in non-negative values.");
+			if(slack_count && x == Width() - 1) {
+				int to_add = 0;
+				for(size_t y = 1; y < Height(); ++y)
+					to_add += !M[y][0];
+				std::cout << "\t\t\t\033[1;96m" << to_add << "\033[0m" << std::endl;
+				if(slack_count <= to_add)
+					slack_count = 0;
+				else {
+					Print(M.SubMatrix(0, Width()), "Exceptional matrix:");
+					throw std::runtime_error("Matrix::GetOptimizedMinimum The system has no solutions in non-negative values.");
+				}
+			}
 			match[chosen_y - 1]	= x;
 			in_basis[x - 1]		= 1;
 			optimizing		= 1;
