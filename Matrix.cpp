@@ -295,19 +295,19 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 	return solution;
 }
 
-void	Matrix::Print(const Matrix &A, const char *NAME, const size_t h_x, const size_t h_y) {
-	const size_t SPACING = 35;
+void	Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const size_t h_y) {
+	const size_t SPACING = 45;
 	std::cout << "\033[1;40;93m  [ Printing another matrix ] \033[0m\033[1;40;35m-><-\t# " << NAME << ":\033[0m" << std::endl;
-	for(size_t y = 0; y < A.Height(); ++y) {
+	val_t precision = 0.0000009;
+	for(size_t y = 0; y < M.Height(); ++y) {
 		std::cout << '\t';
-		for(size_t x = 0; x < A.Width(); ++x) {
-			val_t precision = 0.0000009;
-			std::string number = (std::abs(A[y][x]) > precision) ? std::to_string(A[y][x]) : std::to_string(val_t(0));
+		for(size_t x = 0; x < M.Width(); ++x) {
+			std::string number = (std::abs(M[y][x]) > precision) ? std::to_string(M[y][x]) : std::to_string(val_t(0));
 			if(h_x == x && h_y == y)
 				number = std::string() + "\033[103;30m" + number + " \033[0m";
 			else if(number[0] == '-')
 				number = std::string() + "\033[1;40;91m" + number + "\033[0m";
-			else if(std::abs(A[y][x]) < precision)
+			else if(std::abs(M[y][x]) < precision)
 				number = std::string() + "\033[1;40;92m" + number + "\033[0m";
 			else
 				number = std::string() + "\033[1;40;97m" + number + "\033[0m";
