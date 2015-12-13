@@ -36,7 +36,7 @@ Matrix::matrix_t Matrix::GetGrid() const {
 	return grid_;
 }
 
-bool	Matrix::operator== (const Matrix &other) const {
+bool Matrix::operator== (const Matrix &other) const {
 	if(Width() == other.Width() && Height() == other.Height())
 		for(size_t y = 0; y < Height(); ++y)
 			for(size_t x = 0; x < Width(); ++x)
@@ -45,31 +45,31 @@ bool	Matrix::operator== (const Matrix &other) const {
 	return true;
 }
 
-Matrix::line_t	&Matrix::operator [] (size_t row) {
+Matrix::line_t &Matrix::operator [] (size_t row) {
 	return grid_[row];
 }
 
-const Matrix::line_t	&Matrix::operator [] (size_t row) const {
+const Matrix::line_t &Matrix::operator [] (size_t row) const {
 	return grid_[row];
 }
 
-size_t	Matrix::Height() const {
+size_t Matrix::Height() const {
 	return grid_.size();
 }
 
-size_t	Matrix::Width() const {
+size_t Matrix::Width() const {
 	return grid_.front().size();
 }
 
-void	Matrix::Determinant() {
+void Matrix::Determinant() {
 	return;
 }
 
-bool	Matrix::Square() const {
+bool Matrix::Square() const {
 	return Height() == Width();
 }
 
-Matrix	Matrix::MakeSquare() const {
+Matrix Matrix::MakeSquare() const {
 	Matrix result = *this;
 	long long diff = Height() - Width();
 	if(!diff)
@@ -82,7 +82,7 @@ Matrix	Matrix::MakeSquare() const {
 	return result;
 }
 
-Matrix	Matrix::Concatenate_Columns(const Matrix &B) const {
+Matrix Matrix::Concatenate_Columns(const Matrix &B) const {
 	if(Height() != B.Height())
 		throw std::runtime_error("Matrix::Concatenate_Columns The matrixes have different heights");
 	Matrix A = *this;
@@ -91,7 +91,7 @@ Matrix	Matrix::Concatenate_Columns(const Matrix &B) const {
 	return A;
 }
 
-Matrix	Matrix::Concatenate_Rows(const Matrix &B) const {
+Matrix Matrix::Concatenate_Rows(const Matrix &B) const {
 	if(Width() != B.Width())
 		throw std::runtime_error("Matrix::Concatenate_Rows The matrixes have different widths");
 	Matrix A = *this;
@@ -99,7 +99,7 @@ Matrix	Matrix::Concatenate_Rows(const Matrix &B) const {
 	return A;
 }
 
-Matrix	Matrix::SubMatrix(const size_t start, const size_t length) const {
+Matrix Matrix::SubMatrix(const size_t start, const size_t length) const {
 	if(start + length > Width())
 		throw std::runtime_error("Matrix::SubMatrix Out of width.");
 
@@ -110,7 +110,7 @@ Matrix	Matrix::SubMatrix(const size_t start, const size_t length) const {
 	return A;
 }
 
-Matrix	Matrix::operator* (const Matrix &B) const {
+Matrix Matrix::operator* (const Matrix &B) const {
 	const Matrix &A = *this;
 	if(A.Height() != B.Height())
 		throw std::runtime_error("Matrix::Operator* The matrixes have different dimensions");
@@ -123,7 +123,7 @@ Matrix	Matrix::operator* (const Matrix &B) const {
 	return C;
 }
 
-Matrix	Matrix::Transpose() const {
+Matrix Matrix::Transpose() const {
 	Matrix result(Height(), Width());
 	for(size_t x = 0; x < Width(); ++x)
 		for(size_t y = 0; y < Height(); ++y)
@@ -131,13 +131,13 @@ Matrix	Matrix::Transpose() const {
 	return result;
 }
 
-Matrix	Matrix::Swap_Rows(const size_t row1, const size_t row2) const {
+Matrix Matrix::Swap_Rows(const size_t row1, const size_t row2) const {
 	Matrix result = *this;
 	std::swap(result[row1], result[row2]);
 	return result;
 }
 
-Matrix	Matrix::Add_To_Row(const size_t row1, const size_t row2, const val_t k = 1) const {
+Matrix Matrix::Add_To_Row(const size_t row1, const size_t row2, const val_t k = 1) const {
 	Matrix result = *this;
 	if(result[row2].size() != Width())
 		throw std::runtime_error("Matrix::Add_To_Row Improper size of a row passed..");
@@ -146,40 +146,40 @@ Matrix	Matrix::Add_To_Row(const size_t row1, const size_t row2, const val_t k = 
 	return result;
 }
 
-Matrix	Matrix::Multiply_Row(const size_t row1, const val_t k) const {
-	if(!k)	throw std::runtime_error("Matrix::Multiply_Row Can't multiply by 0.");
+Matrix Matrix::Multiply_Row(const size_t row1, const val_t k) const {
+	if(!k) throw std::runtime_error("Matrix::Multiply_Row Can't multiply by 0.");
 	if(k == 1)
 		return *this;
 	return Add_To_Row(row1, row1, k - 1);
 }
 
-Matrix	Matrix::Swap_Columns(const size_t clm1, const size_t clm2) const {
+Matrix Matrix::Swap_Columns(const size_t clm1, const size_t clm2) const {
 	Matrix result = *this;
 	for(size_t y = 0; y < Height(); ++y)
 		std::swap(result[y][clm1], result[y][clm2]);
 	return result;
 }
 
-Matrix	Matrix::Add_To_Column(const size_t clm1, const size_t clm2, const val_t k = 1) const {
+Matrix Matrix::Add_To_Column(const size_t clm1, const size_t clm2, const val_t k = 1) const {
 	Matrix result = *this;
 	for(size_t y = 0; y < Height(); ++y)
 		result[y][clm2] += result[y][clm1] * k;
 	return result;
 }
 
-Matrix	Matrix::Multiply_Column(const size_t clm1, const val_t k) const {
-	if(!k)	throw std::runtime_error("Matrix::Multiply_Column Can't multiply by 0.");
+Matrix Matrix::Multiply_Column(const size_t clm1, const val_t k) const {
+	if(!k) throw std::runtime_error("Matrix::Multiply_Column Can't multiply by 0.");
 	if(k == 1)
 		return *this;
 	return Add_To_Column(clm1, clm1, k - 1);
 }
 
-Matrix	Matrix::Invert() const {
-	Matrix	common	= this->Concatenate_Columns(Matrix(Height())).Gauss();
-	return	Matrix(common.SubMatrix(Width(), common.Width() - Width()));
+Matrix Matrix::Invert() const {
+	Matrix common = this->Concatenate_Columns(Matrix(Height())).Gauss();
+	return Matrix(common.SubMatrix(Width(), common.Width() - Width()));
 }
 
-Matrix	Matrix::Gauss()	const {
+Matrix Matrix::Gauss() const {
 	Print(*this, "Gaussing");
 	Matrix result = *this;
 	bool *free = new bool[Height()];
@@ -199,14 +199,14 @@ Matrix	Matrix::Gauss()	const {
 	return result;
 }
 
-Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
+Matrix::line_t Matrix::GetOptimizedMinimum(line_t C) const {
 	if(C.size() != Width() - 1)
 		throw std::runtime_error("Matrix::GetOptimizedMinimum can't accept vector of inappropriate size.");
 	C.insert(C.begin(), 0);
 //	Print(Matrix({C}), "To minimize:");
 	Matrix A(*this);
-	std::vector <size_t>	match	(Height());
-	std::vector <bool>	in_basis	(Width() - 1, 0);
+	std::vector <size_t> match (Height());
+	std::vector <bool> in_basis (Width() - 1, 0);
 	for(size_t y = 0; y < Height(); ++y) {
 		A[y].insert(A[y].begin(), A[y].back());
 		A[y].pop_back();
@@ -221,9 +221,9 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 		.Concatenate_Columns(Matrix(Height(), 1, 0)
 		.Concatenate_Rows(Matrix(Height())));
 	Print(M.SubMatrix(0, Width()), "Initial M matrix");
-	size_t x	= 0;
+	size_t x = 0;
 	bool optimizing;
-	int slack_count	= Height();
+	int slack_count = Height();
 	do {
 		optimizing = 0;
 		for(size_t x = 1; x < Width(); ++x) {
@@ -236,15 +236,15 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 					&&
 						M[0][x] <= 0
 			) continue;
-			val_t	theta	= 0;
-			size_t chosen_y	= 0;
+			val_t theta = 0;
+			size_t chosen_y = 0;
 			for(size_t another_y = 1; another_y < M.Height(); ++another_y) {
 				if(M[another_y][x] <= 0)
 					continue;
 				val_t next_theta = M[another_y][0] / M[another_y][x];
 				if(!chosen_y || theta > next_theta) {
-					theta		= next_theta;
-					chosen_y	= another_y;
+					theta = next_theta;
+					chosen_y = another_y;
 				}
 			}
 			if(!chosen_y)
@@ -295,7 +295,7 @@ Matrix::line_t	Matrix::GetOptimizedMinimum(line_t C) const {
 	return solution;
 }
 
-void	Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const size_t h_y) {
+void Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const size_t h_y) {
 	const size_t SPACING = 45;
 	std::cout << "\033[1;40;93m  [ Printing another matrix ] \033[0m\033[1;40;35m-><-\t# " << NAME << ":\033[0m" << std::endl;
 	val_t precision = 0.0000009;
