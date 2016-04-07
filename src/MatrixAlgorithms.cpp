@@ -4,7 +4,7 @@
 Matrix Matrix::operator* (const Matrix &B) const {
 	const Matrix &A = *this;
 	if(A.Width() != B.Height())
-		throw std::runtime_error("Matrix::Operator* The matrixes have different dimensions");
+		throw std::runtime_error("Matrix::Operator* The matrixes have inappropriate dimensions.");
 	Matrix C(B.Width(), A.Height(), 0);
 	const size_t depth = A.Width();
 	for(size_t y = 0; y < A.Height(); ++y)
