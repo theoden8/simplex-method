@@ -1,5 +1,3 @@
-#include <GLUT/glut.h>
-
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
