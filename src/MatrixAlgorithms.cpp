@@ -1,6 +1,7 @@
 #include "Matrix.hpp"
 
-#include <iostream>
+#include <stdexcept>
+
 Matrix Matrix::operator* (const Matrix &B) const {
 	const Matrix &A = *this;
 	if(A.Width() != B.Height())

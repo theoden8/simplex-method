@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 
+typedef unsigned long size_t;
+
 #ifdef VERBOSE
 #warning Verbosity level is defined.
 #endif

@@ -1,5 +1,7 @@
 #include "Matrix.hpp"
 
+#include <stdexcept>
+
 Matrix Matrix::MakeSquare() const {
 	Matrix result = *this;
 	long long diff = Height() - Width();
@@ -34,7 +36,7 @@ Matrix Matrix::SubMatrix(const size_t start, const size_t length) const {
 	if(start + length > Width())
 		throw std::runtime_error("Matrix::SubMatrix Out of width.");
 
-	Matrix A(matrix_t(Height(), {}));
+	Matrix A(matrix_t(Height(), line_t()));
 	for(size_t y = 0; y < Height(); ++y)
 		for(size_t x = 0; x < length; ++x)
 			A[y].push_back(grid_[y][start + x]);

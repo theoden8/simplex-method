@@ -4,6 +4,7 @@
 
 class Matrix {
 public:
+	typedef unsigned long size_t;
 	typedef long double val_t;
 	typedef std::vector <val_t> line_t;
 	typedef std::vector <line_t> matrix_t;

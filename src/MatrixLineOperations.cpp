@@ -1,5 +1,7 @@
 #include "Matrix.hpp"
 
+#include <stdexcept>
+
 Matrix Matrix::SwapRows(const size_t row1, const size_t row2) const {
 	if(row1 >= Height() || row2 >= Height())
 		throw std::runtime_error("Matrix::SwapRows row number out of height.");
