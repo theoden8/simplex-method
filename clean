@@ -1,4 +1,9 @@
 #!/bin/sh
 
-rm -rf CMakeFiles build
-rm -f CMakeCache.txt Makefile cmake_install.cmake
+rm -rf include/gtest include/gmock
+
+for i in Makefile CMakeFiles CMakeCache.txt cmake_install.cmake; do
+    find . -name "$i" -exec rm  -rf {} \;
+done
+
+rm -f _matrix _testmatrix
