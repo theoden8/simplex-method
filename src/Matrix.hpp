@@ -40,6 +40,7 @@ public:
 	Matrix Transpose() const;
 	Matrix Invert() const;
 	static Matrix GaussianElimination(const Matrix &M);
+// SimplexMethod
 	static Matrix::line_t SimplexMethod(Matrix A, line_t C);
 // Obsolete (to be replaced with gtesting)
 	static void Print(const Matrix &A, const char *NAME = "", const size_t h_x = -1, const size_t h_y = -1);

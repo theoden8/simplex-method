@@ -11,10 +11,12 @@ file(GLOB SRCS
 	MatrixTest.cpp
 	MatrixLineOpnsTest.cpp
 	MatrixAlgorithmsTest.cpp
+	SimplexMethodTest.cpp
 	${PROJECT_SRC}/Matrix.cpp
 	${PROJECT_SRC}/MatrixLineOperations.cpp
 	${PROJECT_SRC}/MatrixTransformations.cpp
 	${PROJECT_SRC}/MatrixAlgorithms.cpp
+	${PROJECT_SRC}/SimplexMethod.cpp
 )
 add_executable(_testmatrix ${SRCS})
 set(CMAKE_CXX_FLAGS "-std=c++11")
