@@ -52,6 +52,7 @@ Matrix Matrix::GaussianElimination(const Matrix &M) {
 	return result;
 }
 
+// Crouts method
 std::pair <Matrix, Matrix> Matrix::LUDecomposition() const {
 	const Matrix &A = *this;
 	if(!Square())

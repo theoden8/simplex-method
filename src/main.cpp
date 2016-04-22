@@ -10,6 +10,7 @@ typedef unsigned long size_t;
 
 #include "Matrix.hpp"
 
+// a bunch of methods to help with testing simplex method
 static char verify_solution_validity(const Matrix&, const Matrix::line_t&, const Matrix::line_t&);
 
 #include <fstream>
