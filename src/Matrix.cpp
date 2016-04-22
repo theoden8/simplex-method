@@ -62,8 +62,8 @@ const bool Matrix::Square() const {
 
 void Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const size_t h_y) {
 	const size_t SPACING = 30;
+	const static val_t precision = 0.0000001;
 	std::cout << "\033[1;40;93m  [ Printing another matrix ] \033[0m\033[1;40;35m-><-\t# " << NAME << ":\033[0m" << std::endl;
-	val_t precision = 0.0000001;
 	for(size_t y = 0; y < M.Height(); ++y) {
 		std::cout << '\t';
 		for(size_t x = 0; x < M.Width(); ++x) {
@@ -82,4 +82,9 @@ void Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const si
 		}
 		std::cout << std::endl;
 	}
+}
+
+const bool Matrix::cmp_val_t(const val_t &a, const val_t &b) {
+	const static val_t PRECISION = 0.0000001;
+	return std::abs(a - b) <= PRECISION;
 }

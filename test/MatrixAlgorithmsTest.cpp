@@ -98,6 +98,31 @@ TEST_F(MatrixTest, MatrixTranspositionTest) {
 	}));
 }
 
+TEST_F(MatrixTest, MatrixLUDecompositionTest) {
+	Matrix
+		empty(0),
+		square({
+				{ 20,  28,  8,  4,  32 },
+				{ 25,  35, 10,  5,  40 },
+				{ 40,  56, 16,  8,  64 },
+				{-10, -14, -4, -2, -16 },
+				{  0,   0,  0,  0,   0 },
+		}),
+		longmatrix({
+			 {13, -15, -7 , 9  , 13, -1, 1, -13},
+			 {-9, 2  , 4  , -11, 3 , -1, 5, -13},
+			 {-5, 9  , -14, -2 , 5 , -2, 7, -3 },
+			 {1 , 3  , -7 , 8  , 11, -1, 4, 14 },
+		});
+	ASSERT_NO_THROW(empty.LUDecomposition());
+	ASSERT_ANY_THROW(longmatrix.LUDecomposition());
+	std::pair <Matrix, Matrix> LU = square.LUDecomposition();
+	ASSERT_TRUE(cmp_matr_double(
+			square,
+			LU.first * LU.second
+	));
+}
+
 /*
  * Invert and GaussianElimination can not be tested as determinant function is
  * not implemented, and thus there is no point in trying to check their

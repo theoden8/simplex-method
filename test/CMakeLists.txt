@@ -7,11 +7,7 @@ include_directories(
 )
 
 file(GLOB SRCS
-	main.cpp
-	MatrixTest.cpp
-	MatrixLineOpnsTest.cpp
-	MatrixAlgorithmsTest.cpp
-	SimplexMethodTest.cpp
+	*.cpp
 	${PROJECT_SRC}/Matrix.cpp
 	${PROJECT_SRC}/MatrixLineOperations.cpp
 	${PROJECT_SRC}/MatrixTransformations.cpp

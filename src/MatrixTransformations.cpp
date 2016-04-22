@@ -42,3 +42,25 @@ Matrix Matrix::SubMatrix(const size_t start, const size_t length) const {
 			A[y].push_back(grid_[y][start + x]);
 	return A;
 }
+
+Matrix Matrix::LowerTriangular() const {
+	if(!Square())
+		throw std::runtime_error("Matrix::LowerTriangular must be square.");
+
+	Matrix B(grid_);
+	for(size_t x = 1; x < Width(); ++x)
+		for(size_t y = 0; y < x; ++y)
+			B[y][x] = Matrix::val_t(0);
+	return B;
+}
+
+Matrix Matrix::UpperTriangular() const {
+	if(!Square())
+		throw std::runtime_error("Matrix::LowerTriangular must be square.");
+
+	Matrix B(grid_);
+	for(size_t y = 1; y < Height(); ++y)
+		for(size_t x = 0; x < y; ++x)
+			B[y][x] = Matrix::val_t(0);
+	return B;
+}

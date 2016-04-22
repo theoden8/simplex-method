@@ -6,6 +6,7 @@ Matrix Matrix::operator* (const Matrix &B) const {
 	const Matrix &A = *this;
 	if(A.Width() != B.Height())
 		throw std::runtime_error("Matrix::Operator* The matrixes have inappropriate dimensions.");
+
 	Matrix C(B.Width(), A.Height(), 0);
 	const size_t depth = A.Width();
 	for(size_t y = 0; y < A.Height(); ++y)
@@ -26,6 +27,7 @@ Matrix Matrix::Transpose() const {
 Matrix Matrix::Invert() const {
 	if(!Square())
 		throw std::runtime_error("Matrix::Invert Can not invert non-square matrix.");
+
 	const size_t dim = Height();
 	return GaussianElimination(this->ConcatenateColumns(Matrix(dim))).SubMatrix(dim, dim);
 }
@@ -48,4 +50,38 @@ Matrix Matrix::GaussianElimination(const Matrix &M) {
 			}
 	delete free;
 	return result;
+}
+
+std::pair <Matrix, Matrix> Matrix::LUDecomposition() const {
+	const Matrix &A = *this;
+	if(!Square())
+		throw std::runtime_error("Matrix::LUDecomposition Need a square matrix.");
+
+	const size_t dim = Height();
+	Matrix
+		L(UpperTriangular()),
+		U(LowerTriangular());
+
+	for(size_t d = 0; d < dim; ++d)
+		U[d][d] = val_t(0);
+
+	for(size_t i = 0; i < dim; ++i) {
+		for(size_t j = i; j < dim; ++j) {
+			val_t sum(0);
+			for(size_t k = 0; k < i; ++k)
+				sum += L[i][k] * U[k][j];
+			L[j][i] = A[j][i] - sum;
+		}
+
+		for(size_t j = i; j < dim; ++j) {
+			val_t sum(0);
+			for(size_t k = 0; k < i; ++k)
+				sum += L[i][k] * U[k][j];
+			if(L[i][i] == val_t(0))
+				throw std::runtime_error("Matrix::LUDecomposition det(L) tends to 0. Aborting.");
+			U[i][j] = (A[j][i] - sum) / L[i][i];
+		}
+	}
+
+	return std::pair <Matrix, Matrix> (L, U);
 }

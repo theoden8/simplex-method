@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include <vector>
 
 class Matrix {
@@ -21,12 +22,16 @@ public:
 	const size_t Width() const;
 	const size_t Height() const;
 	const bool Square() const;
+	const static bool cmp_val_t(const val_t &a, const val_t &b);
 private:
 // MatrixTransformations
 	Matrix MakeSquare() const;
 	Matrix ConcatenateColumns(const Matrix &B) const;
 	Matrix ConcatenateRows(const Matrix &B) const;
 	Matrix SubMatrix(const size_t start, const size_t length) const;
+public:
+	Matrix LowerTriangular() const;
+	Matrix UpperTriangular() const;
 public:
 // MatrixLineOperations
 	Matrix SwapRows(const size_t row1, const size_t row2) const;
@@ -40,6 +45,7 @@ public:
 	Matrix Transpose() const;
 	Matrix Invert() const;
 	static Matrix GaussianElimination(const Matrix &M);
+	std::pair <Matrix, Matrix> LUDecomposition() const;
 // SimplexMethod
 	static Matrix::line_t SimplexMethod(Matrix A, line_t C);
 // Obsolete (to be replaced with gtesting)
