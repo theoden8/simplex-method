@@ -22,7 +22,6 @@ public:
 	const size_t Width() const;
 	const size_t Height() const;
 	const bool Square() const;
-	const static bool cmp_val_t(const val_t &a, const val_t &b);
 private:
 // MatrixTransformations
 	Matrix MakeSquare() const;
@@ -41,7 +40,7 @@ public:
 	Matrix AddToColumn(const size_t clm1, const size_t clm2, const val_t k) const;
 	Matrix MultiplyColumn(const size_t clm1, const val_t k) const;
 // MatrixProperties
-	/* val_t Trace() const; */
+	val_t Trace() const;
 // MatrixAlgorithms
 	Matrix operator*(const Matrix &B) const;
 	Matrix Transpose() const;

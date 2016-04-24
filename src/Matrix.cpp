@@ -83,8 +83,3 @@ void Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const si
 		std::cout << std::endl;
 	}
 }
-
-const bool Matrix::cmp_val_t(const val_t &a, const val_t &b) {
-	const static val_t PRECISION = 0.0000001;
-	return std::abs(a - b) <= PRECISION;
-}

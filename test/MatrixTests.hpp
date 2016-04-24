@@ -17,16 +17,20 @@ protected:
 		std::cout << "\n---------------------TEAR DOWN-------------------\n" << std::endl;
 	}
 
-	bool cmp_matr_double(const Matrix &a, const Matrix &b, const double PRECISION = 0.001) {
+
+	bool cmp_double(Matrix::val_t a, Matrix::val_t b, const Matrix::val_t PRECISION = 0.00001) {
+		/* std::cerr << a << ' ' << b << std::endl; */
+		return std::abs(a - b) <= PRECISION;
+	}
+
+	bool cmp_matr_double(const Matrix &a, const Matrix &b, const Matrix::val_t PRECISION = 0.00001) {
 		if(a.Height() != b.Height() || a.Width() != b.Width())
 			return false;
 		for(size_t y = 0; y < a.Height(); ++y) {
 			for(size_t x = 0; x < a.Width(); ++x) {
-				if(std::abs(a[y][x] - b[y][x]) > PRECISION)
+				if(!cmp_double(a[y][x], b[y][x]))
 					return false;
-				/* std::cerr << a[y][x] << ":" << b[y][x] << "\t"; */
 			}
-			/* std::cerr << std::endl; */
 		}
 		return true;
 	}

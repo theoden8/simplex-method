@@ -12,6 +12,7 @@ file(GLOB SRCS
 	${PROJECT_SRC}/MatrixAlgorithms.cpp
 	${PROJECT_SRC}/MatrixLineOperations.cpp
 	${PROJECT_SRC}/MatrixTransformations.cpp
+	${PROJECT_SRC}/MatrixProperties.cpp
 	${PROJECT_SRC}/SimplexMethod.cpp
 )
 add_executable(_testmatrix ${SRCS})
