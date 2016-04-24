@@ -31,15 +31,16 @@ Matrix Matrix::Invert() const {
 		throw std::runtime_error("Matrix::Invert Can not invert non-square matrix.");
 	}
 
+	if(Det() == val_t(0)) {
+		throw std::runtime_error("Matrix::Invert Det == 0, not invertible");
+	}
+
 	const size_t dim = Height();
 	return GaussianElimination(this->ConcatenateColumns(Matrix(dim))).SubMatrix(dim, dim);
 }
 
 Matrix Matrix::GaussianElimination(const Matrix &M) {
-	if(M.Det() == val_t(0)) {
-		throw std::runtime_error("Matrix::GaussianElimination Determinant is zero.");
-	}
-
+	// TODO: prevent segfault in some cases
 	Matrix result = M;
 
 	bool *free = new bool[M.Height()];

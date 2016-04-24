@@ -98,6 +98,76 @@ TEST_F(MatrixTest, MatrixTranspositionTest) {
 	}));
 }
 
+TEST_F(MatrixTest, MatrixInvertTest) {
+	Matrix
+		empty(0),
+		identity(100),
+		det_zero({
+				{ 20,  28,  8,  4,  32 },
+				{ 25,  35, 10,  5,  40 },
+				{ 40,  56, 16,  8,  64 },
+				{-10, -14, -4, -2, -16 },
+				{  0,   0,  0,  0,   0 },
+		}),
+		inversible({
+				{  7,  -1,  9,  4,   6},
+				{ 14, -11,  6,  9,  -8},
+				{ -8, -10,  2,  9, -14},
+				{-10,   2,-15, -9,  -4},
+				{  0,  -2, 10, -7,  14},
+		}),
+		longmatrix({
+			 {13, -15, -7 , 9  , 13, -1, 1, -13},
+			 {-9, 2  , 4  , -11, 3 , -1, 5, -13},
+			 {-5, 9  , -14, -2 , 5 , -2, 7, -3 },
+			 {1 , 3  , -7 , 8  , 11, -1, 4, 14 },
+		});
+	ASSERT_EQ(empty.Invert(), empty);
+	ASSERT_ANY_THROW(identity.Invert());
+	ASSERT_ANY_THROW(det_zero.Invert());
+	ASSERT_ANY_THROW(longmatrix.Invert());
+	ASSERT_TRUE(cmp_matr_double(
+		inversible.Invert(),
+		Matrix({
+			{-1533./20465, 1073./20465, -2301./40930,  -697./20465,  -159./40930},
+			{-5906./20465, -899./20465, -2497./40930, -4394./20465,  -973./40930},
+			{-8618./20465,   -2./20465, -1121./40930, -5587./20465,  3071./40930},
+			{  2028./4093,  -218./4093,    601./8186,    874./4093,   -887./8186},
+			{10382./20465, -672./20465,  3893./81860,  5548./20465, -3253./81860},
+		})
+	));
+}
+
+TEST_F(MatrixTest, MatrixGaussianEliminationTest) {
+	Matrix
+		empty(0),
+		identity(100),
+		det_zero({
+				{ 20,  28,  8,  4,  32 },
+				{ 25,  35, 10,  5,  40 },
+				{ 40,  56, 16,  8,  64 },
+				{-10, -14, -4, -2, -16 },
+				{  0,   0,  0,  0,   0 },
+		}),
+		inversible({
+				{   7,  -1,  9,  4,   6},
+				{  14, -11,  6,  9,  -8},
+				{  -8, -10,  2,  9, -14},
+				{ -10,   2,-15, -9,  -4},
+				{   0,  -2, 10, -7,  14},
+		}),
+		longmatrix({
+			 {13, -15, -7 , 9  , 13, -1, 1, -13},
+			 {-9, 2  , 4  , -11, 3 , -1, 5, -13},
+			 {-5, 9  , -14, -2 , 5 , -2, 7, -3 },
+			 {1 , 3  , -7 , 8  , 11, -1, 4, 14 },
+		});
+	ASSERT_EQ(Matrix::GaussianElimination(empty), empty);
+	ASSERT_EQ(Matrix::GaussianElimination(identity), identity);
+	// TODO fix the following case:
+	/* ASSERT_ANY_THROW(Matrix::GaussianElimination(det_zero)); */
+}
+
 TEST_F(MatrixTest, MatrixLUPDecompositionTest) {
 	Matrix
 		empty(0),
