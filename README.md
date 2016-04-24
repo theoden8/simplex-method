@@ -6,7 +6,7 @@ Created by Kirill Rodriguez on 08/2015.
 
 This program provides an interface to standard matrix operations and algorithms, which include row/column operations, transposition, inversion, multiplication, gaussian elimination and, in particular, simplex method (using the standard form).
 
-Methods `GaussianElimination` and `Invert` are not tested due to absence of `Determinant` function. Simplex method examples are only fully verified by hand.
+Method `GaussianElimination` is not yet properly tested; `Determinant` gives incorrect result because `LUPDecomposition` outputs some random stuff.
 
 ## Usage
 
