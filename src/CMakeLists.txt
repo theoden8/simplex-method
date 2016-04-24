@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
 project(Matrix)
-add_compile_options(-std=c++11 -O3 -DVERBOSE=1)
+set(CMAKE_CXX_FLAGS "-std=c++11 -O3 -DVERBOSE=1")
 
 file(GLOB MATRIX_SRCS
 	*.cpp
 )
 
-add_executable(_matrix ${MATRIX_SRCS})
+add_library(matrix STATIC ${MATRIX_SRCS})

@@ -25,7 +25,7 @@ include(ExternalProject)
 ExternalProject_Add(
 	gtest
 	URL https://googletest.googlecode.com/files/gtest-1.7.0.zip
-    PREFIX ${PROJECT_INCLUDE}/gtest
+	PREFIX ${PROJECT_INCLUDE}/gtest
 	# Disable install step
 	INSTALL_COMMAND ""
 )
@@ -37,8 +37,8 @@ add_dependencies(libgtest gtest)
 # Set gtest properties
 ExternalProject_Get_Property(gtest source_dir binary_dir)
 set_target_properties(libgtest PROPERTIES
-	"IMPORTED_LOCATION" "${binary_dir}/libgtest.a"
-	"IMPORTED_LINK_INTERFACE_LIBRARIES" "${CMAKE_THREAD_LIBS_INIT}"
+	IMPORTED_LOCATION "${binary_dir}/libgtest.a"
+	IMPORTED_LINK_INTERFACE_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}"
 #	"INTERFACE_INCLUDE_DIRECTORIES" "${source_dir}/include"
 )
 # I couldn't make it work with INTERFACE_INCLUDE_DIRECTORIES
@@ -48,7 +48,7 @@ set(GTEST_LIB "${source_dir}/include")
 ExternalProject_Add(
 	gmock
 	URL https://googlemock.googlecode.com/files/gmock-1.7.0.zip
-    PREFIX ${PROJECT_INCLUDE}/gmock
+	PREFIX ${PROJECT_INCLUDE}/gmock
 	# Disable install step
 	INSTALL_COMMAND ""
 )
@@ -69,12 +69,13 @@ set(GMOCK_LIB "${source_dir}/include")
 
 # thanks to http://www.kaizou.org/2014/11/gtest-cmake/
 
-# ----------------- INCLUDE SUBDIRECTORIES ------------------------
+set(MATRIX_LIB ${PROJECT_SRC})
 
-include_directories(${GTEST_LIB} ${GMOCK_LIB})
 message( STATUS "GTEST_LIB:                 " ${GTEST_LIB} )
 message( STATUS "GMOCK_LIB:                 " ${GMOCK_LIB} )
+message( STATUS "MATRIX_LIB                 " ${MATRIX_LIB} )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT})
 add_subdirectory(src)
+#add_subdirectory(test/tests)
 add_subdirectory(test)

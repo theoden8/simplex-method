@@ -8,7 +8,8 @@ typedef unsigned long size_t;
 #warning Verbosity level is defined.
 #endif
 
-#include "Matrix.hpp"
+#include <tuple>
+#include <Matrix.hpp>
 
 // a bunch of methods to help with testing simplex method
 static char verify_solution_validity(const Matrix&, const Matrix::line_t&, const Matrix::line_t&);
