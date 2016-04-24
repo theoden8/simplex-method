@@ -17,6 +17,7 @@ To compile the program, use:
 
 Followed by:
 
+    # temporarily unsupported:
     ./_matrix ./src/tests/... ; echo $? # some file
 
 The supporting program for generating examples is **matrix_gen.pl**, which prints matrices of given width and height.
