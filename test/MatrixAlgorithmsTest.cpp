@@ -98,7 +98,7 @@ TEST_F(MatrixTest, MatrixTranspositionTest) {
 	}));
 }
 
-TEST_F(MatrixTest, MatrixLUDecompositionTest) {
+TEST_F(MatrixTest, MatrixLUPDecompositionTest) {
 	Matrix
 		empty(0),
 		det_zero({
@@ -121,16 +121,22 @@ TEST_F(MatrixTest, MatrixLUDecompositionTest) {
 			 {-5, 9  , -14, -2 , 5 , -2, 7, -3 },
 			 {1 , 3  , -7 , 8  , 11, -1, 4, 14 },
 		});
-	ASSERT_NO_THROW(empty.LUDecomposition());
-	ASSERT_ANY_THROW(longmatrix.LUDecomposition());
-	ASSERT_ANY_THROW(det_zero.LUDecomposition());
-	std::pair <Matrix, Matrix> LU = inversible.LUDecomposition();
-	Matrix::Print(LU.first, "Lower");
-	Matrix::Print(LU.second, "Upper");
-	Matrix::Print(LU.first * LU.second, "L * U");
+	ASSERT_NO_THROW(Matrix::LUPDecomposition(empty));
+	ASSERT_ANY_THROW(Matrix::LUPDecomposition(longmatrix));
+	ASSERT_ANY_THROW(Matrix::LUPDecomposition(det_zero));
+	ASSERT_NO_THROW(Matrix::LUPDecomposition(inversible));
+	std::tuple <Matrix, Matrix, Matrix> LUP = Matrix::LUPDecomposition(inversible);
+	Matrix L = std::get <0>(LUP);
+	Matrix U = std::get <1>(LUP);
+	Matrix P = std::get <2>(LUP);
+	Matrix::Print(L, "Lower");
+	Matrix::Print(U, "Upper");
+	Matrix::Print(P, "Permutation");
+	Matrix::Print(L * U * P, "L * U * P");
+	Matrix::Print(inversible, "Inversible");
 	ASSERT_TRUE(cmp_matr_double(
 			inversible,
-			LU.first * LU.second
+			L * U * P
 	));
 }
 

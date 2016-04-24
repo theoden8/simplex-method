@@ -7,11 +7,11 @@ include_directories(
 )
 
 file(GLOB SRCS
-	*.cpp
+	./*.cpp
 	${PROJECT_SRC}/Matrix.cpp
+	${PROJECT_SRC}/MatrixAlgorithms.cpp
 	${PROJECT_SRC}/MatrixLineOperations.cpp
 	${PROJECT_SRC}/MatrixTransformations.cpp
-	${PROJECT_SRC}/MatrixAlgorithms.cpp
 	${PROJECT_SRC}/SimplexMethod.cpp
 )
 add_executable(_testmatrix ${SRCS})

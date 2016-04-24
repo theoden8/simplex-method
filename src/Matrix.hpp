@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utility>
+#include <tuple>
 #include <vector>
 
 class Matrix {
@@ -40,12 +40,14 @@ public:
 	Matrix SwapColumns(const size_t clm1, const size_t clm2) const;
 	Matrix AddToColumn(const size_t clm1, const size_t clm2, const val_t k) const;
 	Matrix MultiplyColumn(const size_t clm1, const val_t k) const;
+// MatrixProperties
+	/* val_t Trace() const; */
 // MatrixAlgorithms
 	Matrix operator*(const Matrix &B) const;
 	Matrix Transpose() const;
 	Matrix Invert() const;
 	static Matrix GaussianElimination(const Matrix &M);
-	std::pair <Matrix, Matrix> LUDecomposition() const;
+	static std::tuple <Matrix, Matrix, Matrix> LUPDecomposition(const Matrix &M);
 // SimplexMethod
 	static Matrix::line_t SimplexMethod(Matrix A, line_t C);
 // Obsolete (to be replaced with gtesting)
