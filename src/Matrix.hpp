@@ -41,6 +41,7 @@ public:
 	Matrix MultiplyColumn(const size_t clm1, const val_t k) const;
 // MatrixProperties
 	val_t Trace() const;
+	val_t Det() const;
 // MatrixAlgorithms
 	Matrix operator*(const Matrix &B) const;
 	Matrix Transpose() const;

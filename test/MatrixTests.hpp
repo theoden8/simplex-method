@@ -19,7 +19,7 @@ protected:
 
 
 	bool cmp_double(Matrix::val_t a, Matrix::val_t b, const Matrix::val_t PRECISION = 0.00001) {
-		/* std::cerr << a << ' ' << b << std::endl; */
+		std::cerr << a << ' ' << b << std::endl;
 		return std::abs(a - b) <= PRECISION;
 	}
 

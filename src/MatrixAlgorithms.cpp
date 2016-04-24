@@ -27,14 +27,19 @@ Matrix Matrix::Transpose() const {
 }
 
 Matrix Matrix::Invert() const {
-	if(!Square())
+	if(!Square()) {
 		throw std::runtime_error("Matrix::Invert Can not invert non-square matrix.");
+	}
 
 	const size_t dim = Height();
 	return GaussianElimination(this->ConcatenateColumns(Matrix(dim))).SubMatrix(dim, dim);
 }
 
 Matrix Matrix::GaussianElimination(const Matrix &M) {
+	if(M.Det() == val_t(0)) {
+		throw std::runtime_error("Matrix::GaussianElimination Determinant is zero.");
+	}
+
 	Matrix result = M;
 
 	bool *free = new bool[M.Height()];
