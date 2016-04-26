@@ -1,15 +1,15 @@
 #include "Matrix.hpp"
 
 // matching chosen_y if 0 or with the biggest positive relation column[0]/column[i]
-static Matrix::val_t ChooseBestRow(const Matrix &M, const size_t x) {
-	Matrix::val_t theta(0);
+static real_t ChooseBestRow(const Matrix &M, const size_t x) {
+	real_t theta(0);
 	size_t chosen_y = 0;
 	for(size_t another_y = 1; another_y < M.Height(); ++another_y) {
-		if(M[another_y][x] <= Matrix::val_t(0)) {
+		if(M[another_y][x] <= real_t(0)) {
 			continue;
 		}
 
-		Matrix::val_t next_theta = M[another_y][0] / M[another_y][x];
+		real_t next_theta = M[another_y][0] / M[another_y][x];
 		if(chosen_y == 0 || theta > next_theta) {
 			theta = next_theta;
 			chosen_y = another_y;
@@ -32,7 +32,7 @@ static void EliminateChosenRow(Matrix &M, const size_t row, const size_t x) {
 Matrix::line_t Matrix::SimplexMethod(Matrix A, line_t C) {
 	if(C.size() != A.Width() - 1)
 		throw std::runtime_error("Matrix::SimplexMethod Can not use vector of inappropriate width.");
-	C.insert(C.begin(), val_t(0));
+	C.insert(C.begin(), real_t(0));
 	_MATRIX_VERBOSE_SELFPRINT(Matrix({C}), "To minimize:");
 	std::vector <size_t> match(A.Height()); // matches the row with the solution (column)
 	std::vector <bool> in_basis(A.Width() - 1, 0); // records if a solution is in bases
@@ -101,7 +101,7 @@ Matrix::line_t Matrix::SimplexMethod(Matrix A, line_t C) {
 			if(slack_count != 0 && x == A.Width() - 1) {
 				int to_add = 0;
 				for(size_t y = 1; y < A.Height(); ++y) {
-					to_add += (M[y][0] == val_t(0));
+					to_add += (M[y][0] == real_t(0));
 				}
 				/* std::cout << "\t\t\t\033[1;96m" << to_add << "\033[0m" << std::endl; */
 				if(slack_count <= to_add) {

@@ -1,19 +1,19 @@
 #pragma once
 
+#include "Types.hpp"
+
 #include <tuple>
 #include <vector>
 
 class Matrix {
 public:
-	typedef unsigned long size_t;
-	typedef long double val_t;
-	typedef std::vector <val_t> line_t;
+	typedef std::vector <real_t> line_t;
 	typedef std::vector <line_t> matrix_t;
 private:
 	matrix_t grid_;
 public:
 	Matrix(const matrix_t &grid);
-	Matrix(const size_t x, const size_t y, const val_t value = 0);
+	Matrix(const size_t x, const size_t y, const real_t value = 0);
 	Matrix(const size_t diagonal);
 	const matrix_t *GetGrid() const;
 	const bool operator==(const Matrix &other) const;
@@ -34,25 +34,25 @@ public:
 public:
 // MatrixLineOperations
 	Matrix SwapRows(const size_t row1, const size_t row2) const;
-	Matrix AddToRow(const size_t row1, const size_t row2, const val_t k) const;
-	Matrix MultiplyRow(const size_t row1, const val_t k) const;
+	Matrix AddToRow(const size_t row1, const size_t row2, const real_t k) const;
+	Matrix MultiplyRow(const size_t row1, const real_t k) const;
 	Matrix SwapColumns(const size_t clm1, const size_t clm2) const;
-	Matrix AddToColumn(const size_t clm1, const size_t clm2, const val_t k) const;
-	Matrix MultiplyColumn(const size_t clm1, const val_t k) const;
+	Matrix AddToColumn(const size_t clm1, const size_t clm2, const real_t k) const;
+	Matrix MultiplyColumn(const size_t clm1, const real_t k) const;
 // MatrixOperators
 	Matrix operator+() const;
 	Matrix operator-() const;
 
-	Matrix operator+(const val_t &scalar) const;
-	Matrix operator-(const val_t &scalar) const;
-	Matrix operator*(const val_t &scalar) const;
-	Matrix operator/(const val_t &scalar) const;
+	Matrix operator+(const real_t &scalar) const;
+	Matrix operator-(const real_t &scalar) const;
+	Matrix operator*(const real_t &scalar) const;
+	Matrix operator/(const real_t &scalar) const;
 
 	Matrix operator+(const Matrix &B) const;
 	Matrix operator-(const Matrix &B) const;
 // MatrixProperties
-	val_t Trace() const;
-	val_t Det() const;
+	real_t Trace() const;
+	real_t Det() const;
 // MatrixAlgorithms
 	Matrix operator*(const Matrix &B) const;
 	Matrix Transpose() const;

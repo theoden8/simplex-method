@@ -6,11 +6,11 @@ Matrix Matrix::operator+() const {
 }
 
 Matrix Matrix::operator-() const {
-	return *this * val_t(-1);
+	return *this * real_t(-1);
 }
 
 
-Matrix Matrix::operator+(const val_t &scalar) const {
+Matrix Matrix::operator+(const real_t &scalar) const {
 	Matrix A = *this;
 	for(size_t y = 0; y < A.Height(); ++y)
 		for(size_t x = 0; x < A.Width(); ++x)
@@ -18,11 +18,11 @@ Matrix Matrix::operator+(const val_t &scalar) const {
 	return A;
 }
 
-Matrix Matrix::operator-(const val_t &scalar) const {
+Matrix Matrix::operator-(const real_t &scalar) const {
 	return *this + (-scalar);
 }
 
-Matrix Matrix::operator*(const val_t &scalar) const {
+Matrix Matrix::operator*(const real_t &scalar) const {
 	Matrix A = *this;
 	for(size_t y = 0; y < A.Height(); ++y)
 		for(size_t x = 0; x < A.Width(); ++x)
@@ -30,8 +30,8 @@ Matrix Matrix::operator*(const val_t &scalar) const {
 	return A;
 }
 
-Matrix Matrix::operator/(const val_t &scalar) const {
-	if(scalar == val_t(0))
+Matrix Matrix::operator/(const real_t &scalar) const {
+	if(scalar == real_t(0))
 		throw std::runtime_error("Matrix::operator/ cannot divide by zero");
 	return *this * (1 / scalar);
 }

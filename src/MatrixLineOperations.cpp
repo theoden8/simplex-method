@@ -10,7 +10,7 @@ Matrix Matrix::SwapRows(const size_t row1, const size_t row2) const {
 	return result;
 }
 
-Matrix Matrix::AddToRow(const size_t row1, const size_t row2, const val_t k = 1) const {
+Matrix Matrix::AddToRow(const size_t row1, const size_t row2, const real_t k = 1) const {
 	Matrix result = *this;
 	if(row1 >= Height() || row2 >= Height())
 		throw std::runtime_error("Matrix::AddToRow row number out of height.");
@@ -21,7 +21,7 @@ Matrix Matrix::AddToRow(const size_t row1, const size_t row2, const val_t k = 1)
 	return result;
 }
 
-Matrix Matrix::MultiplyRow(const size_t row1, const val_t k) const {
+Matrix Matrix::MultiplyRow(const size_t row1, const real_t k) const {
 	if(row1 >= Height())
 		throw std::runtime_error("Matrix::MultiplyRow row number out of height.");
 	if(!k)
@@ -40,7 +40,7 @@ Matrix Matrix::SwapColumns(const size_t clm1, const size_t clm2) const {
 	return result;
 }
 
-Matrix Matrix::AddToColumn(const size_t clm1, const size_t clm2, const val_t k = 1) const {
+Matrix Matrix::AddToColumn(const size_t clm1, const size_t clm2, const real_t k = 1) const {
 	if(clm1 >= Width() || clm2 >= Width())
 		throw std::runtime_error("Matrix::AddToColumn col number out of height.");
 	Matrix result = *this;
@@ -49,7 +49,7 @@ Matrix Matrix::AddToColumn(const size_t clm1, const size_t clm2, const val_t k =
 	return result;
 }
 
-Matrix Matrix::MultiplyColumn(const size_t clm1, const val_t k) const {
+Matrix Matrix::MultiplyColumn(const size_t clm1, const real_t k) const {
 	if(clm1 >= Width())
 		throw std::runtime_error("Matrix::MultiplyColumn col number out of height.");
 	else if(!k)

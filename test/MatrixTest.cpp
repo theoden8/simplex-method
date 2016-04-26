@@ -14,18 +14,18 @@ TEST_F(MatrixTest, TestingConstructors) {
 	for(size_t y = 0; y < A.Height(); ++y) {
 		for(size_t x = 0; x < A.Width(); ++x) {
 			ASSERT_EQ(A[y][x], B[y][x]);
-			const Matrix::val_t val = (y == x);
+			const real_t val = (y == x);
 			ASSERT_EQ(A[y][x], val);
 			ASSERT_EQ(B[y][x], val);
 		}
 	}
-	const Matrix::val_t C_DEFAULT_VALUE = 0;
+	const real_t C_DEFAULT_VALUE = 0;
 	Matrix C(5, 10, C_DEFAULT_VALUE), D(5, 10);
 	ASSERT_TRUE(C == D);
 	for(size_t y = 0; y < C.Height(); ++y) {
 		for(size_t x = 0; x < C.Width(); ++x) {
 			ASSERT_EQ(C[y][x], C_DEFAULT_VALUE);
-			ASSERT_EQ(D[y][x], (Matrix::val_t)(0));
+			ASSERT_EQ(D[y][x], (real_t)(0));
 		}
 	}
 	/* // checking that constructions of empty matrices does not throw an exception */

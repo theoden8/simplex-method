@@ -47,12 +47,12 @@ char run_test(const char *filename) {
 #include <cmath>
 static char verify_solution_validity(const Matrix &A, const Matrix::line_t &solution, const Matrix::line_t &optimized) {
 	// Substitute values into all rows and verify equations
-	const static Matrix::val_t PRECISION = 0.001;
+	const static real_t PRECISION = 0.001;
 	for(int i = 0; i < solution.size() - 1; ++i)
 		if(solution[i] < 0)
 			return 1;
 	for(int y = 0; y < A.Height(); ++y) {
-		Matrix::val_t sum = 0;
+		real_t sum = 0;
 		for(int x = 0; x < A.Width() - 1; ++x)
 			sum += A[y][x] * solution[x];
 		if(std::abs(A[y][A.Width() - 1] - sum) > PRECISION)

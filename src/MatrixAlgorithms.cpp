@@ -31,7 +31,7 @@ Matrix Matrix::Invert() const {
 		throw std::runtime_error("Matrix::Invert Can not invert non-square matrix.");
 	}
 
-	if(Det() == val_t(0)) {
+	if(Det() == real_t(0)) {
 		throw std::runtime_error("Matrix::Invert Det == 0, not invertible");
 	}
 
@@ -86,10 +86,10 @@ std::pair <Matrix, Matrix> Matrix::LUDecomposition(const Matrix &M) {
 		}
 
 		for(size_t j = i; j < dim; ++j) {
-			val_t sum = 0;
+			real_t sum = 0;
 			for(size_t k = 0; k < i; ++k)
 				sum += L[i][k] * U[k][j];
-			if(L[i][i] == val_t(0))
+			if(L[i][i] == real_t(0))
 				throw std::runtime_error("Matrix::LUDecomposition det(L) tends to 0. Aborting.");
 			U[i][j] = (M[i][j] - sum) / L[i][i];
 		}

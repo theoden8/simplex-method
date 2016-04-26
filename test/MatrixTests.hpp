@@ -16,14 +16,14 @@ protected:
 	virtual void TearDown() {}
 
 
-	bool cmp_double(Matrix::val_t a, Matrix::val_t b, const Matrix::val_t PRECISION = 0.00001) {
+	bool cmp_double(real_t a, real_t b, const real_t PRECISION = 0.00001) {
 		if(std::abs(a - b) <= PRECISION)
 			return true;
 		std::cerr << a << ' ' << b << std::endl;
 		return false;
 	}
 
-	bool cmp_matr_double(const Matrix &a, const Matrix &b, const Matrix::val_t PRECISION = 0.00001) {
+	bool cmp_matr_double(const Matrix &a, const Matrix &b, const real_t PRECISION = 0.00001) {
 		if(a.Height() != b.Height() || a.Width() != b.Width())
 			return false;
 		for(size_t y = 0; y < a.Height(); ++y) {

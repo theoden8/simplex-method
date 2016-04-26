@@ -4,6 +4,6 @@ include_directories(
 	${MATRIX_LIB}
 )
 
-add_executable(_simplex main.cpp)
+add_executable(_simplex simplex.cpp)
 set(CMAKE_CXX_FLAGS "-std=c++11 -O3")
 target_link_libraries(_simplex matrix)
