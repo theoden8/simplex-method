@@ -29,7 +29,7 @@ static void EliminateChosenRow(Matrix &M, const size_t row, const size_t x) {
 	}
 }
 
-Matrix::line_t Matrix::SimplexMethod(Matrix A, line_t C) {
+Vector Matrix::SimplexMethod(Matrix A, line_t C) {
 	if(C.size() != A.Width() - 1)
 		throw std::runtime_error("Matrix::SimplexMethod Can not use vector of inappropriate width.");
 	C.insert(C.begin(), real_t(0));
@@ -122,7 +122,7 @@ Matrix::line_t Matrix::SimplexMethod(Matrix A, line_t C) {
 	} while(optimizing);
 	_MATRIX_VERBOSE_SELFPRINT(M, "Finished optimizing");
 	/* _MATRIX_VERBOSE_SELFPRINT(Matrix({C})); */
-	line_t solution(A.Width(), 0);
+	Vector solution(A.Width(), 0);
 	/* _MATRIX_VERBOSE_LOG(match, "", ' ', std::endl); */
 	solution[A.Width() - 1] = M[0][0];
 	for(size_t i = 0; i < A.Height(); ++i) {

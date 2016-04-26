@@ -12,7 +12,7 @@ typedef unsigned long size_t;
 #include <Matrix.hpp>
 
 // a bunch of methods to help with testing simplex method
-static char verify_solution_validity(const Matrix&, const Matrix::line_t&, const Matrix::line_t&);
+static char verify_solution_validity(const Matrix&, const Vector&, const Vector&);
 
 #include <fstream>
 char run_test(const char *filename) {
@@ -22,18 +22,18 @@ char run_test(const char *filename) {
 	file >> width >> height;
 	if(!width || !height)
 		return 1;
-	Matrix::matrix_t values(height, Matrix::line_t(width));
+	Matrix::matrix_t values(height, Vector(width, 0.));
 	for(int i = 0; i < height; ++i)
 		for(int j = 0; j < width; ++j)
 			file >> values[i][j];
-	Matrix::line_t optimized(width - 1);
+	Vector optimized(width - 1, 0.);
 	for(int i = 0; i < width - 1; ++i)
 		file >> optimized[i];
 	Matrix A(values);
 	try {
-		const static Matrix::line_t solution(Matrix::SimplexMethod(A, optimized));
+		const static Vector solution(Matrix::SimplexMethod(A, *optimized.GetLine()));
 		#ifndef VERBOSE
-		for(size_t i = 0; i < solution.size(); ++i)
+		for(size_t i = 0; i < solution.Size(); ++i)
 			std::cout << solution[i] << " ";
 		std::cout << std::endl;
 		#endif
@@ -45,10 +45,10 @@ char run_test(const char *filename) {
 }
 
 #include <cmath>
-static char verify_solution_validity(const Matrix &A, const Matrix::line_t &solution, const Matrix::line_t &optimized) {
+static char verify_solution_validity(const Matrix &A, const Vector &solution, const Vector &optimized) {
 	// Substitute values into all rows and verify equations
 	const static real_t PRECISION = 0.001;
-	for(int i = 0; i < solution.size() - 1; ++i)
+	for(int i = 0; i < solution.Size() - 1; ++i)
 		if(solution[i] < 0)
 			return 1;
 	for(int y = 0; y < A.Height(); ++y) {

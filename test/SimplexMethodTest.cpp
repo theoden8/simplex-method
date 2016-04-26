@@ -10,7 +10,7 @@ struct smethod_args {
 	{}
 };
 
-static Matrix::line_t sm_wrap(const smethod_args &s) {
+static Vector sm_wrap(const smethod_args &s) {
 	return Matrix::SimplexMethod(s.M, s.F);
 }
 
@@ -34,7 +34,7 @@ TEST_F(MatrixTest, SimplexMethodTests) {
 	// Tested with SageMath
 	smethod_args
 		no_solutions(
-			Matrix({
+			make_mat({
 				{  2, 3, 6 },
 				{ -3, 2, 3 },
 				{ -3, 2, 5 },
@@ -43,7 +43,7 @@ TEST_F(MatrixTest, SimplexMethodTests) {
 			{ 4, 3 }
 		),
 		solveable(
-			Matrix({
+			make_mat({
 				   { 15,-5, 8, 1, -20},
 				   { 8 ,-4, 0, 2,  3 },
 				   { 6 , 8,-9,-3, 13 },
@@ -51,5 +51,8 @@ TEST_F(MatrixTest, SimplexMethodTests) {
 			{ 0, -9, -1, 5 }
 		);
 	ASSERT_ANY_THROW(sm_wrap(no_solutions));
-	ASSERT_TRUE(cmp_matr_double(Matrix({sm_wrap(solveable)}), Matrix({{0.125, 7.625, 0., 16.25, -12.625}})));
+	ASSERT_TRUE(cmp_matr_double(
+			Matrix({sm_wrap(solveable)}),
+			make_mat({{0.125, 7.625, 0., 16.25, -12.625}}))
+	);
 }
