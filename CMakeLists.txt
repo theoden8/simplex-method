@@ -69,7 +69,8 @@ set(GMOCK_LIB "${source_dir}/include")
 
 # thanks to http://www.kaizou.org/2014/11/gtest-cmake/
 
-set(MATRIX_LIB ${PROJECT_SRC})
+set(MATRIX_LIB ${PROJECT_SRC}/matrix)
+set(VECTOR_LIB ${PROJECT_SRC}/vector)
 
 message( STATUS "GTEST_LIB:                 " ${GTEST_LIB} )
 message( STATUS "GMOCK_LIB:                 " ${GMOCK_LIB} )
