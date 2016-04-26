@@ -39,6 +39,17 @@ public:
 	Matrix SwapColumns(const size_t clm1, const size_t clm2) const;
 	Matrix AddToColumn(const size_t clm1, const size_t clm2, const val_t k) const;
 	Matrix MultiplyColumn(const size_t clm1, const val_t k) const;
+// MatrixOperators
+	Matrix operator+() const;
+	Matrix operator-() const;
+
+	Matrix operator+(const val_t &scalar) const;
+	Matrix operator-(const val_t &scalar) const;
+	Matrix operator*(const val_t &scalar) const;
+	Matrix operator/(const val_t &scalar) const;
+
+	Matrix operator+(const Matrix &B) const;
+	Matrix operator-(const Matrix &B) const;
 // MatrixProperties
 	val_t Trace() const;
 	val_t Det() const;

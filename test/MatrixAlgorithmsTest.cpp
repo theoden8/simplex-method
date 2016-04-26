@@ -199,10 +199,6 @@ TEST_F(MatrixTest, MatrixLUDecompositionTest) {
 	Matrix
 		L = LU.first,
 		U = LU.second;
-	Matrix::Print(L, "Lower");
-	Matrix::Print(U, "Upper");
-	Matrix::Print(L * U, "L * U");
-	Matrix::Print(inversible, "Inversible");
 	ASSERT_TRUE(cmp_matr_double(
 			inversible,
 			L * U
