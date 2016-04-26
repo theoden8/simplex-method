@@ -13,9 +13,7 @@ protected:
 	MatrixTest() {}
 	virtual ~MatrixTest() {}
 	virtual void SetUp() {}
-	virtual void TearDown() {
-		std::cout << "\n---------------------TEAR DOWN-------------------\n" << std::endl;
-	}
+	virtual void TearDown() {}
 
 
 	bool cmp_double(Matrix::val_t a, Matrix::val_t b, const Matrix::val_t PRECISION = 0.00001) {
