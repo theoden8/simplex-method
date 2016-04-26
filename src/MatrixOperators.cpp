@@ -38,18 +38,15 @@ Matrix Matrix::operator/(const val_t &scalar) const {
 
 
 Matrix Matrix::operator+(const Matrix &B) const {
-	const Matrix &A = *this;
-	if(A.Width() != B.Width()
-	   || A.Height() != B.Height())
-	{
+	Matrix A = *this;
+	if(A.Width() != B.Width() || A.Height() != B.Height()) {
 		throw new std::runtime_error("Matrix::operator+ Matrices have different dimensions.");
 	}
 
-	Matrix C(A.Height(), B.Height());
-	for(size_t y = 0; y < C.Height(); ++y)
-		for(size_t x = 0; x < C.Width(); ++x)
-			C[y][x] = A[y][x] + B[y][x];
-	return C;
+	for(size_t y = 0; y < Height(); ++y)
+		for(size_t x = 0; x < Width(); ++x)
+			A[y][x] += B[y][x];
+	return A;
 }
 
 Matrix Matrix::operator-(const Matrix &B) const {
