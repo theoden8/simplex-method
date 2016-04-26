@@ -37,4 +37,10 @@ protected:
 		}
 		return true;
 	}
+
+	matrix_t 2dvector(std::vector <std::vector <real_t> > grid) {
+		matrix_t m(grid.size());
+		for(size_t y = 0; y < grid.size(); ++y)
+			m[y] = Vector(m[y]);
+	}
 };

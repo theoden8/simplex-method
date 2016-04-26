@@ -14,7 +14,7 @@ Matrix Matrix::AddToRow(const size_t row1, const size_t row2, const real_t k = 1
 	Matrix result = *this;
 	if(row1 >= Height() || row2 >= Height())
 		throw std::runtime_error("Matrix::AddToRow row number out of height.");
-	else if(result[row2].size() != Width())
+	else if(result[row2].Size() != Width())
 		throw std::runtime_error("Matrix::AddToRow Improper size of a row passed..");
 	for(size_t x = 0; x < Width(); ++x)
 		result[row2][x] += result[row1][x] * k;

@@ -8,13 +8,13 @@ TEST_F(MatrixTest, MatrixMultiplicationTest) {
 		A(5),
 		B(6),
 		Line({{5, 7, 2, 1, 8}}),
-		Column({
+		Column(2dvector({
 			   {4},
 			   {5},
 			   {8},
 			   {-2},
 			   {0},
-		}),
+		})),
 		BIG1({
 			 {13, -15, -7 , 9  , 13, -1, 1, -13},
 			 {-9, 2  , 4  , -11, 3 , -1, 5, -13},

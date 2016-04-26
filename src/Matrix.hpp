@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Types.hpp"
+#include "Vector.hpp"
 
 #include <tuple>
 #include <vector>
@@ -8,7 +9,7 @@
 class Matrix {
 public:
 	typedef std::vector <real_t> line_t;
-	typedef std::vector <line_t> matrix_t;
+	typedef std::vector <Vector> matrix_t;
 private:
 	matrix_t grid_;
 public:
@@ -17,8 +18,8 @@ public:
 	Matrix(const size_t diagonal);
 	const matrix_t *GetGrid() const;
 	const bool operator==(const Matrix &other) const;
-	line_t &operator[](size_t row);
-	const line_t &operator[](size_t row) const;
+	Vector &operator[](size_t row);
+	const Vector &operator[](size_t row) const;
 	const size_t Width() const;
 	const size_t Height() const;
 	const bool Square() const;

@@ -37,9 +37,12 @@ Matrix::line_t Matrix::SimplexMethod(Matrix A, line_t C) {
 	std::vector <size_t> match(A.Height()); // matches the row with the solution (column)
 	std::vector <bool> in_basis(A.Width() - 1, 0); // records if a solution is in bases
 	for(size_t y = 0; y < A.Height(); ++y) {
-		A[y].insert(A[y].begin(), A[y].back());
-		A[y].pop_back();
-		if(A[y].front() < 0)
+		real_t last = A[y].Last();
+		A[y].Pop();
+		Vector A2 = Vector(1, last);
+		A2.Push(A[y]);
+		A[y] = A2;
+		if(A[y].First() < 0)
 			A = A.MultiplyRow(y, -1);
 		match[y] = y + A.Width();
 	}

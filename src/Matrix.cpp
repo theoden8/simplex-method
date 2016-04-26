@@ -6,19 +6,16 @@
 
 #include "Matrix.hpp"
 
-// 2d vector to Matrix
 Matrix::Matrix(const matrix_t &grid) :
 	grid_(grid)
 {}
 
-// give sizes and default value
 Matrix::Matrix(const size_t x, const size_t y, const real_t value) :
-	grid_(y, line_t (x, value))
+	grid_(y, Vector(x, value))
 {}
 
-// creates indentity matrix
 Matrix::Matrix(const size_t diagonal) :
-	grid_(diagonal, line_t (diagonal, 0))
+	grid_(diagonal, Vector(diagonal, 0))
 {
 	for(int i = 0; i < Width(); ++i)
 		grid_[i][i] = 1;
@@ -28,7 +25,6 @@ const Matrix::matrix_t *Matrix::GetGrid() const {
 	return &grid_;
 }
 
-// dimensions and elements must be equal
 const bool Matrix::operator== (const Matrix &other) const {
 	if(Width() == other.Width() && Height() == other.Height())
 		for(size_t y = 0; y < Height(); ++y)
@@ -38,11 +34,11 @@ const bool Matrix::operator== (const Matrix &other) const {
 	return true;
 }
 
-Matrix::line_t &Matrix::operator [] (const size_t row) {
+Vector &Matrix::operator [] (const size_t row) {
 	return grid_[row];
 }
 
-const Matrix::line_t &Matrix::operator [] (const size_t row) const {
+const Vector &Matrix::operator [] (const size_t row) const {
 	return grid_[row];
 }
 
@@ -53,7 +49,7 @@ const size_t Matrix::Height() const {
 const size_t Matrix::Width() const {
 	if(!Height())
 		return 0;
-	return grid_.front().size();
+	return grid_.front().Size();
 }
 
 const bool Matrix::Square() const {
