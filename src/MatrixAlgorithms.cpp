@@ -65,7 +65,7 @@ Matrix Matrix::GaussianElimination(const Matrix &M) {
 	return result;
 }
 
-std::tuple <Matrix, Matrix, Matrix> Matrix::LUPDecomposition(const Matrix &M) {
+std::pair <Matrix, Matrix> Matrix::LUDecomposition(const Matrix &M) {
 	if(!M.Square()) {
 		throw std::runtime_error("Matrix::LUDecomposition Need a square matrix.");
 	}
@@ -73,32 +73,16 @@ std::tuple <Matrix, Matrix, Matrix> Matrix::LUPDecomposition(const Matrix &M) {
 	const size_t dim = M.Height();
 	Matrix
 		L = M.LowerTriangular(),
-		U = M.UpperTriangular(),
-		P(dim);
+		U = M.UpperTriangular();
 
-	// pivotize M
-	for(size_t x = 0; x < dim; ++x) {
-
-		size_t y_max = 0;
-		for(size_t y = x; y < dim; ++y) {
-			if(std::abs(M[y_max][x]) < std::abs(M[y][x]))
-				y_max = y;
-		}
-
-		if(x != y_max)
-			P = P.SwapRows(x, y_max);
-	}
-
-	for(size_t d = 0; d < dim; ++d) {
-		U[d][d] = 0;
+	for(size_t i = 0; i < dim; ++i) {
+		U[i][i] = 1;
 	}
 
 	for(size_t i = 0; i < dim; ++i) {
 		for(size_t j = i; j < dim; ++j) {
-			val_t sum = 0;
 			for(size_t k = 0; k < i; ++k)
-				sum += L[i][k] * U[k][j];
-			L[j][i] = M[j][i] - sum;
+				L[j][i] -= L[j][k] * U[k][i];
 		}
 
 		for(size_t j = i; j < dim; ++j) {
@@ -107,9 +91,9 @@ std::tuple <Matrix, Matrix, Matrix> Matrix::LUPDecomposition(const Matrix &M) {
 				sum += L[i][k] * U[k][j];
 			if(L[i][i] == val_t(0))
 				throw std::runtime_error("Matrix::LUDecomposition det(L) tends to 0. Aborting.");
-			U[i][j] = (M[j][i] - sum) / L[i][i];
+			U[i][j] = (M[i][j] - sum) / L[i][i];
 		}
 	}
 
-	return std::tuple <Matrix, Matrix, Matrix> (L, U, P);
+	return std::pair <Matrix, Matrix> (L, U);
 }

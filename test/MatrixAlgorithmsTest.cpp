@@ -123,7 +123,7 @@ TEST_F(MatrixTest, MatrixInvertTest) {
 			 {1 , 3  , -7 , 8  , 11, -1, 4, 14 },
 		});
 	ASSERT_EQ(empty.Invert(), empty);
-	ASSERT_ANY_THROW(identity.Invert());
+	ASSERT_TRUE(cmp_matr_double(identity.Invert(), identity));
 	ASSERT_ANY_THROW(det_zero.Invert());
 	ASSERT_ANY_THROW(longmatrix.Invert());
 	ASSERT_TRUE(cmp_matr_double(
@@ -168,7 +168,7 @@ TEST_F(MatrixTest, MatrixGaussianEliminationTest) {
 	/* ASSERT_ANY_THROW(Matrix::GaussianElimination(det_zero)); */
 }
 
-TEST_F(MatrixTest, MatrixLUPDecompositionTest) {
+TEST_F(MatrixTest, MatrixLUDecompositionTest) {
 	Matrix
 		empty(0),
 		det_zero({
@@ -191,28 +191,25 @@ TEST_F(MatrixTest, MatrixLUPDecompositionTest) {
 			 {-5, 9  , -14, -2 , 5 , -2, 7, -3 },
 			 {1 , 3  , -7 , 8  , 11, -1, 4, 14 },
 		});
-	ASSERT_NO_THROW(Matrix::LUPDecomposition(empty));
-	ASSERT_ANY_THROW(Matrix::LUPDecomposition(longmatrix));
-	ASSERT_ANY_THROW(Matrix::LUPDecomposition(det_zero));
-	ASSERT_NO_THROW(Matrix::LUPDecomposition(inversible));
-	std::tuple <Matrix, Matrix, Matrix> LUP = Matrix::LUPDecomposition(inversible);
-	Matrix L = std::get <0>(LUP);
-	Matrix U = std::get <1>(LUP);
-	Matrix P = std::get <2>(LUP);
+	ASSERT_NO_THROW(Matrix::LUDecomposition(empty));
+	ASSERT_ANY_THROW(Matrix::LUDecomposition(longmatrix));
+	ASSERT_ANY_THROW(Matrix::LUDecomposition(det_zero));
+	ASSERT_NO_THROW(Matrix::LUDecomposition(inversible));
+	std::pair <Matrix, Matrix> LU = Matrix::LUDecomposition(inversible);
+	Matrix
+		L = LU.first,
+		U = LU.second;
 	Matrix::Print(L, "Lower");
 	Matrix::Print(U, "Upper");
-	Matrix::Print(P, "Permutation");
-	Matrix::Print(L * U * P, "L * U * P");
+	Matrix::Print(L * U, "L * U");
 	Matrix::Print(inversible, "Inversible");
 	ASSERT_TRUE(cmp_matr_double(
 			inversible,
-			L * U * P
+			L * U
 	));
 }
 
 /*
- * Invert and GaussianElimination can not be tested as determinant function is
- * not implemented, and thus there is no point in trying to check their
- * validity. Simplex method implementation uses neither, therefore we are able
- * to verify it (by hand and verifying some aspects of the solution).
+ * GaussianElimination can not be tested as it terminates when the solution
+ * matrix is not similar to identity matrix.
  */

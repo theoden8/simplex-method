@@ -47,7 +47,7 @@ public:
 	Matrix Transpose() const;
 	Matrix Invert() const;
 	static Matrix GaussianElimination(const Matrix &M);
-	static std::tuple <Matrix, Matrix, Matrix> LUPDecomposition(const Matrix &M);
+	static std::pair <Matrix, Matrix> LUDecomposition(const Matrix &M);
 // SimplexMethod
 	static Matrix::line_t SimplexMethod(Matrix A, line_t C);
 // Obsolete (to be replaced with gtesting)

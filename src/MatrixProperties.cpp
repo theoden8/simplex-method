@@ -6,7 +6,7 @@ Matrix::val_t Matrix::Trace() const {
 	}
 
 	val_t sum = 0;
-	for (size_t i = 0; i < Height(); ++i)
+	for(size_t i = 0; i < Height(); ++i)
 		sum += grid_[i][i];
 
 	return sum;
@@ -18,9 +18,9 @@ Matrix::val_t Matrix::Det() const {
 	}
 
 	try {
-		std::tuple <Matrix, Matrix, Matrix> LUP = LUPDecomposition(*this);
+		std::pair <Matrix, Matrix> LU = LUDecomposition(*this);
 		Matrix::val_t det = 1;
-		for (const auto &m : {std::get<0>(LUP), std::get<1>(LUP)}) {
+		for(const auto &m : {LU.first, LU.second}) {
 			for(size_t d = 0; d < m.Width(); ++d)
 				det *= m[d][d];
 		}
