@@ -77,5 +77,5 @@ message( STATUS "MATRIX_LIB                 " ${MATRIX_LIB} )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT})
 add_subdirectory(src)
-#add_subdirectory(test/tests)
+add_subdirectory(test/tests)
 add_subdirectory(test)
