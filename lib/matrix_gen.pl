@@ -3,12 +3,14 @@
 use strict;
 use 5.16.2;
 
-die if(@ARGV != 2);
+exit if(@ARGV != 2);
+
 my($w, $h) = @ARGV;
 
-my @range = -15..15;
 # say join " ", @ARGV;
 # say;
+
+my @range = -15..15;
 
 sub num { return $range[rand @range]; }
 
