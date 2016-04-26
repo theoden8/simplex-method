@@ -6,4 +6,4 @@ for i in Makefile CMakeFiles CMakeCache.txt cmake_install.cmake; do
     find . -name "$i" -exec rm  -rf {} \;
 done
 
-rm -f _simplex _testmatrix src/lib*.a
+find . -type f -name "lib*.a" -exec rm -f {} \;

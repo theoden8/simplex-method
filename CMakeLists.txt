@@ -4,13 +4,16 @@ project(simplex_root)
 
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 set(PROJECT_INCLUDE ${PROJECT_ROOT}/include)
-set(PROJECT_SRC ${PROJECT_ROOT}/src)
+set(PROJECT_LIB ${PROJECT_ROOT}/lib)
 set(PROJECT_TEST ${PROJECT_ROOT}/test)
+set(PROJECT_SRC ${PROJECT_ROOT}/src)
+set(PROJECT_BIN ${PROJECT_ROOT}/bin)
 
 MESSAGE( STATUS "PROJECT_ROOT:     " ${PROJECT_ROOT})
 MESSAGE( STATUS "PROJECT_INCLUDE:  " ${PROJECT_INCLUDE})
-MESSAGE( STATUS "PROJECT_SRC:      " ${PROJECT_SRC})
+MESSAGE( STATUS "PROJECT_LIB:      " ${PROJECT_LIB})
 MESSAGE( STATUS "PROJECT_TEST:     " ${PROJECT_TEST})
+MESSAGE( STATUS "PROJECT_BIN:      " ${PROJECT_BIN})
 
 # ------------- EXTERNAL LIBRARIES --------------
 
@@ -69,14 +72,14 @@ set(GMOCK_LIB "${source_dir}/include")
 
 # thanks to http://www.kaizou.org/2014/11/gtest-cmake/
 
-set(MATRIX_LIB ${PROJECT_SRC}/matrix)
-set(VECTOR_LIB ${PROJECT_SRC}/vector)
+set(MATRIX_LIB ${PROJECT_LIB}/matrix)
+set(VECTOR_LIB ${PROJECT_LIB}/vector)
 
 message( STATUS "GTEST_LIB:                 " ${GTEST_LIB} )
 message( STATUS "GMOCK_LIB:                 " ${GMOCK_LIB} )
 message( STATUS "MATRIX_LIB                 " ${MATRIX_LIB} )
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_ROOT})
-add_subdirectory(src)
-add_subdirectory(test/tests)
-add_subdirectory(test)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BIN})
+add_subdirectory(${PROJECT_LIB})
+add_subdirectory(${PROJECT_SRC})
+add_subdirectory(${PROJECT_TEST})
