@@ -35,6 +35,7 @@ Matrix Matrix::MultiplyRow(const size_t row1, const real_t k) const {
 	return AddToRow(row1, row1, k - 1.);
 }
 
+
 Matrix Matrix::SwapColumns(const size_t clm1, const size_t clm2) const {
 	if(clm1 >= Width() || clm2 >= Width())
 		throw std::runtime_error("Matrix::SwapColumns col number out of height.");

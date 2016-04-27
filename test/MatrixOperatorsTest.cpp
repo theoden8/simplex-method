@@ -15,16 +15,19 @@ static Matrix
 		{1 , 3  , -7 , 8  , 11, -1, 4, 14 },
 	}));
 
-TEST_F(MatrixTest, MatrixUNARYOperatorsTest) {
+TEST_F(MatrixTest, MatrixUnaryOperatorsTest) {
 	ASSERT_EQ(empty, +empty);
 	ASSERT_EQ(empty, -empty);
 	ASSERT_EQ(some, +empty);
-	ASSERT_EQ(-some, make_mat({
+	ASSERT_TRUE(cmp_matr_double(
+		-some,
+		make_mat({
 			{ +5 , +5,-0 ,-11 ,-15 },
 			{ +4 , +2,-15, +13,-13 },
 			{ +10, +2,-14, +12,-1  },
 			{ +1 ,-12,-12, +3 , +7 },
-	}));
+		})
+	));
 }
 
 TEST_F(MatrixTest, MatrixScalarOperatorsTest) {

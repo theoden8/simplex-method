@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 
 include_directories(
-    ${PROJECT_LIB}
+	${PROJECT_LIB}
 	${MATRIX_LIB}
-    ${VECTOR_LIB}
+	${VECTOR_LIB}
 	${GTEST_LIB}
 	${GMOCK_LIB}
 )

@@ -39,9 +39,14 @@ protected:
 
 public:
 	static Matrix make_mat(std::vector <std::vector <real_t> > grid) {
-		Matrix::matrix_t m(grid.size());
+		if(grid.size() == 0) {
+			return Matrix(0);
+		}
+
+		Matrix m(grid.size());
 		for(size_t y = 0; y < grid.size(); ++y)
-			m[y] = Vector(m[y]);
+			m[y] = Vector(grid[y]);
+
 		return Matrix(m);
 	}
 	#define make_mat MatrixTest::make_mat
