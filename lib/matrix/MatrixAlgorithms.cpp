@@ -6,23 +6,31 @@
 
 Matrix Matrix::operator* (const Matrix &B) const {
 	const Matrix &A = *this;
-	if(A.Width() != B.Height())
+	if(A.Width() != B.Height()) {
 		throw std::runtime_error("Matrix::Operator* The matrixes have inappropriate dimensions.");
+	}
 
 	Matrix C(B.Width(), A.Height(), 0);
+	Matrix::Print(A, "A");
+	Matrix::Print(B, "B");
 	const size_t depth = A.Width();
+
 	for(size_t y = 0; y < A.Height(); ++y)
 		for(size_t x = 0; x < B.Width(); ++x)
 			for(size_t i = 0; i < depth; ++i)
 				C[y][x] += A[y][i] * B[i][x];
+
 	return C;
 }
 
 Matrix Matrix::Transpose() const {
 	Matrix result(Height(), Width());
-	for(size_t x = 0; x < Width(); ++x)
+
+	for(size_t x = 0; x < Width(); ++x) {
 		for(size_t y = 0; y < Height(); ++y)
 			result[x][y] = grid_[y][x];
+	}
+
 	return result;
 }
 

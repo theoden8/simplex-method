@@ -1,6 +1,6 @@
 #include "MatrixTests.hpp"
 
-Matrix
+static Matrix
 	empty(0),
 	nonsquare(make_mat({
 		{13, -15, -7 , 9  , 13, -1, 1, -13},

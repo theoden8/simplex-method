@@ -1,6 +1,6 @@
 #include "MatrixTests.hpp"
 
-Matrix
+static Matrix
 	empty(0),
 	some(make_mat({
 		{ -5 , -5, 0 , 11 , 15 },

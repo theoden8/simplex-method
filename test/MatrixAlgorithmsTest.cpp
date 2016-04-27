@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-Matrix
+static Matrix
 	empty(0),
 	det_zero(make_mat({
 		{ 20,  28,  8,  4,  32 },
@@ -32,30 +32,28 @@ TEST_F(MatrixTest, MatrixMultiplicationTest) {
 		B(6),
 		Line({Vector({5, 7, 2, 1, 8})}),
 		Column(make_mat({
-			   {4},
-			   {5},
-			   {8},
-			   {-2},
-			   {0},
+				{4},
+				{5},
+				{8},
+				{-2},
+				{0},
 		})),
 		BIG1(make_mat({
-			 {13, -15, -7 , 9  , 13, -1, 1, -13},
-			 {-9, 2  , 4  , -11, 3 , -1, 5, -13},
-			 {-5, 9  , -14, -2 , 5 , -2, 7, -3 },
-			 {1 , 3  , -7 , 8  , 11, -1, 4, 14 },
+			{13, -15, -7 , 9  , 13, -1, 1, -13},
+			{-9, 2  , 4  , -11, 3 , -1, 5, -13},
+			{-5, 9  , -14, -2 , 5 , -2, 7, -3 },
+			{1 , 3  , -7 , 8  , 11, -1, 4, 14 },
 		})),
 		BIG2(make_mat({
-			 {-4 , 12 , -14},
-			 {0  , -10, -13},
-			 {-11, -7 , -13},
-			 {3  , -11, 5  },
-			 {-12, 10 , -3 },
-			 {-1 , 0  , 6  },
-			 {13 , 0  , 5  },
-			 {-14, 4  , 10 },
-		})),
-		empty(0)
-	;
+			{-4 , 12 , -14},
+			{0  , -10, -13},
+			{-11, -7 , -13},
+			{3  , -11, 5  },
+			{-12, 10 , -3 },
+			{-1 , 0  , 6  },
+			{13 , 0  , 5  },
+			{-14, 4  , 10 },
+		}));
 	ASSERT_ANY_THROW(A * B);
 	ASSERT_ANY_THROW(B * A);
 	ASSERT_ANY_THROW(A * Line);
@@ -66,6 +64,8 @@ TEST_F(MatrixTest, MatrixMultiplicationTest) {
 	ASSERT_TRUE(cmp_matr_double(A * Column, Column));
 	ASSERT_ANY_THROW(B * Column);
 	ASSERT_ANY_THROW(Column * B);
+	Matrix X = Line * Column;
+	Matrix::Print(Line * Column, "Line * Column");
 	ASSERT_TRUE(cmp_matr_double(Line * Column, Matrix(1, 1, 69)));
 	ASSERT_TRUE(cmp_matr_double(Column * Line, make_mat({
 			{ 20,  28,  8,  4,  32 },

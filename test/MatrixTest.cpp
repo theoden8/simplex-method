@@ -9,8 +9,16 @@ TEST_F(MatrixTest, TestingConstructors) {
 			Vector({0, 0, 0, 1, 0}),
 			Vector({0, 0, 0, 0, 1})
 		}),
+		A2(make_mat({
+			{1, 0, 0, 0, 0},
+			{0, 1, 0, 0, 0},
+			{0, 0, 1, 0, 0},
+			{0, 0, 0, 1, 0},
+			{0, 0, 0, 0, 1}
+		})),
 		B(5);
-	ASSERT_TRUE(A == B);
+	ASSERT_EQ(A, B);
+	ASSERT_EQ(A, A2);
 	for(size_t y = 0; y < A.Height(); ++y) {
 		for(size_t x = 0; x < A.Width(); ++x) {
 			ASSERT_EQ(A[y][x], B[y][x]);
@@ -56,12 +64,15 @@ TEST_F(MatrixTest, TestingGetters) {
 	ASSERT_TRUE(Matrix(5).Square());
 	for(const auto &m : {A, B}) {
 		ASSERT_EQ(m.Height(), m.GetGrid()->size());
+
 		if(!m.Height())
 			ASSERT_EQ(m.Width(), 0);
 		else
 			ASSERT_EQ(m.Width(), m.GetGrid()->front().Size());
-		for(size_t y = 0; y < m.Height(); ++y)
+
+		for(size_t y = 0; y < m.Height(); ++y) {
 			for(size_t x = 0; x < m.Width(); ++x)
 				ASSERT_EQ(m[y][x], m[y][x]);
+		}
 	}
 }
