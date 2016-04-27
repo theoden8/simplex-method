@@ -5,7 +5,7 @@ void Vector::Push(const real_t value) {
 }
 
 void Vector::Push(const Vector &other) {
-	line_.insert(line_.end(), other.GetLine()->begin(), other.GetLine()->end());
+	line_.insert(line_.end(), other.GetLine().begin(), other.GetLine().end());
 }
 
 void Vector::Pop() {

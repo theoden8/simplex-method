@@ -4,8 +4,8 @@
 
 struct smethod_args {
 	Matrix M;
-	Matrix::line_t F;
-	smethod_args(Matrix M, Matrix::line_t F):
+	Vector::line_t F;
+	smethod_args(Matrix M, Vector::line_t F):
 		M(M), F(F)
 	{}
 };
@@ -14,7 +14,7 @@ static Vector sm_wrap(const smethod_args &s) {
 	return Matrix::SimplexMethod(s.M, s.F);
 }
 
-static char verify_solution_validity(const Matrix &A, const Matrix::line_t &solution, const Matrix::line_t &optimized) {
+static char verify_solution_validity(const Matrix &A, const Vector::line_t &solution, const Vector::line_t &optimized) {
 	// Substitute values into all rows and verify equations
 	const static real_t PRECISION = 0.001;
 	for(int i = 0; i < solution.size() - 1; ++i)

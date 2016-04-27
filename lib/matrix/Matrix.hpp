@@ -8,7 +8,6 @@
 
 class Matrix {
 public:
-	typedef std::vector <real_t> line_t;
 	typedef std::vector <Vector> matrix_t;
 private:
 	matrix_t grid_;
@@ -61,7 +60,7 @@ public:
 	static Matrix GaussianElimination(const Matrix &M);
 	static std::pair <Matrix, Matrix> LUDecomposition(const Matrix &M);
 // SimplexMethod
-	static Vector SimplexMethod(Matrix A, line_t C);
+	static Vector SimplexMethod(Matrix A, Vector::line_t C);
 // Obsolete (to be replaced with gtesting)
 	static void Print(const Matrix &A, const char *NAME = "", const size_t h_x = -1, const size_t h_y = -1);
 	#if VERBOSE >= 1

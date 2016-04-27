@@ -29,7 +29,7 @@ static void EliminateChosenRow(Matrix &M, const size_t row, const size_t x) {
 	}
 }
 
-Vector Matrix::SimplexMethod(Matrix A, line_t C) {
+Vector Matrix::SimplexMethod(Matrix A, Vector::line_t C) {
 	if(C.size() != A.Width() - 1)
 		throw std::runtime_error("Matrix::SimplexMethod Can not use vector of inappropriate width.");
 	C.insert(C.begin(), real_t(0));

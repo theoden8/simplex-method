@@ -12,16 +12,22 @@ private:
 	line_t line_;
 public:
 	Vector();
+	/* Vector(size_t size); */
 	Vector(size_t size, real_t value);
 	Vector(line_t line);
 	Vector(size_t size, const std::function <real_t (size_t)> &construct);
 	~Vector();
-	const line_t *GetLine() const;
+
+	const line_t &GetLine() const;
+	const bool operator== (const Vector &other) const;
+
 	size_t Size() const;
-	real_t &operator[] (const size_t index);
 	real_t First() const;
 	real_t Last() const;
+
+	real_t &operator[] (const size_t index);
 	const real_t &operator[] (const size_t index) const;
+
 	static void Print(const Vector &v);
 // VectorTransformations
 	void Push(const real_t value);

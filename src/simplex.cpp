@@ -31,7 +31,7 @@ char run_test(const char *filename) {
 		file >> optimized[i];
 	Matrix A(values);
 	try {
-		const static Vector solution(Matrix::SimplexMethod(A, *optimized.GetLine()));
+		const static Vector solution(Matrix::SimplexMethod(A, optimized.GetLine()));
 		#ifndef VERBOSE
 		for(size_t i = 0; i < solution.Size(); ++i)
 			std::cout << solution[i] << " ";

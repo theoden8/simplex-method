@@ -5,12 +5,14 @@
 Matrix Matrix::MakeSquare() const {
 	Matrix result = *this;
 	long long diff = Height() - Width();
+
 	if(diff < 0) {
 		for(size_t i = 0; i < Height(); ++i)
 			result[i].Resize(Height(), 0.);
 	} else if(diff > 0) {
 		result.grid_.resize(Width());
 	}
+
 	return result;
 }
 
@@ -49,8 +51,9 @@ Matrix Matrix::SubMatrix(const size_t start, const size_t length) const {
 }
 
 Matrix Matrix::LowerTriangular() const {
-	if(!Square())
+	if(!Square()) {
 		throw std::runtime_error("Matrix::LowerTriangular must be square.");
+	}
 
 	Matrix B(grid_);
 	for(size_t x = 1; x < Width(); ++x)
@@ -60,8 +63,9 @@ Matrix Matrix::LowerTriangular() const {
 }
 
 Matrix Matrix::UpperTriangular() const {
-	if(!Square())
+	if(!Square()) {
 		throw std::runtime_error("Matrix::LowerTriangular must be square.");
+	}
 
 	Matrix B(grid_);
 	for(size_t y = 1; y < Height(); ++y)
