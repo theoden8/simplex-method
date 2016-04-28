@@ -6,9 +6,9 @@ Created by Kirill Rodriguez on 08/2015.
 
 This program provides two static libraries: vector and matrix (both tested) with various algorithms. The aim of this project was to implement simplex method, but because on the way of understanding how to implement it I created a Matrix class with useful operations algorithms, it was convenient to elaborate a little bit on linear algebra in C++ and to implement vectors, LUDecomposition, Determinant and more.
 
-## Inconsistencies
+## Bugs/Errors
 
-Method `GaussianElimination` is not yet properly tested and `SimplexMethod` is only validated by hand.
+Method `GaussianElimination` is not yet properly tested (causes termination in some cases) and `SimplexMethod` is only verified by hand.
 
 ## Compilation
 
