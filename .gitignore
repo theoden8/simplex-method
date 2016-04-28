@@ -1,4 +1,5 @@
 bin
+include
 lib*.a
 CMakeFiles
 cmake_install.cmake
@@ -6,4 +7,3 @@ CMakeCache.txt
 Makefile
 CTestTestfile.cmake
 Testing
-include
