@@ -64,8 +64,6 @@ TEST_F(MatrixTest, MatrixMultiplicationTest) {
 	ASSERT_TRUE(cmp_matr_double(A * Column, Column));
 	ASSERT_ANY_THROW(B * Column);
 	ASSERT_ANY_THROW(Column * B);
-	Matrix X = Line * Column;
-	Matrix::Print(Line * Column, "Line * Column");
 	ASSERT_TRUE(cmp_matr_double(Line * Column, Matrix(1, 1, 69)));
 	ASSERT_TRUE(cmp_matr_double(Column * Line, make_mat({
 			{ 20,  28,  8,  4,  32 },

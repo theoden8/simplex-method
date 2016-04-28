@@ -6,28 +6,27 @@ Matrix Matrix::operator+ () const {
 }
 
 Matrix Matrix::operator- () const {
-	return *this * real_t(-1);
+	return operator*(-1.);
 }
 
 
 Matrix Matrix::operator+ (const real_t &scalar) const {
 	Matrix A = *this;
 
-	for(size_t y = 0; y < A.Height(); ++y) {
+	for(size_t y = 0; y < A.Height(); ++y)
 		A[y] = A[y] + scalar;
-	}
 
 	return A;
 }
 
 Matrix Matrix::operator- (const real_t &scalar) const {
-	return *this + (-scalar);
+	return operator+ (-scalar);
 }
 
 Matrix Matrix::operator* (const real_t &scalar) const {
 	Matrix A = *this;
 	for(size_t y = 0; y < A.Height(); ++y)
-		A[y] = A[y] + scalar;
+		A[y] = A[y] * scalar;
 	return A;
 }
 
@@ -36,7 +35,7 @@ Matrix Matrix::operator/ (const real_t &scalar) const {
 		throw std::runtime_error("Matrix::operator/ cannot divide by zero");
 	}
 
-	return *this * (1 / scalar);
+	return operator* (1 / scalar);
 }
 
 
@@ -53,5 +52,5 @@ Matrix Matrix::operator+ (const Matrix &B) const {
 }
 
 Matrix Matrix::operator- (const Matrix &B) const {
-	return *this + (-B);
+	return operator+ (-B);
 }

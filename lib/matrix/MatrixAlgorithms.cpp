@@ -11,8 +11,6 @@ Matrix Matrix::operator* (const Matrix &B) const {
 	}
 
 	Matrix C(B.Width(), A.Height(), 0);
-	Matrix::Print(A, "A");
-	Matrix::Print(B, "B");
 	const size_t depth = A.Width();
 
 	for(size_t y = 0; y < A.Height(); ++y)

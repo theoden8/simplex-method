@@ -21,7 +21,6 @@ TEST_F(MatrixTest, MatrixSwapLinesTest) {
 	ASSERT_EQ(empty_rows, empty_rows.SwapRows(1, 2));
 	ASSERT_ANY_THROW(empty.SwapRows(1, 2));
 	ASSERT_ANY_THROW(empty.SwapColumns(1, 2));
-	Matrix::Print(standard, "Standard");
 	ASSERT_EQ(standard.SwapRows(1, 3), make_mat({
 			{ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10},
 			{31, 32, 33, 34, 35, 36, 37, 38, 39, 40},

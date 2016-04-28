@@ -21,18 +21,30 @@ Matrix::Matrix(const size_t diagonal) :
 		grid_[i][i] = 1;
 }
 
-const Matrix::matrix_t *Matrix::GetGrid() const {
-	return &grid_;
+Matrix::~Matrix() {
 }
 
+
+const Matrix::matrix_t &Matrix::GetGrid() const {
+	return grid_;
+}
+
+
 const bool Matrix::operator== (const Matrix &other) const {
-	if(Width() == other.Width() && Height() == other.Height())
-		for(size_t y = 0; y < Height(); ++y)
-			for(size_t x = 0; x < Width(); ++x)
-				if(grid_[y][x] != other[y][x])
-					return false;
+	if(Width() != other.Width() || Height() != other.Height())
+		return false;
+
+	for(size_t y = 0; y < Height(); ++y)
+		for(size_t x = 0; x < Width(); ++x)
+			if(grid_[y][x] != other[y][x])
+				return false;
 	return true;
 }
+
+const bool Matrix::operator!= (const Matrix &other) const {
+	return !(operator==(other));
+}
+
 
 Vector &Matrix::operator [] (const size_t row) {
 	return grid_[row];
@@ -52,9 +64,11 @@ const size_t Matrix::Width() const {
 	return grid_.front().Size();
 }
 
+
 const bool Matrix::Square() const {
 	return Height() == Width();
 }
+
 
 void Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const size_t h_y) {
 	const size_t SPACING = 30;

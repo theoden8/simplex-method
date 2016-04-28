@@ -63,12 +63,12 @@ TEST_F(MatrixTest, TestingGetters) {
 	ASSERT_FALSE(A.Square());
 	ASSERT_TRUE(Matrix(5).Square());
 	for(const auto &m : {A, B}) {
-		ASSERT_EQ(m.Height(), m.GetGrid()->size());
+		ASSERT_EQ(m.Height(), m.GetGrid().size());
 
 		if(!m.Height())
 			ASSERT_EQ(m.Width(), 0);
 		else
-			ASSERT_EQ(m.Width(), m.GetGrid()->front().Size());
+			ASSERT_EQ(m.Width(), m.GetGrid().front().Size());
 
 		for(size_t y = 0; y < m.Height(); ++y) {
 			for(size_t x = 0; x < m.Width(); ++x)

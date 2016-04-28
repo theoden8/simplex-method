@@ -28,8 +28,8 @@ protected:
 		for(size_t y = 0; y < a.Height(); ++y) {
 			for(size_t x = 0; x < a.Width(); ++x) {
 				if(!cmp_double(a[y][x], b[y][x])) {
-					Matrix::Print(a, "a not equal to");
-					Matrix::Print(b, "b not equal to");
+					Matrix::Print(a, "A : A != B");
+					Matrix::Print(b, "B : A != B");
 					return false;
 				}
 			}

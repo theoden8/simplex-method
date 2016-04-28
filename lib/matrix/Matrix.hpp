@@ -14,8 +14,11 @@ public:
 	Matrix(const matrix_t &grid);
 	Matrix(const size_t x, const size_t y, const real_t value = 0);
 	Matrix(const size_t diagonal);
-	const matrix_t *GetGrid() const;
+	~Matrix();
+
+	const matrix_t &GetGrid() const;
 	const bool operator==(const Matrix &other) const;
+	const bool operator!=(const Matrix &other) const;
 	Vector &operator[](size_t row);
 	const Vector &operator[](size_t row) const;
 	const size_t Width() const;
