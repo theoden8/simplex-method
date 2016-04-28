@@ -34,11 +34,10 @@
 			* create a wrapper for canoncial form.
 		* Matrix::GaussianElimination
 			* prevent termination in case something goes wrong.
+		* Matrix::Minor
 
 		* #### further
 
-			* Matrix::Minor
-				* problems with implementing this in memory- and time-efficient way.
 			* Exceptions
 				These need better system.
 			* Matrix::Rank
