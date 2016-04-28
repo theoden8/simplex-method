@@ -73,7 +73,9 @@ set(GMOCK_LIB "${source_dir}/include")
 # thanks to http://www.kaizou.org/2014/11/gtest-cmake/
 
 set(MATRIX_LIB ${PROJECT_LIB}/matrix)
+set(MATRIX_TEST ${PROJECT_LIB}/matrix/test)
 set(VECTOR_LIB ${PROJECT_LIB}/vector)
+set(VECTOR_TEST ${PROJECT_LIB}/vector/test)
 
 message( STATUS "GTEST_LIB:                 " ${GTEST_LIB} )
 message( STATUS "GMOCK_LIB:                 " ${GMOCK_LIB} )
@@ -82,4 +84,5 @@ message( STATUS "MATRIX_LIB                 " ${MATRIX_LIB} )
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BIN})
 add_subdirectory(${PROJECT_LIB})
 add_subdirectory(${PROJECT_SRC})
-add_subdirectory(${PROJECT_TEST})
+add_subdirectory(${VECTOR_TEST})
+add_subdirectory(${MATRIX_TEST})
