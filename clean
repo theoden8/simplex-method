@@ -7,3 +7,5 @@ for i in Makefile CMakeFiles CMakeCache.txt cmake_install.cmake; do
 done
 
 find . -type f -name "lib*.a" -exec rm -f {} \;
+
+rm -rf bin
