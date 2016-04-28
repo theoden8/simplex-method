@@ -86,3 +86,7 @@ add_subdirectory(${PROJECT_LIB})
 add_subdirectory(${PROJECT_SRC})
 add_subdirectory(${VECTOR_TEST})
 add_subdirectory(${MATRIX_TEST})
+
+enable_testing()
+add_test(Vectors ./bin/_testvector)
+add_test(Matrices ./bin/_testmatrix)

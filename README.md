@@ -17,9 +17,9 @@ To compile the program, use:
 
 ## Testing
 
-To run google-tests, execute:
+To test the program, use:
 
-    ./_testmatrix
+    make test
     ./_simplex ./test/tests/... ; echo $? # some file
 
 The supporting program for generating examples is **matrix_gen.pl**, which prints matrices of given width and height.
