@@ -51,4 +51,7 @@ public:
 	Vector operator- (const Vector &B) const;
 // VectorPermutations
 	// TODO
+// VectorAlgorithms
+	real_t abs() const;
+	real_t operator^ (const Vector &other) const;
 };
