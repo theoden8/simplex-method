@@ -12,10 +12,8 @@ Matrix Matrix::operator- () const {
 
 Matrix Matrix::operator+ (const real_t &scalar) const {
 	Matrix A = *this;
-
 	for(size_t y = 0; y < A.Height(); ++y)
 		A[y] = A[y] + scalar;
-
 	return A;
 }
 
@@ -31,23 +29,17 @@ Matrix Matrix::operator* (const real_t &scalar) const {
 }
 
 Matrix Matrix::operator/ (const real_t &scalar) const {
-	if(scalar == real_t(0)) {
-		throw std::runtime_error("Matrix::operator/ cannot divide by zero");
-	}
-
+	ASSERT_DOMAIN(scalar != 0.);
 	return operator* (1 / scalar);
 }
 
 
 Matrix Matrix::operator+ (const Matrix &B) const {
 	Matrix A = *this;
-	if(A.Width() != B.Width() || A.Height() != B.Height()) {
-		throw new std::runtime_error("Matrix::operator+ Matrices have different dimensions.");
-	}
+	ASSERT_DOMAIN(A.Width() == B.Width() && A.Height() == B.Height());
 
 	for(size_t y = 0; y < Height(); ++y)
 		A[y] = A[y] + B[y];
-
 	return A;
 }
 

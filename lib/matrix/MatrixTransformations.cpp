@@ -17,31 +17,24 @@ Matrix Matrix::MakeSquare() const {
 }
 
 Matrix Matrix::ConcatenateColumns(const Matrix &B) const {
-	if(Height() != B.Height()) {
-		throw std::runtime_error("Matrix::ConcatenateColumns The matrixes have different heights");
-	}
-
 	Matrix A = *this;
+	ASSERT_DOMAIN(A.Height() == B.Height());
+
 	for(size_t y = 0; y < Height(); ++y)
 		A[y].Push(B[y]);
-
 	return A;
 }
 
 Matrix Matrix::ConcatenateRows(const Matrix &B) const {
-	if(Width() != B.Width()) {
-		throw std::runtime_error("Matrix::ConcatenateRows The matrixes have different widths");
-	}
-
 	Matrix A = *this;
+	ASSERT_DOMAIN(A.Width() == B.Width());
+
 	A.grid_.insert(A.grid_.end(), B.grid_.begin(), B.grid_.end());
 	return A;
 }
 
 Matrix Matrix::SubMatrix(const size_t start, const size_t length) const {
-	if(start + length > Width()) {
-		throw std::runtime_error("Matrix::SubMatrix Out of width.");
-	}
+	ASSERT_DOMAIN(start + length <= Width());
 
 	Matrix A(matrix_t(Height(), Vector()));
 	for(size_t y = 0; y < Height(); ++y)
@@ -51,9 +44,7 @@ Matrix Matrix::SubMatrix(const size_t start, const size_t length) const {
 }
 
 Matrix Matrix::LowerTriangular() const {
-	if(!Square()) {
-		throw std::runtime_error("Matrix::LowerTriangular must be square.");
-	}
+	ASSERT_DOMAIN(Square());
 
 	Matrix B(grid_);
 	for(size_t x = 1; x < Width(); ++x)
@@ -63,9 +54,7 @@ Matrix Matrix::LowerTriangular() const {
 }
 
 Matrix Matrix::UpperTriangular() const {
-	if(!Square()) {
-		throw std::runtime_error("Matrix::LowerTriangular must be square.");
-	}
+	ASSERT_DOMAIN(Square());
 
 	Matrix B(grid_);
 	for(size_t y = 1; y < Height(); ++y)

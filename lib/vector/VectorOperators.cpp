@@ -28,24 +28,18 @@ Vector Vector::operator* (const real_t scalar) const {
 }
 
 Vector Vector::operator/ (const real_t scalar) const {
-	if(scalar == real_t(0)) {
-		throw std::runtime_error("Vector::operator/ Can not divide by zero.");
-	}
+	ASSERT_DOMAIN(scalar != real_t(0));
 
 	return *this * (1 / scalar);
 }
 
 
 Vector Vector::operator+ (const Vector &B) const {
-	if(Size() != B.Size()) {
-		throw std::runtime_error("Vector::operator+ Vectors have different dimensions.");
-	}
+	ASSERT_DOMAIN(Size() == B.Size());
 
 	Vector A = *this;
-
 	for(size_t i = 0; i < Size(); ++i)
 		A[i] += B[i];
-
 	return A;
 }
 

@@ -1,9 +1,7 @@
 #include "Matrix.hpp"
 
 real_t Matrix::Trace() const {
-	if(!Square()) {
-		throw std::runtime_error("Matrix::Trace need a square matrix.");
-	}
+	ASSERT_DOMAIN(Square());
 
 	real_t sum = 0;
 	for(size_t i = 0; i < Height(); ++i)
@@ -13,9 +11,7 @@ real_t Matrix::Trace() const {
 }
 
 real_t Matrix::Det() const {
-	if(!Square()) {
-		throw std::runtime_error("Matrix::Det need a square matrix.");
-	}
+	ASSERT_DOMAIN(Square());
 
 	try {
 		std::pair <Matrix, Matrix> LU = LUDecomposition(*this);

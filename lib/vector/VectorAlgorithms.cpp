@@ -10,9 +10,7 @@ real_t Vector::Abs() const {
 }
 
 real_t Vector::operator^(const Vector &other) const {
-	if(Size() != other.Size()) {
-		throw std::runtime_error("Vector::operator^ need vectors of the same size.");
-	}
+	ASSERT_DOMAIN(Size() == other.Size());
 
 	real_t scalar = 0;
 	for(size_t i = 0; i < Size(); ++i)

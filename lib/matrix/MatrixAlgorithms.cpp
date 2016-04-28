@@ -6,9 +6,7 @@
 
 Matrix Matrix::operator* (const Matrix &B) const {
 	const Matrix &A = *this;
-	if(A.Width() != B.Height()) {
-		throw std::runtime_error("Matrix::Operator* The matrixes have inappropriate dimensions.");
-	}
+	ASSERT_DOMAIN(A.Width() == B.Height());
 
 	Matrix C(B.Width(), A.Height(), 0);
 	const size_t depth = A.Width();
@@ -33,14 +31,7 @@ Matrix Matrix::Transpose() const {
 }
 
 Matrix Matrix::Invert() const {
-	if(!Square()) {
-		throw std::runtime_error("Matrix::Invert Can not invert non-square matrix.");
-	}
-
-	if(Det() == real_t(0)) {
-		throw std::runtime_error("Matrix::Invert Det == 0, not invertible");
-	}
-
+	ASSERT_DOMAIN(Square() && Det() != real_t(0));
 	const size_t dim = Height();
 	return GaussianElimination(this->ConcatenateColumns(Matrix(dim))).SubMatrix(dim, dim);
 }
@@ -72,9 +63,7 @@ Matrix Matrix::GaussianElimination(const Matrix &M) {
 }
 
 std::pair <Matrix, Matrix> Matrix::LUDecomposition(const Matrix &M) {
-	if(!M.Square()) {
-		throw std::runtime_error("Matrix::LUDecomposition Need a square matrix.");
-	}
+	ASSERT_DOMAIN(M.Square());
 
 	const size_t dim = M.Height();
 	Matrix
