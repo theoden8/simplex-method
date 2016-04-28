@@ -4,7 +4,7 @@ Created by Kirill Rodriguez on 08/2015.
 
 ## Program
 
-This program provides an interface to standard matrix operations and algorithms, which include row/column operations, transposition, inversion, multiplication (and so on) and, in particular, simplex method (using the standard form). Apart from that the program provides extensive interface to vectors: scalar multiplication, constructors with lambdas and more.
+This program provides two static libraries: vector and matrix (both tested) with various algorithms. The aim of this project was to implement simplex method, but because on the way of understanding how to implement it I created a Matrix class with useful operations algorithms, it is convenient to elaborate a little bit on linear algebra in C++ and to implement vectors, LUDecomposition, Determinant and more.
 
 ## Inconsistencies
 
