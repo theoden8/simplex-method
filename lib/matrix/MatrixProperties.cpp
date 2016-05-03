@@ -21,7 +21,7 @@ real_t Matrix::Det() const {
 				det *= m[d][d];
 		}
 		return det;
-	} catch(std::runtime_error e) {
-		return 0;
+	} catch(real_t exception) {
+		return 0.;
 	}
 }

@@ -84,8 +84,9 @@ std::pair <Matrix, Matrix> Matrix::LUDecomposition(const Matrix &M) {
 			real_t sum = 0;
 			for(size_t k = 0; k < i; ++k)
 				sum += L[i][k] * U[k][j];
-			if(L[i][i] == real_t(0))
-				throw std::runtime_error("Matrix::LUDecomposition det(L) tends to 0. Aborting.");
+			if(L[i][i] == real_t(0)) {
+				throw real_t(0);
+			}
 			U[i][j] = (M[i][j] - sum) / L[i][i];
 		}
 	}
