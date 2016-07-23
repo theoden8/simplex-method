@@ -6,9 +6,7 @@ include_directories(
 	${GMOCK_LIB}
 )
 
-file(GLOB SRCS
-	*.cpp
-)
+file(GLOB SRCS *.cpp)
 
 add_executable(_testvector ${SRCS})
 set(CMAKE_CXX_FLAGS "-std=c++11 -O3")

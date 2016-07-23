@@ -11,7 +11,7 @@ Vector Vector::operator- () const {
 
 Vector Vector::operator+ (const real_t scalar) const {
 	Vector A = *this;
-	A.Map([scalar](real_t val){return val + scalar;});
+	A.Map([scalar](real_t val) {return val + scalar;});
 	return A;
 }
 
@@ -21,7 +21,7 @@ Vector Vector::operator- (const real_t scalar) const {
 
 Vector Vector::operator* (const real_t scalar) const {
 	Vector A = *this;
-	A.Map([scalar](real_t val){return val * scalar;});
+	A.Map([scalar](real_t val) {return val * scalar;});
 	return A;
 }
 

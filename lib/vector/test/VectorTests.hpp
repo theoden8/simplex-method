@@ -16,8 +16,15 @@ protected:
 	virtual void TearDown() {}
 
 	static bool cmp_double(real_t a, real_t b, const real_t PRECISION = 0.00001) {
-		if(std::abs(a - b) <= PRECISION)
+		if(
+			(a == NAN && b == NAN)
+			|| (a == INFINITY && b == INFINITY)
+			|| (a == -INFINITY && b == -INFINITY)
+			|| (std::abs(a - b) <= PRECISION)
+		)
+		{
 			return true;
+		}
 		std::cerr << a << ' ' << b << std::endl;
 		return false;
 	}
