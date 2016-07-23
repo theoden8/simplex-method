@@ -8,12 +8,12 @@
 * ## Source
 
 	* ### Vector
-		
+
 		* real_t Vector::operator*
 			* vector multiplication. requires matrix interface for calculation
 		* Vector::Functional
-			* fix the Map function and use against loops.
-			* create  Reduce function and use against sums/products.
+			* create another parallel function and use against loops
+			* create Reduce function and use against sums/products
 		* Vector::Permutations
 			* shuffle using a number
 			* get current combinatorical permutation using compare function
@@ -27,5 +27,5 @@
 			* prevent termination in case something goes wrong.
 		* Matrix::Minor
 		* Exceptions
-			* These need better system that existing one.
+			* These need better system than the existing one.
 		* Matrix::Rank

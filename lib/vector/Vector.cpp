@@ -19,9 +19,8 @@ Vector::Vector(std::vector <real_t> line) :
 Vector::Vector(size_t size, const std::function <real_t (size_t)> &construct) :
 	line_(size)
 {
-	for(size_t i = 0; i < line_.size(); ++i) {
+	for(size_t i = 0; i < line_.size(); ++i)
 		line_[i] = construct(i);
-	}
 }
 
 
