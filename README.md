@@ -24,7 +24,7 @@ To test the program, use:
     make test
     ./_simplex ./test/tests/... ; echo $? # some file
 
-The supporting programs for generating examples are **matrix_gen**, **vector_gen** , generate samples from given dimensions.
+The supporting programs for generating examples are **matrix_gen**, **vector_gen**, they generate samples from given dimensions.
 
 ## References
 
