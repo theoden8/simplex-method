@@ -10,11 +10,14 @@ TEST_F(VectorTest, VectorMapTest) {
 
 	for(size_t i = 0; i < cpvector.Size(); ++i)
 		cpvector[i] *= cpvector[i];
-	longvector.Map([](real_t val) {return val * val;});
+	longvector = longvector.Map([](real_t val) {return val * val;});
 	ASSERT_TRUE(cmp_vec_double(longvector, cpvector));
 
 	for(size_t i = 0; i < cpvector.Size(); ++i)
 		cpvector[i] = log(cpvector[i]);
-	longvector.Map([](real_t val) {return log(val);});
+	longvector = longvector.Map([](real_t val) {return log(val);});
 	ASSERT_TRUE(cmp_vec_double(longvector, cpvector));
+}
+
+TEST_F(VectorTest, VectorMap2Test) {
 }

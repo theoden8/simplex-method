@@ -12,12 +12,11 @@
 		* real_t Vector::operator*
 			* vector multiplication. requires matrix interface for calculation
 		* Vector::Functional
-			* create another parallel function and use against loops
-			* create Reduce function and use against sums/products
+			* fix Reduce function and use against sums/products
 		* Vector::Permutations
 			* shuffle using a number
 			* get current combinatorical permutation using compare function
-			* will require `gmp`
+			* will require bignum interface
 
 	* ### Matrix
 

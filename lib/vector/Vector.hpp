@@ -8,11 +8,13 @@
 class Vector {
 public:
 	typedef std::vector <real_t> line_t;
+	typedef const std::function <real_t (real_t)> mapfunc_t;
+	typedef const std::function <real_t (real_t, real_t)> mapfunc_2_t;
 private:
 	line_t line_;
 public:
+//Vector
 	Vector();
-	/* Vector(size_t size); */
 	Vector(size_t size, real_t value);
 	Vector(line_t line);
 	Vector(size_t size, const std::function <real_t (size_t)> &construct);
@@ -34,8 +36,11 @@ public:
 	void Push(const Vector &other);
 	void Pop();
 	void Resize(const size_t new_size, const real_t value);
+	Vector Reverse() const;
 // VectorFunctional
-	void Map(const std::function <real_t (real_t)> &map_lambda);
+	Vector Map(mapfunc_t &map_lambda) const;
+	static Vector Map(const Vector &a, const Vector &b, mapfunc_2_t &map_lambda);
+	real_t Reduce(mapfunc_2_t &map_lambda) const;
 	// TODO reduce,
 // VectorOperators
 	// TODO paralellize with map

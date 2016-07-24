@@ -34,6 +34,7 @@ protected:
 			return false;
 		for(size_t i = 0; i < a.Size(); ++i) {
 			if(!cmp_double(a[i], b[i])) {
+				std::cout << a.Size() << " " << b.Size() << std::endl;
 				Vector::Print(a);
 				Vector::Print(b);
 				return false;

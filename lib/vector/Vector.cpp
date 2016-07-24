@@ -4,10 +4,6 @@ Vector::Vector():
 	line_()
 {}
 
-/* Vector::Vector(size_t size) : */
-/* 	line_(size) */
-/* {} */
-
 Vector::Vector(size_t size, real_t value) :
 	line_(size, value)
 {}
