@@ -41,9 +41,8 @@ Matrix Matrix::GaussianElimination(const Matrix &M) {
 	Matrix result = M;
 
 	bool *free = new bool[M.Height()];
-	for(size_t i = 0; i < M.Height(); ++i) {
+	for(size_t i = 0; i < M.Height(); ++i)
 		free[i] = true;
-	}
 
 	for(size_t clm = 0; clm < M.Width(); ++clm) {
 		for(size_t ln = 0; ln < M.Height(); ++ln)
@@ -58,7 +57,7 @@ Matrix Matrix::GaussianElimination(const Matrix &M) {
 			}
 	}
 
-	delete free;
+	delete [] free;
 	return result;
 }
 
