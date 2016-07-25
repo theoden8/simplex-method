@@ -31,7 +31,7 @@ Vector Vector::operator/ (const real_t scalar) const {
 Vector Vector::operator+ (const Vector &B) const {
 	ASSERT_DOMAIN(Size() == B.Size());
 
-	return Map(*this, B, [](real_t a, real_t b) {return a + b;});
+	return Map(*this, B, std::plus <real_t>());
 }
 
 Vector Vector::operator- (const Vector &B) const {

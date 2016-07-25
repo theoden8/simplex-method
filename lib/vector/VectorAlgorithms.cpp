@@ -14,7 +14,7 @@ real_t Vector::operator^(const Vector &other) const {
 
 	real_t scalar = 0;
 	Vector mapped[2] = {*this, other};
-	for(const auto &it : Map(*this, other, [](real_t a, real_t b){return a * b;}).line_)
+	for(const auto &it : Map(*this, other, std::multiplies <real_t> ()).line_)
 		scalar += it;
 	return scalar;
 }
