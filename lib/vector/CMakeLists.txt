@@ -8,3 +8,4 @@ file(GLOB VECTOR_SRCS
 )
 
 add_library(vector STATIC ${VECTOR_SRCS})
+#add_library(vector_so SHARED ${VECTOR_SRCS})

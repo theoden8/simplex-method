@@ -59,4 +59,6 @@ public:
 // VectorAlgorithms
 	real_t Abs() const;
 	real_t operator^ (const Vector &other) const;
+	Vector operator* (const Vector &other) const;
+	Vector operator% (const Vector &other) const;
 };

@@ -17,15 +17,14 @@ protected:
 
 	static bool cmp_double(real_t a, real_t b, const real_t PRECISION = 0.00001) {
 		if(
-			(a == NAN && b == NAN)
-			|| (a == INFINITY && b == INFINITY)
-			|| (a == -INFINITY && b == -INFINITY)
+			a == b
+			|| (isnan(a) && isnan(b))
 			|| (std::abs(a - b) <= PRECISION)
 		)
 		{
 			return true;
 		}
-		std::cerr << a << ' ' << b << std::endl;
+		std::cerr << "not equal: " << a << ' ' << b << std::endl;
 		return false;
 	}
 
