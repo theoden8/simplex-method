@@ -5,14 +5,12 @@ project(simplex_root)
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 set(PROJECT_INCLUDE ${PROJECT_ROOT}/include)
 set(PROJECT_LIB ${PROJECT_ROOT}/lib)
-set(PROJECT_TEST ${PROJECT_LIB}/test)
 set(PROJECT_SRC ${PROJECT_ROOT}/src)
 set(PROJECT_BIN ${PROJECT_ROOT}/bin)
 
 MESSAGE( STATUS "PROJECT_ROOT:     " ${PROJECT_ROOT})
 MESSAGE( STATUS "PROJECT_INCLUDE:  " ${PROJECT_INCLUDE})
 MESSAGE( STATUS "PROJECT_LIB:      " ${PROJECT_LIB})
-MESSAGE( STATUS "PROJECT_TEST:     " ${PROJECT_TEST})
 MESSAGE( STATUS "PROJECT_BIN:      " ${PROJECT_BIN})
 
 # ------------- EXTERNAL LIBRARIES --------------
@@ -72,21 +70,27 @@ set(GMOCK_LIB "${source_dir}/include")
 
 # thanks to http://www.kaizou.org/2014/11/gtest-cmake/
 
-set(MATRIX_LIB ${PROJECT_LIB}/matrix)
-set(MATRIX_TEST ${PROJECT_LIB}/matrix/test)
+set(TENSOR_LIB ${PROJECT_LIB}/tensor)
+set(TENSOR_TEST ${PROJECT_LIB}/tensor/test)
 set(VECTOR_LIB ${PROJECT_LIB}/vector)
 set(VECTOR_TEST ${PROJECT_LIB}/vector/test)
+set(MATRIX_LIB ${PROJECT_LIB}/matrix)
+set(MATRIX_TEST ${PROJECT_LIB}/matrix/test)
 
 message( STATUS "GTEST_LIB:                 " ${GTEST_LIB} )
 message( STATUS "GMOCK_LIB:                 " ${GMOCK_LIB} )
+message( STATUS "TENSOR_LIB                 " ${TENSOR_LIB} )
+message( STATUS "VECTOR_LIB                 " ${VECTOR_LIB} )
 message( STATUS "MATRIX_LIB                 " ${MATRIX_LIB} )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BIN})
 add_subdirectory(${PROJECT_LIB})
 add_subdirectory(${PROJECT_SRC})
+add_subdirectory(${TENSOR_TEST})
 add_subdirectory(${VECTOR_TEST})
 add_subdirectory(${MATRIX_TEST})
 
 enable_testing()
+add_test(Tensors ./bin/_testtensor)
 add_test(Vectors ./bin/_testvector)
 add_test(Matrices ./bin/_testmatrix)

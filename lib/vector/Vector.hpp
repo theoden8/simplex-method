@@ -7,7 +7,7 @@
 
 class Vector {
 public:
-	typedef std::vector <real_t> line_t;
+	typedef tensor_t <1> :: type line_t;
 	typedef const std::function <real_t (real_t)> mapfunc_t;
 	typedef const std::function <real_t (real_t, real_t)> mapfunc_2_t;
 private:

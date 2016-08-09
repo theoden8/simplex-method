@@ -2,9 +2,20 @@
 #define TYPES_HPP_OZLBATI4
 
 #include <stdexcept>
+#include <vector>
 
 typedef unsigned long size_t;
 typedef long double real_t;
+
+template <size_t DIM>
+struct tensor_t {
+	typedef std::vector <typename tensor_t <DIM - 1> :: type > type;
+};
+
+template <>
+struct tensor_t <0> {
+	typedef real_t type;
+};
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
