@@ -4,6 +4,7 @@
 
 #include <stdexcept>
 
+// standard matrix multiplication
 Matrix Matrix::operator* (const Matrix &B) const {
 	const Matrix &A = *this;
 	ASSERT_DOMAIN(A.Width() == B.Height());
@@ -17,6 +18,16 @@ Matrix Matrix::operator* (const Matrix &B) const {
 				C[y][x] += A[y][i] * B[i][x];
 
 	return C;
+}
+
+// hadamard product
+Matrix Matrix::operator% (const Matrix &B) const {
+	const Matrix &A = *this;
+	ASSERT_DOMAIN(A.Width() == B.Width() && A.Height() == B.Height());
+
+	Matrix C(Width(), Height(), 0);
+	for(size_t i = 0; i < Height(); ++i)
+		C[i] = A[i] * B[i];
 }
 
 Matrix Matrix::Transpose() const {

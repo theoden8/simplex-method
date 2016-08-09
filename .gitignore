@@ -1,6 +1,9 @@
 bin
 include
-lib*.a
+*.a
+*.so
+*.dylib
+*.pyc
 CMakeFiles
 cmake_install.cmake
 CMakeCache.txt

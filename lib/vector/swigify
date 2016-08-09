@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+PY_H="/usr/include/python2.7"
+echo "$PY_H"
+
+for swig in *.i; do
+  cxx=${swig/.i/_wrap.cxx}
+  module=$(cat $swig | grep module | cut -f 2 -d ' ')
+  rm -vf $cxx $module.py *.pyc
+  swig -c++ -python $swig
+  c++ -std=c++11 -I$PY_H -lpython2.7 -pthread -shared -o _$module.so $cxx *.cpp
+  # ipython -c "import $module"
+done

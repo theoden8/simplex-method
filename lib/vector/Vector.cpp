@@ -44,10 +44,12 @@ size_t Vector::Size() const {
 }
 
 real_t Vector::First() const {
+	ASSERT_DOMAIN(Size() > 0);
 	return line_.front();
 }
 
 real_t Vector::Last() const {
+	ASSERT_DOMAIN(Size() > 0);
 	return line_.back();
 }
 

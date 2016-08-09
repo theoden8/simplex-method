@@ -57,6 +57,7 @@ public:
 	real_t Det() const;
 // MatrixAlgorithms
 	Matrix operator*(const Matrix &B) const;
+    Matrix operator%(const Matrix &B) const;
 	Matrix Transpose() const;
 	Matrix Invert() const;
 	static Matrix GaussianElimination(const Matrix &M);
