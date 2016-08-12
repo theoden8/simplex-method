@@ -20,45 +20,66 @@ public:
 	Vector(size_t size, const std::function <real_t (size_t)> &construct);
 	~Vector();
 
-	const line_t &GetLine() const;
-	const bool operator== (const Vector &other) const;
+	const bool
+		operator== (const Vector &other)
+			const;
 
-	size_t Size() const;
-	real_t First() const;
-	real_t Last() const;
+	static void
+		Print(const Vector &v);
 
-	real_t &operator[] (const size_t index);
-	const real_t &operator[] (const size_t index) const;
+// VectorAttributes
+	const
+		line_t &GetLine()
+		const;
+	size_t
+		Size() const;
+	real_t
+		First() const,
+		Last() const,
+		&operator[] (const size_t index);
+	const real_t
+		&operator[] (const size_t index)
+			const;
 
-	static void Print(const Vector &v);
 // VectorTransformations
-	void Push(const real_t value);
-	void Push(const Vector &other);
-	void Pop();
-	void Resize(const size_t new_size, const real_t value);
-	Vector Reverse() const;
+	void
+		Pop(),
+		Push(const real_t value),
+		Push(const Vector &other),
+		Resize(const size_t new_size, const real_t value);
+	Vector
+		Reverse() const;
+
 // VectorFunctional
-	Vector Map(mapfunc_t &map_lambda) const;
-	static Vector Map(const Vector &a, const Vector &b, mapfunc_2_t &map_lambda);
-	real_t Reduce(mapfunc_2_t &map_lambda) const;
+	static Vector
+		Map(const Vector &a, const Vector &b, mapfunc_2_t &map_lambda);
+	Vector
+		Map(mapfunc_t &map_lambda) const;
+	real_t
+		Reduce(mapfunc_2_t &map_lambda) const;
 	// TODO reduce,
+
 // VectorOperators
-	// TODO paralellize with map
-	Vector operator+ () const;
-	Vector operator- () const;
+	Vector
+		operator+ () const,
+		operator- () const,
 
-	Vector operator+ (const real_t scalar) const;
-	Vector operator- (const real_t scalar) const;
-	Vector operator* (const real_t scalar) const;
-	Vector operator/ (const real_t scalar) const;
+		operator+ (const real_t scalar) const,
+		operator- (const real_t scalar) const,
+		operator* (const real_t scalar) const,
+		operator/ (const real_t scalar) const,
 
-	Vector operator+ (const Vector &B) const;
-	Vector operator- (const Vector &B) const;
+		operator+ (const Vector &B) const,
+		operator- (const Vector &B) const;
+
 // VectorPermutations
 	// TODO
+
 // VectorAlgorithms
-	real_t Abs() const;
-	real_t operator^ (const Vector &other) const;
-	Vector operator* (const Vector &other) const;
-	Vector operator% (const Vector &other) const;
+	real_t
+		Abs() const,
+		operator^ (const Vector &other) const;
+	Vector
+		operator* (const Vector &other) const,
+		operator% (const Vector &other) const;
 };
