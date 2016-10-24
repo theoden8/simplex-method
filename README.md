@@ -4,7 +4,7 @@ Created by Kirill Rodriguez on 08/2015.
 
 ## Program
 
-This program provides two static libraries: vector and matrix (both tested) with various algorithms. The aim of this project was to implement simplex method, but because on the way of understanding how to implement it I created a Matrix class with useful operations algorithms, it was convenient to elaborate a little bit on linear algebra in C++ and to implement vectors, LUDecomposition, Determinant and more.
+This program provides three static libraries: tensor, vector and matrix (all tested) with various algorithms. The aim of this project was to implement simplex method, but because on the way of understanding how to implement it I created a Matrix class with useful operations algorithms, it was convenient to elaborate a little bit on linear algebra in C++ and to implement vectors, LUDecomposition, Determinant and more.
 
 ## Bugs/Errors
 

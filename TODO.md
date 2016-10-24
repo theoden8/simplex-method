@@ -28,3 +28,11 @@
 		* Exceptions
 			* These need better system than the existing one.
 		* Matrix::Rank
+	
+	* ### Tensor
+	
+		* Inherit to Vector and Matrix to reduce code duplication.
+	
+	* ### Lazy Evaluation
+	
+		* Replace return values with function wrapper classes with implicit conversion to the intended return value, thus building lazy evaluation tree.
