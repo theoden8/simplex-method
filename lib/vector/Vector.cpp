@@ -8,7 +8,7 @@ Vector::Vector(size_t size, real_t value) :
 	line_(size, value)
 {}
 
-Vector::Vector(std::vector <real_t> line) :
+Vector::Vector(line_t line) :
 	line_(line)
 {}
 
