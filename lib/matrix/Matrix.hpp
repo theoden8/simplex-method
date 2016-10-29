@@ -1,35 +1,32 @@
 #pragma once
 
+#include <Tensor.hpp>
 #include <Vector.hpp>
 
 #include <tuple>
 #include <vector>
 
-class Matrix {
+class Matrix : public Tensor <2> {
 public:
-	typedef std::vector <Vector> matrix_t;
+	typedef subtensor_t vector_t;
+	typedef tensor_t matrix_t;
 private:
 	matrix_t grid_;
 public:
-	Matrix(const matrix_t &grid);
-	Matrix(const size_t x, const size_t y, const real_t value = 0);
-	Matrix(const size_t diagonal);
-	~Matrix();
+	Matrix();
+	explicit Matrix(matrix_t grid);
+	explicit Matrix(const size_t x, const size_t y, const real_t value = 0);
+	explicit Matrix(const size_t diagonal);
+	virtual ~Matrix();
 	const bool
 		operator==(const Matrix &other) const,
 		operator!=(const Matrix &other) const;
 // MatrixAttributes
-	const matrix_t
-		&GetGrid() const;
 	const bool
 		Square() const;
 	const size_t
 		Width() const,
 		Height() const;
-	Vector
-		&operator[](size_t row);
-	const Vector
-		&operator[](size_t row) const;
 private:
 // MatrixTransformations
 	Matrix
@@ -51,18 +48,10 @@ public:
 		MultiplyColumn(const size_t clm1, const real_t k) const;
 // MatrixOperators
 	Matrix
-		operator+() const,
-		operator-() const,
-
-		operator+(const real_t &scalar) const,
-		operator-(const real_t &scalar) const,
-		operator*(const real_t &scalar) const,
-		operator/(const real_t &scalar) const,
-
 		operator+(const Matrix &B) const,
 		operator-(const Matrix &B) const;
 // MatrixProperties
-	real_t
+	Vector::scalar_t
 		Trace() const,
 		Det() const;
 // MatrixAlgorithms
@@ -76,8 +65,8 @@ public:
 	static std::pair <Matrix, Matrix>
 		LUDecomposition(const Matrix &M);
 // SimplexMethod
-	static Vector
-		SimplexMethod(Matrix A, Vector::line_t C);
+	static vector_t
+		SimplexMethod(Matrix A, vector_t C);
 // Obsolete (to be replaced with gtesting)
 	static void
 		Print(const Matrix &A, const char *NAME = "", const size_t h_x = -1, const size_t h_y = -1);

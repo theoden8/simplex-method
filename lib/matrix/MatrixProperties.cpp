@@ -1,6 +1,6 @@
 #include "Matrix.hpp"
 
-real_t Matrix::Trace() const {
+Vector::scalar_t Matrix::Trace() const {
 	ASSERT_DOMAIN(Square());
 
 	real_t sum = 0;
@@ -10,7 +10,7 @@ real_t Matrix::Trace() const {
 	return sum;
 }
 
-real_t Matrix::Det() const {
+Vector::scalar_t Matrix::Det() const {
 	ASSERT_DOMAIN(Square());
 
 	try {

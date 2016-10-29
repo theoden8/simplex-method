@@ -1,5 +1,4 @@
-#ifndef TYPES_HPP_OZLBATI4
-#define TYPES_HPP_OZLBATI4
+#pragma once
 
 #include <stdexcept>
 #include <vector>
@@ -27,5 +26,3 @@ struct tensor_t <0> {
 		throw std::domain_error("\033[1;91mdomain_error\033[0m" CODE_LOCATION CONDITION_TOSTR(CONDITION));\
 	} \
 }
-
-#endif

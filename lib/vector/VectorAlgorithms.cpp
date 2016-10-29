@@ -2,29 +2,22 @@
 
 #include "Vector.hpp"
 
-real_t Vector::Abs() const {
-	real_t scalar = 0;
-	for(const auto &it : Map([](real_t it) { return it * it; }).line_)
+Vector::scalar_t Vector::Abs() const {
+	scalar_t scalar = 0;
+	for(const auto &it : Map([](scalar_t it) { return it * it; }).grid_)
 		scalar += it;
 	return sqrt(scalar);
 }
 
-// scalar product
-real_t Vector::operator^ (const Vector &other) const {
+// dot product
+Vector::scalar_t Vector::operator^ (const Vector &other) const {
 	ASSERT_DOMAIN(Size() == other.Size());
 
-	real_t scalar = 0;
+	scalar_t scalar = 0;
 	Vector mapped[2] = {*this, other};
-	for(const auto &it : Map(*this, other, std::multiplies <real_t> ()).line_)
+	for(const auto &it : Map(*this, other, std::multiplies <scalar_t> ()).grid_)
 		scalar += it;
 	return scalar;
-}
-
-// dot product
-Vector Vector::operator*(const Vector &other) const {
-	ASSERT_DOMAIN(Size() == other.Size());
-
-	return Map(*this, other, std::multiplies <real_t>());
 }
 
 // cross product
@@ -46,8 +39,8 @@ Vector Vector::operator% (const Vector &other) const {
 		 * | x y z |
 		 * (a, b, c)^T * (x, y, z)^T = (bz - cy, - (az - cx), ay - bx)
 		 */
-		const real_t
-			&a = line_[0], &b = line_[1], &c = line_[2],
+		const scalar_t
+			&a = grid_[0], &b = grid_[1], &c = grid_[2],
 			&x = other[0], &y = other[1], &z = other[2];
 		return Vector({
 			b * z - c * y,
@@ -56,5 +49,7 @@ Vector Vector::operator% (const Vector &other) const {
 		});
 	}
 	if(Size() == 7) {
+		throw std::logic_error("not implemented yet");
+		// TODO
 	}
 }

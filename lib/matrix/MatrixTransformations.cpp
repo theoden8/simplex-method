@@ -10,7 +10,7 @@ Matrix Matrix::MakeSquare() const {
 		for(size_t i = 0; i < Height(); ++i)
 			result[i].Resize(Height(), 0.);
 	} else if(diff > 0) {
-		result.grid_.resize(Width());
+		result.Resize(Width(), {});
 	}
 
 	return result;
@@ -19,9 +19,7 @@ Matrix Matrix::MakeSquare() const {
 Matrix Matrix::ConcatenateColumns(const Matrix &B) const {
 	Matrix A = *this;
 	ASSERT_DOMAIN(A.Height() == B.Height());
-
-	for(size_t y = 0; y < Height(); ++y)
-		A[y].Push(B[y]);
+	A.Push(B);
 	return A;
 }
 

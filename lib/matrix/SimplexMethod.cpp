@@ -1,15 +1,15 @@
 #include "Matrix.hpp"
 
 // matching chosen_y if 0 or with the biggest positive relation column[0]/column[i]
-static real_t ChooseBestRow(const Matrix &M, const size_t x) {
-	real_t theta(0);
+static Vector::scalar_t ChooseBestRow(const Matrix &M, const size_t x) {
+	Vector::scalar_t theta(0);
 	size_t chosen_y = 0;
 	for(size_t another_y = 1; another_y < M.Height(); ++another_y) {
-		if(M[another_y][x] <= real_t(0)) {
+		if(M[another_y][x] <= Vector::scalar_t(0)) {
 			continue;
 		}
 
-		real_t next_theta = M[another_y][0] / M[another_y][x];
+		Vector::scalar_t next_theta = M[another_y][0] / M[another_y][x];
 		if(chosen_y == 0 || theta > next_theta) {
 			theta = next_theta;
 			chosen_y = another_y;
@@ -29,22 +29,21 @@ static void EliminateChosenRow(Matrix &M, const size_t row, const size_t x) {
 	}
 }
 
-Vector Matrix::SimplexMethod(Matrix A, Vector::line_t C) {
-	if(C.size() != A.Width() - 1) {
-		throw std::runtime_error("Matrix::SimplexMethod Can not use vector of inappropriate width.");
-	}
+Matrix::vector_t Matrix::SimplexMethod(Matrix A, vector_t C_prime) {
+	vector_t C(Vector::scalar_t(0));
+	C.Push(C_prime);
+	ASSERT_DOMAIN(C.Size() == A.Width());
 
-	C.insert(C.begin(), real_t(0));
 	_MATRIX_VERBOSE_SELFPRINT(Matrix({C}), "To minimize:");
 	std::vector <size_t> match(A.Height()); // matches the row with the solution (column)
 	std::vector <bool> in_basis(A.Width() - 1, 0); // records if a solution is in bases
 	for(size_t y = 0; y < A.Height(); ++y) {
-		real_t last = A[y].Last();
+		Vector::scalar_t last = A[y][A.Width() - 1];
 		A[y].Pop();
-		Vector A2 = Vector(1, last);
+		vector_t A2 = vector_t(1, last);
 		A2.Push(A[y]);
 		A[y] = A2;
-		if(A[y].First() < 0)
+		if(A[y][0] < 0)
 			A = A.MultiplyRow(y, -1);
 		match[y] = y + A.Width();
 	}
@@ -106,7 +105,7 @@ Vector Matrix::SimplexMethod(Matrix A, Vector::line_t C) {
 			if(slack_count != 0 && x == A.Width() - 1) {
 				int to_add = 0;
 				for(size_t y = 1; y < A.Height(); ++y) {
-					to_add += (M[y][0] == real_t(0));
+					to_add += (M[y][0] == Vector::scalar_t(0));
 				}
 				/* std::cout << "\t\t\t\033[1;96m" << to_add << "\033[0m" << std::endl; */
 				if(slack_count <= to_add) {

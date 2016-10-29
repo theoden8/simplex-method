@@ -1,5 +1,6 @@
 #include "VectorTests.hpp"
 
+
 TEST_F(VectorTest, VectorUnaryOperatorsTest) {
 	Vector
 		empty,

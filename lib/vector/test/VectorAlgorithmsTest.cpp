@@ -42,22 +42,6 @@ TEST_F(VectorTest, VectorScalarProductTest) {
 	ASSERT_TRUE(cmp_double(B ^ B, B.Abs() * B.Abs()));
 }
 
-TEST_F(VectorTest, VectorDotProductTest) {
-	auto builder = [](const size_t idx) { return (real_t)(idx * idx) / log(real_t(idx + 1)); };
-	Vector
-		empty,
-		A(100, builder),
-		A2(100, 10.),
-		B(101, builder);
-
-	ASSERT_EQ(empty * empty, empty);
-	auto builder2 = [builder](const size_t idx) { return builder(idx) * 10.; };
-	ASSERT_TRUE(cmp_vec_double(A * A2, Vector(100, builder2)));
-	ASSERT_ANY_THROW(A * B);
-	ASSERT_ANY_THROW(A2 * B);
-	ASSERT_TRUE(cmp_vec_double(A * A2, A2 * A));
-}
-
 TEST_F(VectorTest, VectorCrossProductTest) {
 	Vector
 		empty,

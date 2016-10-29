@@ -3,22 +3,21 @@
 #include <vector>
 #include <functional>
 
-#include "Types.hpp"
+#include <Tensor.hpp>
 
-class Vector {
+class Vector : public Tensor <1> {
 public:
-	typedef tensor_t <1> :: type line_t;
-	typedef const std::function <real_t (real_t)> mapfunc_t;
-	typedef const std::function <real_t (real_t, real_t)> mapfunc_2_t;
-private:
-	line_t line_;
+	typedef subtensor_t scalar_t;
+	typedef tensor_t line_t;
+	typedef const std::function <scalar_t (scalar_t)> mapfunc_t;
+	typedef const std::function <scalar_t (scalar_t, scalar_t)> mapfunc_2_t;
 public:
 //Vector
 	Vector();
-	Vector(size_t size, real_t value);
-	Vector(line_t line);
-	Vector(size_t size, const std::function <real_t (size_t)> &construct);
-	~Vector();
+	explicit Vector(size_t size, real_t value = 0.);
+	explicit Vector(line_t line);
+	explicit Vector(size_t size, const std::function <real_t (size_t)> &construct);
+	virtual ~Vector();
 
 	const bool
 		operator== (const Vector &other)
@@ -28,25 +27,11 @@ public:
 		Print(const Vector &v);
 
 // VectorAttributes
-	const
-		line_t &GetLine()
-		const;
-	size_t
-		Size() const;
-	real_t
+	scalar_t
 		First() const,
-		Last() const,
-		&operator[] (const size_t index);
-	const real_t
-		&operator[] (const size_t index)
-			const;
+		Last() const;
 
 // VectorTransformations
-	void
-		Pop(),
-		Push(const real_t value),
-		Push(const Vector &other),
-		Resize(const size_t new_size, const real_t value);
 	Vector
 		Reverse() const;
 
@@ -55,19 +40,16 @@ public:
 		Map(const Vector &a, const Vector &b, mapfunc_2_t &map_lambda);
 	Vector
 		Map(mapfunc_t &map_lambda) const;
-	real_t
+	scalar_t
 		Reduce(mapfunc_2_t &map_lambda) const;
-	// TODO reduce,
+	// TODO reduce
 
 // VectorOperators
 	Vector
-		operator+ () const,
-		operator- () const,
-
-		operator+ (const real_t scalar) const,
-		operator- (const real_t scalar) const,
-		operator* (const real_t scalar) const,
-		operator/ (const real_t scalar) const,
+		operator+ (const scalar_t scalar) const,
+		operator- (const scalar_t scalar) const,
+		operator* (const scalar_t scalar) const,
+		operator/ (const scalar_t scalar) const,
 
 		operator+ (const Vector &B) const,
 		operator- (const Vector &B) const;
@@ -76,10 +58,9 @@ public:
 	// TODO
 
 // VectorAlgorithms
-	real_t
+	scalar_t
 		Abs() const,
 		operator^ (const Vector &other) const;
 	Vector
-		operator* (const Vector &other) const,
 		operator% (const Vector &other) const;
 };

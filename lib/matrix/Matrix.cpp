@@ -6,7 +6,7 @@
 
 #include "Matrix.hpp"
 
-Matrix::Matrix(const matrix_t &grid) :
+Matrix::Matrix(matrix_t grid):
 	grid_(grid)
 {}
 

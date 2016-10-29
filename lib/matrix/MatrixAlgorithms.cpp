@@ -27,7 +27,8 @@ Matrix Matrix::operator% (const Matrix &B) const {
 
 	Matrix C(Width(), Height(), 0);
 	for(size_t i = 0; i < Height(); ++i)
-		C[i] = A[i] * B[i];
+		for(int j = 0; j < C.Width(); ++j)
+			C[i][j] = A[i][j] * B[i][j];
 }
 
 Matrix Matrix::Transpose() const {
@@ -80,23 +81,21 @@ std::pair <Matrix, Matrix> Matrix::LUDecomposition(const Matrix &M) {
 		L = M.LowerTriangular(),
 		U = M.UpperTriangular();
 
-	for(size_t i = 0; i < dim; ++i) {
+	for(size_t i = 0; i < dim; ++i)
 		U[i][i] = 1;
-	}
 
 	for(size_t i = 0; i < dim; ++i) {
-		for(size_t j = i; j < dim; ++j) {
+		for(size_t j = i; j < dim; ++j)
 			for(size_t k = 0; k < i; ++k)
 				L[j][i] -= L[j][k] * U[k][i];
-		}
 
 		for(size_t j = i; j < dim; ++j) {
 			real_t sum = 0;
 			for(size_t k = 0; k < i; ++k)
 				sum += L[i][k] * U[k][j];
-			if(L[i][i] == real_t(0)) {
+
+			if(L[i][i] == real_t(0))
 				throw real_t(0);
-			}
 			U[i][j] = (M[i][j] - sum) / L[i][i];
 		}
 	}

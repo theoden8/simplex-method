@@ -48,7 +48,7 @@ Vector Vector::Map(const Vector &a, const Vector &b, mapfunc_2_t &map_lambda) {
 }
 
 
-static real_t reduce(const Vector::line_t &vec, Vector::mapfunc_2_t &func, const size_t start_id, const size_t fin_id) {
+static Vector::scalar_t reduce(const Vector::line_t &vec, Vector::mapfunc_2_t &func, const size_t start_id, const size_t fin_id) {
 	if(start_id + 1 == fin_id)
 		return vec[start_id];
 	else return func(
@@ -57,6 +57,6 @@ static real_t reduce(const Vector::line_t &vec, Vector::mapfunc_2_t &func, const
 	);
 }
 
-real_t Vector::Reduce(const std::function <real_t (real_t, real_t)> &map_lambda) const {
-	return reduce(line_, map_lambda, 0, Size());
+Vector::scalar_t Vector::Reduce(const std::function <scalar_t (scalar_t, scalar_t)> &map_lambda) const {
+	return reduce(grid_, map_lambda, 0, Size());
 }
