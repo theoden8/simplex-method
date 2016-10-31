@@ -21,4 +21,3 @@ temptensor(N)
 void Tensor<N>::Resize(const size_t new_size, const subtensor_t value) {
 	return Tensor<N>(Size(), [&](const size_t idx) {return grid_[Size() - idx - 1];});
 }
-

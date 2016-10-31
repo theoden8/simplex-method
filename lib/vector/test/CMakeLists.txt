@@ -10,5 +10,5 @@ include_directories(
 file(GLOB SRCS *.cpp)
 
 add_executable(_testvector ${SRCS})
-set(CMAKE_CXX_FLAGS "-std=c++11 -O3")
+set(CMAKE_CXX_FLAGS "-std=c++1y -O3")
 target_link_libraries(_testvector libgtest libgmock vector tensor)

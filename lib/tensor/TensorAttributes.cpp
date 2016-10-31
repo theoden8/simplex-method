@@ -10,3 +10,8 @@ temptensor(N)
 const Tensor<N>::Tensor::tensor_t &Tensor<N>::GetGrid() const {
 	return grid_;
 }
+
+temptensor(N)
+Tensor<N>::operator Tensor<N>::tensor_t() {
+	return grid_;
+}

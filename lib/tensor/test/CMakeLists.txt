@@ -11,5 +11,5 @@ file(GLOB SRCS
 )
 
 add_executable(_testtensor ${SRCS})
-set(CMAKE_CXX_FLAGS "-std=c++11 -O3")
+set(CMAKE_CXX_FLAGS "-std=c++1y -O3")
 target_link_libraries(_testtensor libgtest libgmock)

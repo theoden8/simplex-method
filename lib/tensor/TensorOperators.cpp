@@ -2,6 +2,7 @@
 #include "TensorTemplates.hpp"
 
 
+
 temptensor(N)
 Tensor <N> Tensor<N>::operator+() const {
 	return *this;
@@ -16,6 +17,7 @@ Tensor <N> Tensor<N>::operator-() const {
 }
 
 
+
 temptensor(N)
 Tensor <N> Tensor<N>::operator+(const Tensor <N> &other) const {
 	Tensor <N> T(*this);
@@ -26,6 +28,19 @@ Tensor <N> Tensor<N>::operator+(const Tensor <N> &other) const {
 temptensor(N)
 Tensor <N> Tensor<N>::operator-(const Tensor <N> &other) const {
 	operator+(-other);
+}
+
+
+temptensor(N)
+Tensor <N> Tensor<N>::operator+(const Tensor <0> &scalar) const {
+	Tensor <N> T(*this);
+	T += scalar;
+	return T;
+}
+
+temptensor(N)
+Tensor <N> Tensor<N>::operator-(const Tensor <0> &scalar) const {
+	operator+(-scalar);
 }
 
 temptensor(N)
@@ -43,6 +58,7 @@ Tensor <N> Tensor<N>::operator/(const Tensor <0> &scalar) const {
 }
 
 
+
 temptensor(N)
 void Tensor<N>::operator+=(const Tensor <N> &other) {
 	ASSERT_DOMAIN(Size() == other.Size());
@@ -53,6 +69,18 @@ void Tensor<N>::operator+=(const Tensor <N> &other) {
 temptensor(N)
 void Tensor<N>::operator-=(const Tensor <N> &other) {
 	operator+=(-other);
+}
+
+
+temptensor(N)
+void Tensor<N>::operator+=(const Tensor <0> &scalar) {
+	for(size_t i = 0; i < Size(); ++i)
+		grid_[i] += scalar;
+}
+
+temptensor(N)
+void Tensor<N>::operator-=(const Tensor <0> &scalar) {
+	operator+=(-scalar);
 }
 
 temptensor(N)

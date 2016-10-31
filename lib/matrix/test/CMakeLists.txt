@@ -12,5 +12,5 @@ file(GLOB SRCS
 )
 
 add_executable(_testmatrix ${SRCS})
-set(CMAKE_CXX_FLAGS "-std=c++11 -O3")
+set(CMAKE_CXX_FLAGS "-std=c++1y -O3")
 target_link_libraries(_testmatrix libgtest libgmock matrix vector)

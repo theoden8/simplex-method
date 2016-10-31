@@ -1,6 +1,16 @@
 #include "Vector.hpp"
 
 
+Vector Vector::operator+ () const {
+	return Vector(Tensor<1>::operator+());
+}
+
+Vector Vector::operator- () const {
+	return Vector(Tensor<1>::operator-());
+}
+
+
+
 Vector Vector::operator+ (const scalar_t scalar) const {
 	return Map([scalar](scalar_t val) {return val + scalar;});
 }

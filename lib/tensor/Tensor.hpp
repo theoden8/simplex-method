@@ -20,6 +20,8 @@ public:
 	explicit Tensor(tensor_t grid);
 	virtual ~Tensor();
 
+	virtual operator tensor_t();
+
 	virtual Tensor <N - 1> &operator[] (size_t idx) {
 		return grid_[idx];
 	}
@@ -28,8 +30,10 @@ public:
 		return grid_[idx];
 	}
 
-	virtual size_t Size() const;
-	virtual const tensor_t &GetGrid() const;
+	virtual size_t
+		Size() const;
+	virtual const
+		tensor_t &GetGrid() const;
 
 	virtual void
 		Pop(),
@@ -37,22 +41,23 @@ public:
 		Push(const Tensor <N> &other),
 		Resize(const size_t new_size, const subtensor_t value);
 
-	virtual operator tensor_t() {
-		return grid_;
-	}
-
-	virtual Tensor <N>
+	Tensor <N>
 		operator+() const,
 		operator-() const,
 
-		operator+(const Tensor <N> &other) const,
-		operator-(const Tensor <N> &other) const,
+		operator+(const Tensor <0> &scalar) const,
+		operator-(const Tensor <0> &scalar) const,
+		operator*(const Tensor <0> &scalar) const,
+		operator/(const Tensor <0> &scalar) const,
 
-		operator*(const Tensor <0> &other) const,
-		operator/(const Tensor <0> &other) const;
-	virtual void
+		operator+(const Tensor <N> &other) const,
+		operator-(const Tensor <N> &other) const;
+	void
 		operator+=(const Tensor <N> &other),
 		operator-=(const Tensor <N> &other),
+
+		operator+=(const Tensor <0> &scalar),
+		operator-=(const Tensor <0> &scalar),
 		operator*=(const Tensor <0> &scalar),
 		operator/=(const Tensor <0> &scalar);
 };
@@ -65,39 +70,17 @@ public:
 protected:
 	tensor_t grid_;
 public:
-	Tensor(tensor_t val):
-		grid_(val)
-	{}
+	Tensor(tensor_t val);
+	virtual ~Tensor();
 
-	const tensor_t &GetGrid() {
-		return grid_;
-	}
+	virtual const tensor_t &GetGrid();
+	virtual size_t Size() const;
 
-	size_t Size() {
-		return 1;
-	}
+	operator tensor_t() ;
+	const operator tensor_t() const;
 
-	operator tensor_t() {
-		return grid_;
-	}
-
-	const operator tensor_t() const {
-		return grid_;
-	}
-
-	void operator +=(real_t val) {
-		grid_ += val;
-	}
-
-	void operator -=(real_t val) {
-		grid_ -= val;
-	}
-
-	void operator *=(real_t val) {
-		grid_ *= val;
-	}
-
-	void operator /=(real_t val) {
-		grid_ /= val;
-	}
+	virtual void operator +=(real_t val);
+	virtual void operator -=(real_t val);
+	virtual void operator *=(real_t val);
+	virtual void operator /=(real_t val);
 };

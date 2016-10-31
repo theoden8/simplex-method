@@ -5,6 +5,7 @@
 
 #include <Tensor.hpp>
 
+
 class Vector : public Tensor <1> {
 public:
 	typedef subtensor_t scalar_t;
@@ -46,6 +47,9 @@ public:
 
 // VectorOperators
 	Vector
+		operator+() const,
+		operator-() const,
+
 		operator+ (const scalar_t scalar) const,
 		operator- (const scalar_t scalar) const,
 		operator* (const scalar_t scalar) const,
