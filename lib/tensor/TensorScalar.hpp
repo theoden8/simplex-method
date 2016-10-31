@@ -8,11 +8,12 @@ public:
 protected:
 	tensor_t grid_;
 public:
+	Tensor();
 	Tensor(tensor_t val);
 	virtual ~Tensor();
 
 	virtual size_t Size() const;
-	virtual const tensor_t &GetGrid();
+	virtual const tensor_t &GetGrid() const;
 
 	virtual operator tensor_t() ;
 	virtual const operator tensor_t() const;

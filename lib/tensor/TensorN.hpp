@@ -14,7 +14,9 @@ public:
 protected:
 	tensor_t grid_;
 public:
-	Tensor();
+	Tensor():
+		Tensor(0)
+	{}
 	explicit Tensor(size_t size);
 	explicit Tensor(size_t size, subtensor_t value);
 	explicit Tensor(tensor_t grid);

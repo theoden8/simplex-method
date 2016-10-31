@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 project(Vector)
-set(CMAKE_CXX_FLAGS "-std=c++1y -O3 -DVERBOSE=1")
+set(CMAKE_CXX_FLAGS "-std=c++1y -O3")
 
 include_directories(
 	${TENSOR_LIB}

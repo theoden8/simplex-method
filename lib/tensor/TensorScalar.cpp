@@ -1,13 +1,20 @@
 #include "Tensor.hpp"
 
+
+Tensor<0>::Tensor():
+	Tensor(0.)
+{}
+
 Tensor<0>::Tensor(tensor_t val):
 	grid_(val)
 {}
 
+
 Tensor<0>::~Tensor()
 {}
 
-const Tensor<0>::tensor_t &Tensor<0>::GetGrid() {
+
+const Tensor<0>::tensor_t &Tensor<0>::GetGrid() const {
 	return grid_;
 }
 
