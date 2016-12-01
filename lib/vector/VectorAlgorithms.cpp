@@ -32,7 +32,7 @@ Vector Vector::operator% (const Vector &other) const {
 	if(Size() == 0) {
 		return Vector();
 	}
-	if(Size() == 3) {
+	else if(Size() == 3) {
 		/*
 		 * | i j k |
 		 * | a b c |
@@ -48,7 +48,7 @@ Vector Vector::operator% (const Vector &other) const {
 			a * y - b * x
 		});
 	}
-	if(Size() == 7) {
+	else if(Size() == 7) {
 		throw std::logic_error("not implemented yet");
 		// TODO
 	}

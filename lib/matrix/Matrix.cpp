@@ -10,8 +10,8 @@ Matrix::Matrix(matrix_t grid):
 	grid_(grid)
 {}
 
-Matrix::Matrix(const size_t x, const size_t y, const real_t value) :
-	grid_(y, Vector(x, value))
+Matrix::Matrix(const size_t x, const size_t y, const scalar_t value) :
+	Tensor <vector_t> (y, Vector(x, value))
 {}
 
 Matrix::Matrix(const size_t diagonal) :
@@ -21,8 +21,8 @@ Matrix::Matrix(const size_t diagonal) :
 		grid_[i][i] = 1;
 }
 
-Matrix::~Matrix() {
-}
+Matrix::~Matrix()
+{}
 
 
 const bool Matrix::operator== (const Matrix &other) const {
@@ -43,7 +43,7 @@ const bool Matrix::operator!= (const Matrix &other) const {
 
 void Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const size_t h_y) {
 	const size_t SPACING = 30;
-	const static real_t precision = 0.0000001;
+	const static scalar_t precision = 0.0000001;
 	std::cout << "\033[1;40;93m  [ Printing another matrix ] \033[0m\033[1;40;35m-><-\t# " << NAME << ":\033[0m" << std::endl;
 	for(size_t y = 0; y < M.Height(); ++y) {
 		std::cout << '\t';
@@ -58,7 +58,7 @@ void Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const si
 				number += "1;40;92";
 			else
 				number += "1;40;97";
-			number += "m" + (is_zero ? std::to_string(real_t(0)) : std::to_string(M[y][x])) + " \033[0m";
+			number += "m" + (is_zero ? std::to_string(scalar_t(0)) : std::to_string(M[y][x])) + " \033[0m";
 			std::cout << number << std::string(std::max(SPACING - number.length(), (size_t)1), ' ');
 		}
 		std::cout << std::endl;

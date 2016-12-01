@@ -10,6 +10,7 @@
 
 class TensorTest : public ::testing::Test {
 protected:
+	typedef long double real_t;
 	TensorTest() {}
 	virtual ~TensorTest() {}
 	virtual void SetUp() {}

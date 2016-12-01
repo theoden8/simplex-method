@@ -30,7 +30,7 @@ static void EliminateChosenRow(Matrix &M, const size_t row, const size_t x) {
 }
 
 Matrix::vector_t Matrix::SimplexMethod(Matrix A, vector_t C_prime) {
-	vector_t C(Vector::scalar_t(0));
+	vector_t C(scalar_t(0));
 	C.Push(C_prime);
 	ASSERT_DOMAIN(C.Size() == A.Width());
 

@@ -1,16 +1,16 @@
 #include "Vector.hpp"
 
 
-Vector::Vector(size_t size, real_t value) :
-	Tensor <1> (size, value)
+Vector::Vector(size_t size, scalar_t value) :
+	Tensor <scalar_t> (size, value)
 {}
 
 Vector::Vector(line_t grid) :
-	Tensor <1> (grid)
+	Tensor <scalar_t> (grid)
 {}
 
-Vector::Vector(size_t size, const std::function <real_t (size_t)> &construct) :
-	Tensor <1> (size)
+Vector::Vector(size_t size, const std::function <scalar_t (size_t)> &construct) :
+	Tensor <scalar_t> (size)
 {
 	for(size_t i = 0; i < grid_.size(); ++i)
 		grid_[i] = construct(i);
@@ -35,7 +35,7 @@ const bool Vector::operator== (const Vector &other) const {
 void Vector::Print(const Vector &v) {
 	static const int CELL = 15;
 	for(const auto &it : v.grid_) {
-		size_t len = printf("%Lf" , real_t(it));
+		size_t len = printf("%Lf" , scalar_t(it));
 		for(size_t i = 0; i < CELL - len; ++i)
 			putchar(' ');
 	}

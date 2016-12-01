@@ -27,8 +27,9 @@ Matrix Matrix::operator% (const Matrix &B) const {
 
 	Matrix C(Width(), Height(), 0);
 	for(size_t i = 0; i < Height(); ++i)
-		for(int j = 0; j < C.Width(); ++j)
+		for(size_t j = 0; j < C.Width(); ++j)
 			C[i][j] = A[i][j] * B[i][j];
+	return A;
 }
 
 Matrix Matrix::Transpose() const {
@@ -43,9 +44,70 @@ Matrix Matrix::Transpose() const {
 }
 
 Matrix Matrix::Invert() const {
-	ASSERT_DOMAIN(Square() && Det() != real_t(0));
+	ASSERT_DOMAIN(Square() && Det() != scalar_t(0));
 	const size_t dim = Height();
 	return GaussianElimination(this->ConcatenateColumns(Matrix(dim))).SubMatrix(dim, dim);
+}
+
+Matrix Matrix::RowEchelon() const {
+	Matrix result(*this);
+	size_t row = 0, col = 0;
+	while(col != Width() || row != Height()) {
+		const scalar_t leading_entry = result[row][col];
+		if(leading_entry == 0.) {
+			size_t new_row = row;
+			while(++new_row < Height()) {
+				if(result[new_row][col] == 0.)
+					continue;
+				result.SwapRows(row, new_row);
+				break;
+			}
+			++col;
+			continue;
+		}
+		for(size_t i = row + 1; i < Height(); ++i) {
+			const scalar_t reduced_entry = result[i][col];
+			result = result.AddToRow(row, i, -reduced_entry / leading_entry);
+		}
+		++row;
+	}
+	return result;
+}
+
+Matrix Matrix::RowEchelonReduced() const {
+	Matrix result(*this);
+	size_t row = 0, col = 0;
+	while(col != Width() || row != Height()) {
+		const scalar_t leading_entry = result[row][col];
+		if(leading_entry == 0.) {
+			size_t new_row;
+			while(++new_row < Height()) {
+				if(result[new_row][col] == 0.)
+					continue;
+				result.SwapRows(row, new_row);
+				break;
+			}
+			++col;
+			continue;
+		}
+		result = result.MultiplyRow(row, 1. / leading_entry);
+		for(size_t i = 0; i < Height(); ++i) {
+			if(i == row)
+				continue;
+			const scalar_t reduced_entry = result[i][col];
+			result = result.AddToRow(row, i, -reduced_entry);
+		}
+		++row;
+	}
+	return result;
+}
+
+Matrix Matrix::ColumnEchelon() const {
+	return this->Transpose().RowEchelon().Transpose();
+}
+
+Matrix Matrix::ColumnEchelonReduced() const {
+	return this->Transpose().RowEchelonReduced().Transpose();
 }
 
 Matrix Matrix::GaussianElimination(const Matrix &M) {
@@ -90,12 +152,12 @@ std::pair <Matrix, Matrix> Matrix::LUDecomposition(const Matrix &M) {
 				L[j][i] -= L[j][k] * U[k][i];
 
 		for(size_t j = i; j < dim; ++j) {
-			real_t sum = 0;
+			scalar_t sum = 0;
 			for(size_t k = 0; k < i; ++k)
 				sum += L[i][k] * U[k][j];
 
-			if(L[i][i] == real_t(0))
-				throw real_t(0);
+			if(L[i][i] == scalar_t(0))
+				throw scalar_t(0);
 			U[i][j] = (M[i][j] - sum) / L[i][i];
 		}
 	}

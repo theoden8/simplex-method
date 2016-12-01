@@ -10,16 +10,16 @@ Matrix Matrix::SwapRows(const size_t row1, const size_t row2) const {
 	return result;
 }
 
-Matrix Matrix::AddToRow(const size_t row1, const size_t row2, const real_t k = 1) const {
+Matrix Matrix::AddToRow(const size_t row1, const size_t row2, const scalar_t k = 1) const {
 	Matrix result = *this;
 	ASSERT_DOMAIN(row1 < Height() && row2 < Height());
 	ASSERT_DOMAIN(result[row2].Size() == Width());
 
-	result[row2] = result[row2] + result[row1] * k;
+	result[row2] += result[row1] * k;
 	return result;
 }
 
-Matrix Matrix::MultiplyRow(const size_t row1, const real_t k) const {
+Matrix Matrix::MultiplyRow(const size_t row1, const scalar_t k) const {
 	ASSERT_DOMAIN(row1 < Height() && k != 0.);
 	if(k == 1.)
 		return *this;
@@ -35,7 +35,7 @@ Matrix Matrix::SwapColumns(const size_t clm1, const size_t clm2) const {
 	return result;
 }
 
-Matrix Matrix::AddToColumn(const size_t clm1, const size_t clm2, const real_t k = 1) const {
+Matrix Matrix::AddToColumn(const size_t clm1, const size_t clm2, const scalar_t k = 1) const {
 	ASSERT_DOMAIN(clm1 < Width() && clm2 < Width());
 	Matrix result = *this;
 	for(size_t y = 0; y < Height(); ++y)
@@ -43,7 +43,7 @@ Matrix Matrix::AddToColumn(const size_t clm1, const size_t clm2, const real_t k 
 	return result;
 }
 
-Matrix Matrix::MultiplyColumn(const size_t clm1, const real_t k) const {
+Matrix Matrix::MultiplyColumn(const size_t clm1, const scalar_t k) const {
 	ASSERT_DOMAIN(clm1 < Width() && k != 0.);
 	if(k == 1)
 		return *this;

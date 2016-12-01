@@ -47,7 +47,7 @@ Matrix Matrix::LowerTriangular() const {
 	Matrix B(grid_);
 	for(size_t x = 1; x < Width(); ++x)
 		for(size_t y = 0; y < x; ++y)
-			B[y][x] = real_t(0);
+			B[y][x] = scalar_t(0);
 	return B;
 }
 
@@ -57,6 +57,6 @@ Matrix Matrix::UpperTriangular() const {
 	Matrix B(grid_);
 	for(size_t y = 1; y < Height(); ++y)
 		for(size_t x = 0; x < y; ++x)
-			B[y][x] = real_t(0);
+			B[y][x] = scalar_t(0);
 	return B;
 }

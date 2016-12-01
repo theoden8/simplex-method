@@ -6,16 +6,17 @@
 #include <tuple>
 #include <vector>
 
-class Matrix : public Tensor <2> {
+class Matrix : public Tensor <Vector> {
 public:
-	typedef subtensor_t vector_t;
+	typedef Vector::scalar_t scalar_t;
+	typedef Vector vector_t;
 	typedef tensor_t matrix_t;
 private:
 	matrix_t grid_;
 public:
 	Matrix();
 	explicit Matrix(matrix_t grid);
-	explicit Matrix(const size_t x, const size_t y, const real_t value = 0);
+	explicit Matrix(const size_t x, const size_t y, const scalar_t value = 0);
 	explicit Matrix(const size_t diagonal);
 	virtual ~Matrix();
 	const bool
@@ -41,17 +42,13 @@ public:
 // MatrixLineOperations
 	Matrix
 		SwapRows(const size_t row1, const size_t row2) const,
-		AddToRow(const size_t row1, const size_t row2, const real_t k) const,
-		MultiplyRow(const size_t row1, const real_t k) const,
+		AddToRow(const size_t row1, const size_t row2, const scalar_t k) const,
+		MultiplyRow(const size_t row1, const scalar_t k) const,
 		SwapColumns(const size_t clm1, const size_t clm2) const,
-		AddToColumn(const size_t clm1, const size_t clm2, const real_t k) const,
-		MultiplyColumn(const size_t clm1, const real_t k) const;
-// MatrixOperators
-	Matrix
-		operator+(const Matrix &B) const,
-		operator-(const Matrix &B) const;
+		AddToColumn(const size_t clm1, const size_t clm2, const scalar_t k) const,
+		MultiplyColumn(const size_t clm1, const scalar_t k) const;
 // MatrixProperties
-	Vector::scalar_t
+	scalar_t
 		Trace() const,
 		Det() const;
 // MatrixAlgorithms
@@ -59,7 +56,11 @@ public:
 		operator*(const Matrix &B) const,
 		operator%(const Matrix &B) const,
 		Transpose() const,
-		Invert() const;
+		Invert() const,
+		RowEchelon() const,
+		RowEchelonReduced() const,
+		ColumnEchelon() const,
+		ColumnEchelonReduced() const;
 	static Matrix
 		GaussianElimination(const Matrix &M);
 	static std::pair <Matrix, Matrix>

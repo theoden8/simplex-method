@@ -3,94 +3,95 @@
 
 
 
-temptensor(N)
-Tensor <N> Tensor<N>::operator+() const {
+temptensor_tr(T, R)
+R Tensor<T>::operator+() const {
 	return *this;
 }
 
-temptensor(N)
-Tensor <N> Tensor<N>::operator-() const {
-	Tensor <N> T(*this);
-	for(auto &it : grid_)
+temptensor_tr(T, R)
+R Tensor<T>::operator-() const {
+	Tensor <T> other(*this);
+	for(auto &it : other.grid_)
 		it = -it;
-	return T;
+	return other;
 }
 
 
 
-temptensor(N)
-Tensor <N> Tensor<N>::operator+(const Tensor <N> &other) const {
-	Tensor <N> T(*this);
-	T += other;
-	return T;
+temptensor_trs(T, R, S)
+R Tensor<T>::operator+(const S scalar) const {
+	R other(*this);
+	other += scalar;
+	return other;
 }
 
-temptensor(N)
-Tensor <N> Tensor<N>::operator-(const Tensor <N> &other) const {
+temptensor_trs(T, R, S)
+R Tensor<T>::operator-(const S scalar) const {
+	operator+(-scalar);
+}
+
+temptensor_trs(T, R, S)
+R Tensor<T>::operator*(const S scalar) const {
+	R other(*this);
+	other *= scalar;
+	return other;
+}
+
+temptensor_trs(T, R, S)
+R Tensor<T>::operator/(const S scalar) const {
+	ASSERT_DOMAIN(scalar != S(0))
+	R other(*this);
+	other /= scalar;
+	return other;
+}
+
+
+temptensor_tra(T, R, A)
+R Tensor<T>::operator+(const A &other) const {
+	R result(*this);
+	result += other;
+	return result;
+}
+
+temptensor_tra(T, R, A)
+R Tensor<T>::operator-(const A &other) const {
 	operator+(-other);
 }
 
 
-temptensor(N)
-Tensor <N> Tensor<N>::operator+(const Tensor <0> &scalar) const {
-	Tensor <N> T(*this);
-	T += scalar;
-	return T;
-}
 
-temptensor(N)
-Tensor <N> Tensor<N>::operator-(const Tensor <0> &scalar) const {
-	operator+(-scalar);
-}
-
-temptensor(N)
-Tensor <N> Tensor<N>::operator*(const Tensor <0> &scalar) const {
-	Tensor <N> T(*this);
-	T *= scalar;
-	return T;
-}
-
-temptensor(N)
-Tensor <N> Tensor<N>::operator/(const Tensor <0> &scalar) const {
-	Tensor <N> T(*this);
-	T /= scalar;
-	return T;
-}
-
-
-
-temptensor(N)
-void Tensor<N>::operator+=(const Tensor <N> &other) {
+temptensor_a(T, A)
+void Tensor<T>::operator+=(const A &other) {
 	ASSERT_DOMAIN(Size() == other.Size());
 	for(size_t i = 0; i < Size(); ++i)
 		grid_[i] += other[i];
 }
 
-temptensor(N)
-void Tensor<N>::operator-=(const Tensor <N> &other) {
+temptensor_a(T, A)
+void Tensor<T>::operator-=(const A &other) {
 	operator+=(-other);
 }
 
 
-temptensor(N)
-void Tensor<N>::operator+=(const Tensor <0> &scalar) {
-	for(size_t i = 0; i < Size(); ++i)
-		grid_[i] += scalar;
+temptensor_s(T, S)
+void Tensor<T>::operator+=(const S scalar) {
+	for(auto &it : grid_)
+		it += scalar;
 }
 
-temptensor(N)
-void Tensor<N>::operator-=(const Tensor <0> &scalar) {
+temptensor_s(T, S)
+void Tensor<T>::operator-=(const S scalar) {
 	operator+=(-scalar);
 }
 
-temptensor(N)
-void Tensor<N>::operator*=(const Tensor <0> &scalar) {
-	for(size_t i = 0; i < Size(); ++i)
-		grid_[i] *= scalar;
+temptensor_s(T, S)
+void Tensor<T>::operator*=(const S scalar) {
+	for(auto &it : grid_)
+		it *= scalar;
 }
 
-temptensor(N)
-void Tensor<N>::operator/=(const Tensor <0> &scalar) {
-	ASSERT_DOMAIN(scalar != 0.);
-	operator*=(Tensor <0> (1.) / scalar);
+temptensor_s(T, S)
+void Tensor<T>::operator/=(const S scalar) {
+	ASSERT_DOMAIN(scalar != S(0));
+	operator*=(S(1.) / scalar);
 }

@@ -2,27 +2,27 @@
 #include "TensorTemplates.hpp"
 
 
-temptensor(N)
-Tensor <N - 1> &Tensor<N>::operator[] (size_t idx) {
+temptensor(T)
+T &Tensor<T>::operator[] (size_t idx) {
 	return grid_[idx];
 }
 
-temptensor(N)
-const Tensor <N - 1> &Tensor<N>::operator[] (size_t idx) const {
+temptensor(T)
+const T &Tensor<T>::operator[] (size_t idx) const {
 	return grid_[idx];
 }
 
-temptensor(N)
-size_t Tensor<N>::Size() const {
+temptensor(T)
+size_t Tensor<T>::Size() const {
 	return grid_.size();
 }
 
-temptensor(N)
-Tensor<N>::operator Tensor<N>::tensor_t() {
+temptensor(T)
+Tensor<T>::operator Tensor<T>::tensor_t() {
 	return grid_;
 }
 
-temptensor(N)
-const Tensor<N>::Tensor::tensor_t &Tensor<N>::GetGrid() const {
+temptensor(T)
+const Tensor<T>::Tensor::tensor_t &Tensor<T>::GetGrid() const {
 	return grid_;
 }

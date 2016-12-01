@@ -11,12 +11,12 @@ static Matrix
 		{-10, -14, -4, -2, -16 },
 		{  0,   0,  0,  0,   0 },
 	})),
-	inversible(make_mat({
-			{   7,  -1,  9,  4,   6},
-			{  14, -11,  6,  9,  -8},
-			{  -8, -10,  2,  9, -14},
-			{ -10,   2,-15, -9,  -4},
-			{   0,  -2, 10, -7,  14},
+	invertible(make_mat({
+		{   7,  -1,  9,  4,   6},
+		{  14, -11,  6,  9,  -8},
+		{  -8, -10,  2,  9, -14},
+		{ -10,   2,-15, -9,  -4},
+		{   0,  -2, 10, -7,  14},
 	})),
 	longmatrix(make_mat({
 		 {13, -15, -7 , 9  , 13, -1, 1, -13},
@@ -113,7 +113,7 @@ TEST_F(MatrixTest, MatrixInvertTest) {
 	ASSERT_ANY_THROW(det_zero.Invert());
 	ASSERT_ANY_THROW(longmatrix.Invert());
 	ASSERT_TRUE(cmp_matr_double(
-		inversible.Invert(),
+		invertible.Invert(),
 		make_mat({
 			{-1533./20465, 1073./20465, -2301./40930,  -697./20465,  -159./40930},
 			{-5906./20465, -899./20465, -2497./40930, -4394./20465,  -973./40930},
@@ -122,6 +122,58 @@ TEST_F(MatrixTest, MatrixInvertTest) {
 			{10382./20465, -672./20465,  3893./81860,  5548./20465, -3253./81860},
 		})
 	));
+}
+
+TEST_F(MatrixTest, MatrixEchelonReducedTest) {
+	ASSERT_TRUE(cmp_matr_double(
+			det_zero.RowEchelonReduced(),
+			make_mat({
+				{  1, 1.4, .4, .2, 1.6 },
+				{  0,   0,  0,  0,   0 },
+				{  0,   0,  0,  0,   0 },
+				{  0,   0,  0,  0,   0 },
+				{  0,   0,  0,  0,   0 },
+			})
+	));
+	ASSERT_TRUE(cmp_matr_double(
+			det_zero.ColumnEchelonReduced(),
+			make_mat({
+				{   1,   0,  0,  0,  0 },
+				{1.25,   0,  0,  0,  0 },
+				{   2,   0,  0,  0,  0 },
+				{ -.5,   0,  0,  0,  0 },
+				{   0,   0,  0,  0,  0 },
+			})
+	));
+	ASSERT_TRUE(cmp_matr_double(
+			invertible.RowEchelonReduced(),
+			Matrix(invertible.Size())
+	));
+	ASSERT_TRUE(cmp_matr_double(
+			invertible.ColumnEchelonReduced(),
+			Matrix(invertible.Size())
+	));
+	ASSERT_TRUE(cmp_matr_double(
+			longmatrix.RowEchelonReduced(),
+			make_mat({
+				{ 1, 0, 0, 0, -34859./9455, 3531./9455, -16156./9455, -4078./9455},
+				{ 0, 1, 0, 0, -34859./9455, 3531./9455, -16156./9455, -4078./9455},
+				{ 0, 0, 1, 0,  -8536./9455, 1709./9455,  -5439./9455,  8713./9455},
+				{ 0, 0, 0, 1,   3722./1891,  -198./1891,  1065./1891,  3993./1891},
+			})
+	))
+	ASSERT_TRUE(cmp_matr_double(
+			longmatrix.ColumnEchelonReduced(),
+			make_mat({
+				{ 1, 0, 0, 0, 0, 0, 0, 0},
+				{ 0, 1, 0, 0, 0, 0, 0, 0},
+				{ 0, 0, 1, 0, 0, 0, 0, 0},
+				{ 0, 0, 0, 1, 0, 0, 0, 0},
+			})
+	))
+}
+
+TEST_F(MatrixTest, MatrixEchelonReducedTest) {
 }
 
 TEST_F(MatrixTest, MatrixGaussianEliminationTest) {
@@ -137,13 +189,13 @@ TEST_F(MatrixTest, MatrixLUDecompositionTest) {
 	ASSERT_NO_THROW(Matrix::LUDecomposition(empty));
 	ASSERT_ANY_THROW(Matrix::LUDecomposition(longmatrix));
 	ASSERT_ANY_THROW(Matrix::LUDecomposition(det_zero));
-	ASSERT_NO_THROW(Matrix::LUDecomposition(inversible));
-	std::pair <Matrix, Matrix> LU = Matrix::LUDecomposition(inversible);
+	ASSERT_NO_THROW(Matrix::LUDecomposition(invertible));
+	std::pair <Matrix, Matrix> LU = Matrix::LUDecomposition(invertible);
 	Matrix
 		L = LU.first,
 		U = LU.second;
 	ASSERT_TRUE(cmp_matr_double(
-			inversible,
+			invertible,
 			L * U
 	));
 }
