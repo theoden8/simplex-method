@@ -24,23 +24,6 @@ Matrix::Matrix(const size_t diagonal) :
 Matrix::~Matrix()
 {}
 
-
-const bool Matrix::operator== (const Matrix &other) const {
-	if(Width() != other.Width() || Height() != other.Height())
-		return false;
-
-	for(size_t y = 0; y < Height(); ++y)
-		for(size_t x = 0; x < Width(); ++x)
-			if(grid_[y][x] != other[y][x])
-				return false;
-	return true;
-}
-
-const bool Matrix::operator!= (const Matrix &other) const {
-	return !(operator==(other));
-}
-
-
 void Matrix::Print(const Matrix &M, const char *NAME, const size_t h_x, const size_t h_y) {
 	const size_t SPACING = 30;
 	const static scalar_t precision = 0.0000001;

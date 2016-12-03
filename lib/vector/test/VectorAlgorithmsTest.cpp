@@ -3,7 +3,7 @@
 #include <cmath>
 
 TEST_F(VectorTest, VectorAbsTest) {
-	auto ld_sqrt = [](const size_t idx) { return sqrt((real_t)(idx)); };
+	auto ld_sqrt = [](const size_t idx) { return sqrt((scalar_t)(idx)); };
 	Vector
 		empty,
 		A(100, ld_sqrt),
@@ -12,19 +12,19 @@ TEST_F(VectorTest, VectorAbsTest) {
 	ASSERT_TRUE(cmp_double(
 		A.Abs(),
 		sqrt(
-			((A.Size() - 1.) / 2.) * (real_t)A.Size()
+			((A.Size() - 1.) / 2.) * scalar_t(A.Size())
 		)
 	));
 	ASSERT_TRUE(cmp_double(
 		B.Abs(),
 		sqrt(
-			((B.Size() - 1.) / 2.) * (real_t)B.Size()
+			((B.Size() - 1.) / 2.) * scalar_t(B.Size())
 		)
 	));
 }
 
 TEST_F(VectorTest, VectorScalarProductTest) {
-	auto inv = [](const size_t idx) { return 1. / ((real_t)(idx + 1)); };
+	auto inv = [](const size_t idx) { return 1. / scalar_t(idx + 1); };
 	Vector
 		empty,
 		A(100, inv),

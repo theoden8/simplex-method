@@ -19,7 +19,7 @@ TEST_F(VectorTest, VectorUnaryOperatorsTest) {
 }
 
 TEST_F(VectorTest, VectorScalarOperatorTest) {
-	auto sqr = [](const size_t idx) { return (real_t)idx * (real_t)idx; };
+	auto sqr = [](const size_t idx) { return scalar_t(idx * idx); };
 	Vector
 		empty,
 		A(100, sqr),
@@ -74,8 +74,8 @@ TEST_F(VectorTest, VectorScalarOperatorTest) {
 }
 
 TEST_F(VectorTest, VectorCalculusTest) {
-	auto sqr = [] (const size_t idx) { return (real_t)(idx * idx); };
-	auto neg_sqr = [] (const size_t idx) { return -(real_t)(idx * idx); };
+	auto sqr = [] (const size_t idx) { return scalar_t(idx * idx); };
+	auto neg_sqr = [] (const size_t idx) { return -scalar_t(idx * idx); };
 	Vector
 		empty,
 		Asqr(100, sqr),

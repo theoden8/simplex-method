@@ -2,6 +2,21 @@
 #include "TensorTemplates.hpp"
 
 
+temptensor_a(T, A)
+bool Tensor<T>::operator==(const A &other) const {
+	if(Size() != other.Size())
+		return false;
+	for(size_t i = 0; i < Size(); ++i)
+		if(!(grid_[i] == other[i]))
+			return false;
+	return true;
+}
+
+temptensor_a(T, A)
+bool Tensor<T>::operator!=(const A &other) const {
+	return !operator==(other);
+}
+
 
 temptensor_tr(T, R)
 R Tensor<T>::operator+() const {
@@ -18,26 +33,26 @@ R Tensor<T>::operator-() const {
 
 
 
-temptensor_trs(T, R, S)
+temptensor_tras(T, R, A, S)
 R Tensor<T>::operator+(const S scalar) const {
 	R other(*this);
 	other += scalar;
 	return other;
 }
 
-temptensor_trs(T, R, S)
+temptensor_tras(T, R, A, S)
 R Tensor<T>::operator-(const S scalar) const {
 	operator+(-scalar);
 }
 
-temptensor_trs(T, R, S)
+temptensor_tras(T, R, A, S)
 R Tensor<T>::operator*(const S scalar) const {
 	R other(*this);
 	other *= scalar;
 	return other;
 }
 
-temptensor_trs(T, R, S)
+temptensor_tras(T, R, A, S)
 R Tensor<T>::operator/(const S scalar) const {
 	ASSERT_DOMAIN(scalar != S(0))
 	R other(*this);
@@ -73,24 +88,24 @@ void Tensor<T>::operator-=(const A &other) {
 }
 
 
-temptensor_s(T, S)
+temptensor_as(T, A, S)
 void Tensor<T>::operator+=(const S scalar) {
 	for(auto &it : grid_)
 		it += scalar;
 }
 
-temptensor_s(T, S)
+temptensor_as(T, A, S)
 void Tensor<T>::operator-=(const S scalar) {
 	operator+=(-scalar);
 }
 
-temptensor_s(T, S)
+temptensor_as(T, A, S)
 void Tensor<T>::operator*=(const S scalar) {
 	for(auto &it : grid_)
 		it *= scalar;
 }
 
-temptensor_s(T, S)
+temptensor_as(T, A, S)
 void Tensor<T>::operator/=(const S scalar) {
 	ASSERT_DOMAIN(scalar != S(0));
 	operator*=(S(1.) / scalar);

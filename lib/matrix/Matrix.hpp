@@ -19,9 +19,6 @@ public:
 	explicit Matrix(const size_t x, const size_t y, const scalar_t value = 0);
 	explicit Matrix(const size_t diagonal);
 	virtual ~Matrix();
-	const bool
-		operator==(const Matrix &other) const,
-		operator!=(const Matrix &other) const;
 // MatrixAttributes
 	const bool
 		Square() const;

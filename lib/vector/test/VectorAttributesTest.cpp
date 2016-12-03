@@ -1,7 +1,7 @@
 #include "VectorTests.hpp"
 
 TEST_F(VectorTest, VectorAttributesTest) {
-	auto ld1 = [](const size_t idx) { return (real_t)idx * 10.; };
+	auto ld1 = [](const size_t idx) { return scalar_t(idx) * scalar_t(10); };
 	Vector
 		empty,
 		A({1, 2, 3, 4, 5, 6 ,7}),

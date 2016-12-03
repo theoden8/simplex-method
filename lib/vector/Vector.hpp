@@ -20,8 +20,6 @@ public:
 	explicit Vector(size_t size, const std::function <scalar_t (size_t)> &construct);
 	virtual ~Vector();
 
-	const bool
-		operator== (const Vector &other) const;
 	static void
 		Print(const Vector &v);
 

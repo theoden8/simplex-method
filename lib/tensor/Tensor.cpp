@@ -2,6 +2,11 @@
 #include "TensorTemplates.hpp"
 
 temptensor(T)
+Tensor<T>::Tensor():
+	Tensor(0)
+{}
+
+temptensor(T)
 Tensor<T>::Tensor(size_t size):
 	grid_(size)
 {}

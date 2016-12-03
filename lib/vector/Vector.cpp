@@ -21,17 +21,6 @@ Vector::~Vector()
 {}
 
 
-const bool Vector::operator== (const Vector &other) const {
-	if(Size() != other.Size())
-		return false;
-
-	for(size_t i = 0; i < Size(); ++i)
-		if(grid_[i] != other[i])
-			return false;
-	return true;
-}
-
-
 void Vector::Print(const Vector &v) {
 	static const int CELL = 15;
 	for(const auto &it : v.grid_) {

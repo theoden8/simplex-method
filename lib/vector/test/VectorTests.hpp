@@ -8,6 +8,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+typedef Vector::scalar_t scalar_t;
+
 class VectorTest : public ::testing::Test {
 protected:
 	VectorTest() {}
@@ -15,7 +17,7 @@ protected:
 	virtual void SetUp() {}
 	virtual void TearDown() {}
 
-	static bool cmp_double(real_t a, real_t b, const real_t PRECISION = 0.00001) {
+	static bool cmp_double(scalar_t a, scalar_t b, const scalar_t PRECISION = 0.00001) {
 		if(
 			a == b
 			|| (isnan(a) && isnan(b))
@@ -28,7 +30,7 @@ protected:
 		return false;
 	}
 
-	static bool cmp_vec_double(const Vector &a, const Vector &b, const real_t PRECISION = 0.00001) {
+	static bool cmp_vec_double(const Vector &a, const Vector &b, const scalar_t PRECISION = 0.00001) {
 		if(a.Size() != b.Size())
 			return false;
 		for(size_t i = 0; i < a.Size(); ++i) {
