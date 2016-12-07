@@ -12,8 +12,9 @@ Vector::Vector(line_t grid) :
 Vector::Vector(size_t size, const std::function <scalar_t (size_t)> &construct) :
 	Tensor <scalar_t> (size)
 {
-	for(size_t i = 0; i < grid_.size(); ++i)
-		grid_[i] = construct(i);
+	size_t i = 0;
+	for(auto &x : *this)
+		x = construct(i++);
 }
 
 
@@ -23,7 +24,7 @@ Vector::~Vector()
 
 void Vector::Print(const Vector &v) {
 	static const int CELL = 15;
-	for(const auto &it : v.grid_) {
+	for(const auto &it : v) {
 		size_t len = printf("%Lf" , scalar_t(it));
 		for(size_t i = 0; i < CELL - len; ++i)
 			putchar(' ');

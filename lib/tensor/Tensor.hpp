@@ -2,8 +2,8 @@
 
 #include <stdexcept>
 #include <vector>
-#include <initializer_list>
 #include <type_traits>
+#include <iterator>
 
 #include "TensorTemplates.hpp"
 #include "Types.hpp"
@@ -12,8 +12,9 @@ template <class T>
 class Tensor {
 public:
 	typedef std::vector <T> tensor_t;
-	template <typename S>
-	using SCALAR = typename std::enable_if<std::is_fundamental<S>::value>::type;
+	template <typename S> using SCALAR = typename std::enable_if<std::is_fundamental<S>::value>::type;
+	typedef typename std::vector<T>::iterator iter_t;
+	typedef typename std::vector<T>::const_iterator const_iter_t;
 protected:
 	tensor_t grid_;
 public:
@@ -27,6 +28,13 @@ public:
 
 	virtual T &operator[] (size_t idx);
 	virtual const T &operator[] (size_t idx) const;
+
+	iter_t
+		begin(),
+		end();
+	const_iter_t
+		begin() const,
+		end() const;
 
 	virtual size_t
 		Size() const;

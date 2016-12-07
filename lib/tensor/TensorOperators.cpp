@@ -7,7 +7,7 @@ bool Tensor<T>::operator==(const A &other) const {
 	if(Size() != other.Size())
 		return false;
 	for(size_t i = 0; i < Size(); ++i)
-		if(!(grid_[i] == other[i]))
+		if(!(*this[i] == other[i]))
 			return false;
 	return true;
 }
@@ -26,7 +26,7 @@ R Tensor<T>::operator+() const {
 temptensor_tr(T, R)
 R Tensor<T>::operator-() const {
 	Tensor <T> other(*this);
-	for(auto &it : other.grid_)
+	for(auto &it : other)
 		it = -it;
 	return other;
 }
@@ -79,7 +79,7 @@ temptensor_a(T, A)
 void Tensor<T>::operator+=(const A &other) {
 	ASSERT_DOMAIN(Size() == other.Size());
 	for(size_t i = 0; i < Size(); ++i)
-		grid_[i] += other[i];
+		*this[i] += other[i];
 }
 
 temptensor_a(T, A)
@@ -90,7 +90,7 @@ void Tensor<T>::operator-=(const A &other) {
 
 temptensor_as(T, A, S)
 void Tensor<T>::operator+=(const S scalar) {
-	for(auto &it : grid_)
+	for(auto &it : *this)
 		it += scalar;
 }
 
@@ -101,7 +101,7 @@ void Tensor<T>::operator-=(const S scalar) {
 
 temptensor_as(T, A, S)
 void Tensor<T>::operator*=(const S scalar) {
-	for(auto &it : grid_)
+	for(auto &it : *this)
 		it *= scalar;
 }
 
