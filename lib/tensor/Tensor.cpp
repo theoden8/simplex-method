@@ -1,26 +1,26 @@
 #include "Tensor.hpp"
 #include "TensorTemplates.hpp"
 
-temptensor(T)
+template <class T>
 Tensor<T>::Tensor():
 	Tensor(0)
 {}
 
-temptensor(T)
+template <class T>
 Tensor<T>::Tensor(size_t size):
 	grid_(size)
 {}
 
-temptensor(T)
+template <class T>
 Tensor<T>::Tensor(size_t size, T value):
 	grid_(size, value)
 {}
 
-temptensor(T)
+template <class T>
 Tensor<T>::Tensor(tensor_t grid):
 	grid_(grid)
 {}
 
-temptensor(T)
+template <class T>
 Tensor<T>::~Tensor()
 {}

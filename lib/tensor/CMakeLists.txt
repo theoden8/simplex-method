@@ -6,8 +6,3 @@ set(CMAKE_CXX_FLAGS "-std=c++1y -O3")
 file(GLOB TENSOR_SRCS
 	*.cpp
 )
-
-add_library(tensor STATIC ${TENSOR_SRCS})
-
-# add_library(matrix_so SHARED ${TENSOR_SRCS})
-# add_dependencies(matrix_so vector_so)

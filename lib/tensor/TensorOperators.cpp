@@ -2,7 +2,7 @@
 #include "TensorTemplates.hpp"
 
 
-temptensor_a(T, A)
+template <class T> template <class A>
 bool Tensor<T>::operator==(const A &other) const {
 	if(Size() != other.Size())
 		return false;
@@ -12,19 +12,19 @@ bool Tensor<T>::operator==(const A &other) const {
 	return true;
 }
 
-temptensor_a(T, A)
+template <class T> template <class A>
 bool Tensor<T>::operator!=(const A &other) const {
 	return !operator==(other);
 }
 
 
-temptensor_tr(T, R)
-R Tensor<T>::operator+() const {
+template <class T>
+decltype(auto) Tensor<T>::operator+() const {
 	return *this;
 }
 
-temptensor_tr(T, R)
-R Tensor<T>::operator-() const {
+template <class T>
+decltype(auto) Tensor<T>::operator-() const {
 	Tensor <T> other(*this);
 	for(auto &it : other)
 		it = -it;
@@ -33,80 +33,80 @@ R Tensor<T>::operator-() const {
 
 
 
-temptensor_tras(T, R, A, S)
-R Tensor<T>::operator+(const S scalar) const {
-	R other(*this);
+template <class T> template <class A>
+decltype(auto) Tensor<T>::operator+(const SCALAR<A> scalar) const {
+	decltype(auto) other(*this);
 	other += scalar;
 	return other;
 }
 
-temptensor_tras(T, R, A, S)
-R Tensor<T>::operator-(const S scalar) const {
+template <class T> template <class A>
+decltype(auto) Tensor<T>::operator-(const SCALAR<A> scalar) const {
 	operator+(-scalar);
 }
 
-temptensor_tras(T, R, A, S)
-R Tensor<T>::operator*(const S scalar) const {
-	R other(*this);
+template <class T> template <class A>
+decltype(auto) Tensor<T>::operator*(const SCALAR<A> scalar) const {
+	decltype(auto) other(*this);
 	other *= scalar;
 	return other;
 }
 
-temptensor_tras(T, R, A, S)
-R Tensor<T>::operator/(const S scalar) const {
-	ASSERT_DOMAIN(scalar != S(0))
-	R other(*this);
+template <class T> template <class A>
+decltype(auto) Tensor<T>::operator/(const SCALAR<A> scalar) const {
+	ASSERT_DOMAIN(scalar != SCALAR<A>(0))
+	decltype(auto) other(*this);
 	other /= scalar;
 	return other;
 }
 
 
-temptensor_tra(T, R, A)
-R Tensor<T>::operator+(const A &other) const {
-	R result(*this);
+template <class T> template <class A>
+decltype(auto) Tensor<T>::operator+(const A &other) const {
+	decltype(auto) result(*this);
 	result += other;
 	return result;
 }
 
-temptensor_tra(T, R, A)
-R Tensor<T>::operator-(const A &other) const {
+template <class T> template <class A>
+decltype(auto) Tensor<T>::operator-(const A &other) const {
 	operator+(-other);
 }
 
 
 
-temptensor_a(T, A)
+template <class T> template <class A>
 void Tensor<T>::operator+=(const A &other) {
 	ASSERT_DOMAIN(Size() == other.Size());
 	for(size_t i = 0; i < Size(); ++i)
 		*this[i] += other[i];
 }
 
-temptensor_a(T, A)
+template <class T> template <class A>
 void Tensor<T>::operator-=(const A &other) {
 	operator+=(-other);
 }
 
 
-temptensor_as(T, A, S)
-void Tensor<T>::operator+=(const S scalar) {
+template <class T> template <class A>
+void Tensor<T>::operator+=(const SCALAR<A> scalar) {
 	for(auto &it : *this)
 		it += scalar;
 }
 
-temptensor_as(T, A, S)
-void Tensor<T>::operator-=(const S scalar) {
+template <class T> template <class A>
+void Tensor<T>::operator-=(const SCALAR<A> scalar) {
 	operator+=(-scalar);
 }
 
-temptensor_as(T, A, S)
-void Tensor<T>::operator*=(const S scalar) {
+template <class T> template <class A>
+void Tensor<T>::operator*=(const SCALAR<A> scalar) {
 	for(auto &it : *this)
 		it *= scalar;
 }
 
-temptensor_as(T, A, S)
-void Tensor<T>::operator/=(const S scalar) {
-	ASSERT_DOMAIN(scalar != S(0));
-	operator*=(S(1.) / scalar);
+template <class T> template <class A>
+void Tensor<T>::operator/=(const SCALAR<A> scalar) {
+	ASSERT_DOMAIN(scalar != SCALAR<A>(0));
+	operator*=(SCALAR<A>(1.) / scalar);
 }

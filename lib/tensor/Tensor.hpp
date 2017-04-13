@@ -5,14 +5,14 @@
 #include <type_traits>
 #include <iterator>
 
-#include "TensorTemplates.hpp"
 #include "Types.hpp"
 
 template <class T>
 class Tensor {
 public:
 	typedef std::vector <T> tensor_t;
-	template <typename S> using SCALAR = typename std::enable_if<std::is_fundamental<S>::value>::type;
+	/* template <typename S> using SCALAR = typename std::enable_if<std::is_fundamental<S>::value>::type; */
+    template <typename S> using SCALAR = S;
 	typedef typename std::vector<T>::iterator iter_t;
 	typedef typename std::vector<T>::const_iterator const_iter_t;
 protected:
@@ -53,28 +53,27 @@ public:
 	bool
 		operator==(const A &other) const,
 		operator!=(const A &other) const;
-	template <class R>
-	R
+	decltype(auto)
 		operator+() const,
 		operator-() const;
-	template <class R, class A, class S = SCALAR <A> >
-	R
-		operator+(const S scalar) const,
-		operator-(const S scalar) const,
-		operator*(const S scalar) const,
-		operator/(const S scalar) const;
-	template <class R, class A>
-	R
+	template <class A>
+	decltype(auto)
+		operator+(const SCALAR<A> scalar) const,
+		operator-(const SCALAR<A> scalar) const,
+		operator*(const SCALAR<A> scalar) const,
+		operator/(const SCALAR<A> scalar) const;
+	template <class A>
+	decltype(auto)
 		operator+(const A &other) const,
 		operator-(const A &other) const;
 	template <class A>
 	void
 		operator+=(const A &other),
 		operator-=(const A &other);
-	template <class A, class S = SCALAR <A> >
+	template <class A>
 	void
-		operator+=(const S scalar),
-		operator-=(const S scalar),
-		operator*=(const S scalar),
-		operator/=(const S scalar);
+		operator+=(const SCALAR<A> scalar),
+		operator-=(const SCALAR<A> scalar),
+		operator*=(const SCALAR<A> scalar),
+		operator/=(const SCALAR<A> scalar);
 };

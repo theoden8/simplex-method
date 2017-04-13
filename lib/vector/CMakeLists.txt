@@ -12,7 +12,7 @@ file(GLOB VECTOR_SRCS
 )
 
 add_library(vector STATIC ${VECTOR_SRCS})
-add_dependencies(vector tensor)
+# add_dependencies(vector)
 
 #add_library(vector_so SHARED ${VECTOR_SRCS})
 #add_dependencies(vector_so tensor_so)
