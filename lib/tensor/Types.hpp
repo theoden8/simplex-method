@@ -1,9 +1,8 @@
 #pragma once
 
+#include <cstdlib>
 #include <stdexcept>
 #include <vector>
-
-typedef unsigned long size_t;
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)

@@ -38,12 +38,12 @@ public:
 		UpperTriangular() const;
 // MatrixLineOperations
 	Matrix
-		SwapRows(const size_t row1, const size_t row2) const,
-		AddToRow(const size_t row1, const size_t row2, const scalar_t k) const,
-		MultiplyRow(const size_t row1, const scalar_t k) const,
-		SwapColumns(const size_t clm1, const size_t clm2) const,
-		AddToColumn(const size_t clm1, const size_t clm2, const scalar_t k) const,
-		MultiplyColumn(const size_t clm1, const scalar_t k) const;
+		SwapRows(const size_t r1, const size_t r2) const,
+		AddToRow(const size_t r1, const size_t r2, const scalar_t k) const,
+		MultiplyRow(const size_t r1, const scalar_t k) const,
+		SwapColumns(const size_t c1, const size_t c2) const,
+		AddToColumn(const size_t c1, const size_t c2, const scalar_t k) const,
+		MultiplyColumn(const size_t c1, const scalar_t k) const;
 // MatrixProperties
 	scalar_t
 		Trace() const,

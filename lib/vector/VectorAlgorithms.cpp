@@ -52,4 +52,5 @@ Vector Vector::operator% (const Vector &other) const {
 		throw std::logic_error("not implemented yet");
 		// TODO
 	}
+	throw std::logic_error("problem with implementation");
 }

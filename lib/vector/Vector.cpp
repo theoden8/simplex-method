@@ -1,7 +1,7 @@
 #include "Vector.hpp"
 
 
-Vector::Vector(size_t size, scalar_t value) :
+Vector::Vector(size_t size, scalar_t value):
 	Tensor <scalar_t> (size, value)
 {}
 
@@ -9,13 +9,9 @@ Vector::Vector(line_t grid) :
 	Tensor <scalar_t> (grid)
 {}
 
-Vector::Vector(size_t size, const std::function <scalar_t (size_t)> &construct) :
-	Tensor <scalar_t> (size)
-{
-	size_t i = 0;
-	for(auto &x : *this)
-		x = construct(i++);
-}
+Vector::Vector(size_t size, const std::function <scalar_t (size_t)> &construct):
+	Tensor <scalar_t> (size, construct)
+{}
 
 
 Vector::~Vector()
