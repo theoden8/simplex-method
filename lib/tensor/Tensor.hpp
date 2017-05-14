@@ -8,25 +8,25 @@
 
 #include "Types.hpp"
 
-template <typename T>
+template <typename T, typename L = std::vector <T> >
 class Tensor {
 public:
-	typedef std::vector <T> list_t;
-	typedef list_t tensor_t;
+	typedef L list_t;
+	using tensor_t = list_t;
 	using ARG_SUBTENSOR = std::conditional_t<std::is_fundamental<T>::value, T, typename std::add_lvalue_reference<T>::type>;
 	typedef typename list_t::iterator iter_t;
 	typedef typename list_t::const_iterator const_iter_t;
 protected:
 	tensor_t grid_;
 public:
-	Tensor();
+	explicit Tensor();
 	explicit Tensor(size_t size);
 	explicit Tensor(size_t size, T value);
 	explicit Tensor(tensor_t grid);
 	explicit Tensor(size_t size, const std::function <T (size_t)> &construct);
 	virtual ~Tensor();
 
-	virtual operator tensor_t();
+	virtual operator tensor_t() const;
 
 	virtual T &operator[] (size_t idx);
 	virtual const T &operator[] (size_t idx) const;
@@ -53,6 +53,14 @@ public:
 	bool
 		operator==(const A &other) const,
 		operator!=(const A &other) const;
+	template <typename A>
+	bool
+		operator==(const A &&other) const,
+		operator!=(const A &&other) const;
+	template <typename A>
+	decltype(auto)
+		operator+(const A &other) const,
+		operator-(const A &other) const;
 	decltype(auto)
 		operator+() const,
 		operator-() const;
@@ -61,10 +69,6 @@ public:
 		operator-(const ARG_SUBTENSOR scalar) const,
 		operator*(const ARG_SUBTENSOR scalar) const,
 		operator/(const ARG_SUBTENSOR scalar) const;
-	template <typename A>
-	decltype(auto)
-		operator+(const A &other) const,
-		operator-(const A &other) const;
 	template <typename A>
 	void
 		operator+=(const A &other),

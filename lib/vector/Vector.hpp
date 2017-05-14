@@ -5,7 +5,6 @@
 
 #include <Tensor.hpp>
 
-
 class Vector : public Tensor <long double> {
 public:
 	typedef long double scalar_t;
@@ -14,7 +13,7 @@ public:
 	typedef const std::function <scalar_t (scalar_t, scalar_t)> mapfunc_2_t;
 public:
 //Vector
-	Vector();
+	explicit Vector();
 	explicit Vector(size_t size, scalar_t value = 0.);
 	explicit Vector(line_t line);
 	explicit Vector(size_t size, const std::function <scalar_t (size_t)> &construct);
@@ -24,6 +23,8 @@ public:
 		Print(const Vector &v);
 
 // VectorAttributes
+	Vector operator=(Tensor <scalar_t> t);
+	Vector operator=(Tensor <scalar_t> &t);
 	scalar_t
 		First() const,
 		Last() const;

@@ -15,8 +15,7 @@ Matrix Matrix::AddToRow(const size_t r1, const size_t r2, const scalar_t k = 1) 
 	ASSERT_DOMAIN(r1 < Height() && r2 < Height());
 	ASSERT_DOMAIN(result[r2].Size() == Width());
 
-	decltype(auto) thing = result[r1] * k;
-	result[r2] += thing;
+	result[r2] += result[r1] * k;
 	return result;
 }
 
