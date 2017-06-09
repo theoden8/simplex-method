@@ -60,6 +60,7 @@ set(GMOCK_LIB "${source_dir}/googlemock/include")
 
 # thanks to http://www.kaizou.org/2014/11/gtest-cmake/
 
+set(TTENSOR_LIB ${PROJECT_LIB}/ttensor)
 set(TENSOR_LIB ${PROJECT_LIB}/tensor)
 set(TENSOR_TEST ${PROJECT_LIB}/tensor/test)
 set(LAZYEVAL_LIB ${PROJECT_LIB}/lazyeval)
@@ -85,6 +86,7 @@ add_subdirectory(${LAZYEVAL_TEST})
 add_subdirectory(${PROJECT_SRC})
 
 enable_testing()
+add_test(TTensors ${TTENSOR_LIB}/make test)
 add_test(Tensors ./bin/_testtensor)
 add_test(LazyEvals ./bin/_testlzeval)
 #add_test(Vectors ./bin/_testvector)

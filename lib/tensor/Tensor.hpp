@@ -27,6 +27,7 @@ public:
 	virtual ~Tensor();
 
 	virtual operator tensor_t() const;
+	template <typename X> operator X() const;
 
 	virtual T &operator[] (size_t idx);
 	virtual const T &operator[] (size_t idx) const;
